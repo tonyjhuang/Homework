@@ -1,0 +1,86 @@
+package com.tonyhuangjun.homework;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+	private final static String CLASS_NAME_HEADER = "class_name_";
+	private final static String EMPTY_CLASS = "empty";
+	private final static String TAG = "MainActivity";
+
+	ListView homeworkList;
+	TextView alert;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		homeworkList = (ListView) findViewById(R.id.homework_list);
+		alert = (TextView) findViewById(R.id.empty_list_alert);
+
+		SharedPreferences settings = getPreferences(MODE_PRIVATE);
+		Editor editor = settings.edit();
+		editor.putString(CLASS_NAME_HEADER + 0, "Vagina");
+		editor.commit();
+		Log.d(TAG,  CLASS_NAME_HEADER + 0 + " = " + settings
+					.getString(CLASS_NAME_HEADER + 0, EMPTY_CLASS));
+
+		Log.d(TAG, "SharedPreferences initialized");
+		if (settings.contains(CLASS_NAME_HEADER + 0)) {
+			Log.d(TAG, "At least one class exists.");
+
+			ArrayList<String> classNames = new ArrayList<String>();
+			Log.d(TAG, "ArrayList initialized.");
+			// If the index call to class name in settings does not turn
+			// up empty, add class name to arraylist, otherwise exit.
+			Log.d(TAG, "Loop starting.");
+			for (int i = 0; settings.contains(CLASS_NAME_HEADER + i); i++) {
+				Log.d(TAG, "" + i+ " "
+					+ settings.getString(CLASS_NAME_HEADER + i, EMPTY_CLASS));
+				classNames.add(settings.getString(CLASS_NAME_HEADER + i,
+						EMPTY_CLASS));
+			}
+			Log.d(TAG, "Loop exitted.");
+			Log.d(TAG, "Initializing ArrayAdapter.");
+			CustomAdapter ca = new CustomAdapter(this,
+					android.R.layout.simple_list_item_1, R.id.list_item,
+					classNames);
+			Log.d(TAG, "Initialized ArrayAdapter.");
+			Log.d(TAG, "Attaching adapter to listview...");
+			homeworkList.setAdapter(aa);
+			Log.d(TAG, "Attachment successful!");
+		} else {
+			Log.d(TAG, "No classes exist");
+			alert.setText("Add some classes!");
+		}
+		Log.d(TAG, "onCreate code finished.");
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem menuItem) {
+		switch (menuItem.getItemId()) {
+		case R.id.menu_edit:
+
+			break;
+		}
+		return true;
+	}
+}
