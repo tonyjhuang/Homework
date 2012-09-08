@@ -7,44 +7,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private final static String CLASS_NAME_HEADER = "class_name_";
-	private final static String EMPTY_CLASS = "empty";
+	private final static String CLASS_TITLE = "class_title_";
+	private final static String CLASS_BODY = "class_body_";
+	private final static String NUMBER_OF_CLASSES = "number_of_classes";
+	// As of right now, the possible ints are 1, 2, and 4.
+	private int numberOfClasses;
+	private int layout;
 	private final static String TAG = "MainActivity";
-
-	ListView homeworkList;
-	TextView alert;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-
-		homeworkList = (ListView) findViewById(R.id.homework_list);
-		alert = (TextView) findViewById(R.id.empty_list_alert);
-
+		
+		// Get preferences file and set number of classes to 4 for
+		// debugging purposes.
 		SharedPreferences settings = getPreferences(MODE_PRIVATE);
 		Editor editor = settings.edit();
-		editor.putString(CLASS_NAME_HEADER + 0, "Vagina");
+		editor.putInt(NUMBER_OF_CLASSES, 4);
 		editor.commit();
-		Log.d(TAG,
-				CLASS_NAME_HEADER
-						+ 0
-						+ " = "
-						+ settings
-								.getString(CLASS_NAME_HEADER + 0, EMPTY_CLASS));
-
-		Log.d(TAG, "SharedPreferences initialized");
-		if (settings.contains(CLASS_NAME_HEADER + 0)) {
-			Log.d(TAG, "At least one class exists.");
-		} else {
-			Log.d(TAG, "No classes exist");
-			alert.setText("Add some classes!");
+		
+		// Select correct corresponding layout for number of 
+		// classes selected
+		switch(settings.getInt(NUMBER_OF_CLASSES, 1)){
+		case 1:
+			layout = R.layout.main_one;
+			break;
+		case 2:
+			layout = R.layout.main_two;
+			break;
+		case 4:
+			layout = R.layout.main_four;
+			break;
 		}
-		Log.d(TAG, "onCreate code finished.");
+		setContentView(layout);
+		
 	}
 
 	@Override
