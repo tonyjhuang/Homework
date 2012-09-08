@@ -4,13 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/ClassTitle1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="classTitle1Click"
+        android:textSize="@dimen/class_title_text_size" />
+
+    <TextView
+        android:id="@+id/ClassBody1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="1"
-        android:orientation="vertical" >
-        
-        
-    </LinearLayout>
+        android:onClick="classBody1Click"
+        android:textSize="@dimen/class_body_text_size" />
 
 </LinearLayout>
