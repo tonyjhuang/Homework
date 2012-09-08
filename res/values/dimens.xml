@@ -2,7 +2,8 @@
     <resources>
         <dimen name="list_side_padding">20dp</dimen>
         <dimen name="alert_text_size">20sp</dimen>
-        <dimen name="class_title_text_size">20sp</dimen>
+        <dimen name="class_title_text_size">30sp</dimen>
         <dimen name="class_body_text_size">16sp</dimen>
-        <dimen name="class_title_vertical_padding">10dp</dimen>
+        <dimen name="class_title_vertical_padding">6dp</dimen>
+        <dimen name="layout_side_padding">5dp</dimen>
     </resources>

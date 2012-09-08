@@ -3,6 +3,7 @@ package com.tonyhuangjun.homework;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	private final static String CLASS_TITLE = "class_title_";
 	private final static String CLASS_BODY = "class_body_";
+	private final static String CLASS_STATUS = "class_status_";
 	private final static String NUMBER_OF_CLASSES = "number_of_classes";
 	// As of right now, the possible ints are 1, 2, and 4.
 	private int numberOfClasses;
@@ -40,6 +42,9 @@ public class MainActivity extends Activity {
 		for(int j = 1; j < 9; j++){
 			editor.putString(CLASS_BODY + j, "Description.");
 		}
+		for(int k = 1; k < 9; k++){
+			editor.putBoolean(CLASS_STATUS + k, true);
+		}
 		editor.commit();
 		numberOfClasses = settings.getInt(NUMBER_OF_CLASSES, 1);
 		
@@ -61,26 +66,40 @@ public class MainActivity extends Activity {
 		// Initialize the handlers and populate the TextViews.
 		switch(numberOfClasses){
 		case 4:
+			// Get title handlers and set text.
 			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
 			classTitle3 = (TextView) findViewById(R.id.ClassTitle3);
-			
 			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
 			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
 			
+			// UnFinished? If true, bold. If not, normal.
+			if(settings.getBoolean(CLASS_STATUS + 4, true))
+					classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
+			if(settings.getBoolean(CLASS_STATUS + 3, true))
+					classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
+			
+			Log.d(TAG, "" + settings.getBoolean(CLASS_STATUS + 4, false));
+			
+			// Get body handlers and set text.
 			classBody4 = (TextView) findViewById(R.id.ClassBody4);
 			classBody3 = (TextView) findViewById(R.id.ClassBody3);
-			
 			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
 			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
 		case 2:
 			classTitle2 = (TextView) findViewById(R.id.ClassTitle2);
 			classTitle2.setText(settings.getString(CLASS_TITLE + 2, "Null"));
 			
+			if(settings.getBoolean(CLASS_STATUS + 2, true))
+				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
+			
 			classBody2 = (TextView) findViewById(R.id.ClassBody2);
 			classBody2.setText(settings.getString(CLASS_BODY + 2, "Null"));
 		case 1:
 			classTitle1 = (TextView) findViewById(R.id.ClassTitle1);
 			classTitle1.setText(settings.getString(CLASS_TITLE + 1, "Null"));
+			
+			if(settings.getBoolean(CLASS_STATUS + 1, true))
+				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
 			
 			classBody1 = (TextView) findViewById(R.id.ClassBody1);
 			classBody1.setText(settings.getString(CLASS_BODY + 1, "Null"));

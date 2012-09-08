@@ -15,6 +15,7 @@ public final class R {
         public static final int class_body_text_size=0x7f040003;
         public static final int class_title_text_size=0x7f040002;
         public static final int class_title_vertical_padding=0x7f040004;
+        public static final int layout_side_padding=0x7f040005;
         public static final int list_side_padding=0x7f040000;
     }
     public static final class drawable {
