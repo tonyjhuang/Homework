@@ -40,14 +40,38 @@ public class MainActivity extends Activity {
 
 		// Get preferences file and set number of classes to 4 for
 		// debugging purposes.
-		settings = getPreferences(MODE_PRIVATE);
+		settings = getSharedPreferences("Default", MODE_PRIVATE);
 		editor = settings.edit();
+		
+		// Create dummy titles in settings.
+		populateDebug();
 
-		// Stores the number of classes the user has set in an easily accessable
-		// variable.
+		parent = (ViewGroup) findViewById(R.id.TopLayout);
+
+	}
+
+	protected void onResume() {
+		super.onResume();
+
+		Log.d(TAG, "MainActivity resuming...");
+		Log.d(TAG, "Previous number of classes = " + numberOfClasses);
+		Log.d(TAG, "Refreshing number of classes....");
 		refreshNumberOfClasses();
+		Log.d(TAG, "Refresh completed. New number of classes = "
+				+ numberOfClasses);
+		refreshLayout();
+		
+		getHandlers();
+		fillData();
+	}
 
-		// Inflate the appropriate layout according to the number of classes.
+	private void refreshNumberOfClasses() {
+		numberOfClasses = Integer.valueOf(settings.getString(NUMBER_OF_CLASSES,
+				"1"));
+	}
+
+	// Applies the layout corresponding to the current number of classes.
+	private void refreshLayout() {
 		switch (numberOfClasses) {
 		case 4:
 			setContentView(R.layout.main_four);
@@ -60,29 +84,10 @@ public class MainActivity extends Activity {
 			break;
 		}
 
-		// Get UI handlers.
+		Log.d(TAG, "Layout refreshed! Currenet number of classes = "
+				+ numberOfClasses);
 		getHandlers();
-
-		// Apply names and bodies from preferences.
 		fillData();
-
-		parent = (ViewGroup) findViewById(R.id.TopLayout);
-
-	}
-
-	protected void onResume() {
-		super.onResume();
-		
-		Log.d(TAG, "MainActivity resuming...");
-		Log.d(TAG, "Previous number of classes = " + numberOfClasses);
-		Log.d(TAG, "Refreshing number of classes....");
-		refreshNumberOfClasses();
-		Log.d(TAG, "Refresh completed. New number of classes = " + numberOfClasses);
-	}
-
-	private void refreshNumberOfClasses() {
-		numberOfClasses = Integer.valueOf(settings.getString(NUMBER_OF_CLASSES,
-				"1"));
 	}
 
 	private void getHandlers() {
