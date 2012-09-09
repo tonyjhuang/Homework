@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="Four"
+        android:entries="@array/classArray"
+        android:entryValues="@array/classValues"
+        android:key="listPref"
+        android:title="Number of Classes"
+        android:summary="Allows you to choose how many classes you are taking this semester." />
+
+</PreferenceScreen>
