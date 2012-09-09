@@ -84,7 +84,6 @@ public class MainActivity extends Activity {
 		Log.d(TAG,
 				"Reminder interval = "
 						+ settings.getString(REMINDER_TIMER, "Null"));
-
 		// Set up calendar instance to reference 12pm.
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, 12);
@@ -99,6 +98,7 @@ public class MainActivity extends Activity {
 		am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
 				Integer.valueOf(settings.getString(REMINDER_TIMER, "1800000")),
 				pendingIntent);
+
 	}
 
 	private void refreshNumberOfClasses() {
@@ -220,7 +220,7 @@ public class MainActivity extends Activity {
 	// class titles, bodies, and statuses for debugging.
 	private void populateDebug() {
 		if (settings.getBoolean(FIRST_RUN, true)) {
-			editor.putInt(NUMBER_OF_CLASSES, 1);
+			editor.putString(NUMBER_OF_CLASSES, "1");
 			editor.putString(REMINDER_TIMER, "1800000");
 
 			for (int i = 1; i < 9; i++) {
