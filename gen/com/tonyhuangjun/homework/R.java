@@ -16,6 +16,7 @@ public final class R {
     }
     public static final class dimen {
         public static final int alert_text_size=0x7f060001;
+        public static final int background_padding=0x7f060006;
         public static final int class_body_text_size=0x7f060003;
         public static final int class_title_text_size=0x7f060002;
         public static final int class_title_vertical_padding=0x7f060004;
@@ -27,6 +28,7 @@ public final class R {
         public static final int ic_action_edit=0x7f020001;
         public static final int ic_action_search=0x7f020002;
         public static final int ic_launcher=0x7f020003;
+        public static final int tile_background=0x7f020004;
     }
     public static final class id {
         public static final int ClassBody=0x7f0a0002;
