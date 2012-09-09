@@ -1,6 +1,11 @@
 package com.tonyhuangjun.homework;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -20,7 +25,7 @@ public class MainActivity extends Activity {
 	final static String CLASS_BODY = "class_body_";
 	// Class Status: true = unfinished(bold), false = finished(normal)
 	final static String CLASS_STATUS = "class_status_";
-	private final static String NUMBER_OF_CLASSES = "number_of_classes";
+	final static String NUMBER_OF_CLASSES = "number_of_classes";
 
 	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
 	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
@@ -41,9 +46,22 @@ public class MainActivity extends Activity {
 	private TextView classBody1, classBody2, classBody3, classBody4,
 			classBody5, classBody6, classBody7, classBody8;
 
+	// For notifications.
+	AlarmManager am;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		// Sets repeating alarm.
+		Intent intent = new Intent(this, Alarm.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+				intent, 0);
+		Log.d(TAG, "Setting repeating alarm.");
+		am.setRepeating(AlarmManager.RTC_WAKEUP,
+				System.currentTimeMillis() + 1000, 5000, pendingIntent);
+
 
 		// Get preferences file and set number of classes to 4 for
 		// debugging purposes.
