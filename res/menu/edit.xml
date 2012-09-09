@@ -2,13 +2,15 @@
 
     <item
         android:id="@+id/menu_title"
+        android:icon="@drawable/ic_action_edit"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Title" android:icon="ic_action_edit"/>
+        android:title="Title"/>
     <item
         android:id="@+id/menu_save"
+        android:icon="@drawable/ic_action_done"
         android:orderInCategory="200"
         android:showAsAction="ifRoom"
-        android:title="Save" android:icon="ic_action_done"/>
+        android:title="Save"/>
 
 </menu>
