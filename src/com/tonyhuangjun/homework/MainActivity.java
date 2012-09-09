@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 	final static String CLASS_STATUS = "class_status_";
 	final static String NUMBER_OF_CLASSES = "number_of_classes";
 	final static String REMINDER_TIMER = "timer";
+	private final static String FIRST_RUN = "first_run";
 
 	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
 	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
@@ -41,8 +42,6 @@ public class MainActivity extends Activity {
 	private SharedPreferences settings;
 	private Editor editor;
 
-	private ViewGroup parent;
-
 	private TextView classTitle1, classTitle2, classTitle3, classTitle4,
 			classTitle5, classTitle6, classTitle7, classTitle8;
 	private TextView classBody1, classBody2, classBody3, classBody4,
@@ -54,32 +53,17 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		// Set up calendar instance to reference 12pm.
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 12);
-		calendar.set(Calendar.MINUTE, 0);
-	    calendar.set(Calendar.SECOND, 0);
-		
-		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		// Sets repeating alarm.
-		Intent intent = new Intent(this, Alarm.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-				intent, 0);
-		Log.d(TAG, "Setting repeating alarm.");
-		am.setRepeating(AlarmManager.RTC_WAKEUP,
-				calendar.getTimeInMillis(),
-				settings.getInt(REMINDER_TIMER, 1800000), pendingIntent);
 
-		// Get preferences file and set number of classes to 4 for
-		// debugging purposes.
+		// Get preferences file and editor.
 		settings = getSharedPreferences("Default", MODE_PRIVATE);
 		editor = settings.edit();
 
+		Log.d(TAG, "Interval = " + settings.getString(REMINDER_TIMER, "Null"));
+
+		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
 		// Create dummy titles in settings.
 		populateDebug();
-
-		parent = (ViewGroup) findViewById(R.id.TopLayout);
 
 	}
 
@@ -96,8 +80,25 @@ public class MainActivity extends Activity {
 
 		getHandlers();
 		fillData();
-		
-		Log.d(TAG, "Reminder interval = " + settings.getInt(REMINDER_TIMER, 1800000));
+
+		Log.d(TAG,
+				"Reminder interval = "
+						+ settings.getString(REMINDER_TIMER, "Null"));
+
+		// Set up calendar instance to reference 12pm.
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 12);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+
+		// Sets repeating alarm.
+		Intent intent = new Intent(this, Alarm.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+				intent, 0);
+		Log.d(TAG, "Setting repeating alarm.");
+		am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+				Integer.valueOf(settings.getString(REMINDER_TIMER, "1800000")),
+				pendingIntent);
 	}
 
 	private void refreshNumberOfClasses() {
@@ -218,17 +219,21 @@ public class MainActivity extends Activity {
 	// If settings is empty, populates preferences file to contain
 	// class titles, bodies, and statuses for debugging.
 	private void populateDebug() {
-		if ("empty".equals(settings.getString(CLASS_TITLE + 1, "empty"))) {
+		if (settings.getBoolean(FIRST_RUN, true)) {
+			editor.putInt(NUMBER_OF_CLASSES, 1);
+			editor.putString(REMINDER_TIMER, "1800000");
+
 			for (int i = 1; i < 9; i++) {
 				editor.putString(CLASS_TITLE + i, "Class " + i);
 			}
 			for (int j = 1; j < 9; j++) {
-				editor.putString(CLASS_BODY + j, "Description.");
+				editor.putString(CLASS_BODY + j, "Assignments.");
 			}
 			for (int k = 1; k < 9; k++) {
-				editor.putBoolean(CLASS_STATUS + k, true);
+				editor.putBoolean(CLASS_STATUS + k, false);
 			}
 			editor.commit();
+
 		}
 	}
 

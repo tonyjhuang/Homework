@@ -28,7 +28,8 @@ public class Preferences extends PreferenceActivity {
 	private void getPrefs() {
 		SharedPreferences settings = 
 				getSharedPreferences("Default", MODE_PRIVATE);
-		Log.d(TAG, settings.getString("number_of_classes",  "one"));
+		Log.d(TAG, "Current number of classes set = " + 
+				settings.getString("number_of_classes",  "one"));
 		
 		
 	}
