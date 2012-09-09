@@ -1,6 +1,7 @@
 package com.tonyhuangjun.homework;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
@@ -21,7 +22,6 @@ public class MainActivity extends Activity {
 
 	// As of right now, the possible ints are 1, 2, and 4.
 	private int numberOfClasses;
-	private int layout;
 	private final static String TAG = "MainActivity";
 
 	private SharedPreferences settings;
@@ -42,7 +42,100 @@ public class MainActivity extends Activity {
 		// debugging purposes.
 		settings = getPreferences(MODE_PRIVATE);
 		editor = settings.edit();
-		editor.putInt(NUMBER_OF_CLASSES, 1);
+
+		// Stores the number of classes the user has set in an easily accessable
+		// variable.
+		refreshNumberOfClasses();
+
+		// Inflate the appropriate layout according to the number of classes.
+		switch (numberOfClasses) {
+		case 4:
+			setContentView(R.layout.main_four);
+			break;
+		case 2:
+			setContentView(R.layout.main_two);
+			break;
+		default:
+			setContentView(R.layout.main_one);
+			break;
+		}
+
+		// Get UI handlers.
+		getHandlers();
+
+		// Apply names and bodies from preferences.
+		fillData();
+
+		parent = (ViewGroup) findViewById(R.id.TopLayout);
+
+	}
+
+	protected void onResume() {
+		super.onResume();
+		
+		Log.d(TAG, "MainActivity resuming...");
+		Log.d(TAG, "Previous number of classes = " + numberOfClasses);
+		Log.d(TAG, "Refreshing number of classes....");
+		refreshNumberOfClasses();
+		Log.d(TAG, "Refresh completed. New number of classes = " + numberOfClasses);
+	}
+
+	private void refreshNumberOfClasses() {
+		numberOfClasses = Integer.valueOf(settings.getString(NUMBER_OF_CLASSES,
+				"1"));
+	}
+
+	private void getHandlers() {
+		switch (numberOfClasses) {
+		case 4:
+			// Get title handlers and set text.
+			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
+			classTitle3 = (TextView) findViewById(R.id.ClassTitle3);
+			// Get body handlers and set text.
+			classBody4 = (TextView) findViewById(R.id.ClassBody4);
+			classBody3 = (TextView) findViewById(R.id.ClassBody3);
+		case 2:
+			classTitle2 = (TextView) findViewById(R.id.ClassTitle2);
+			classBody2 = (TextView) findViewById(R.id.ClassBody2);
+		default:
+			classTitle1 = (TextView) findViewById(R.id.ClassTitle1);
+			classBody1 = (TextView) findViewById(R.id.ClassBody1);
+		}
+	}
+
+	private void fillData() {
+		// Initialize the handlers and populate the TextViews.
+		switch (numberOfClasses) {
+		case 4:
+			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
+			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
+			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
+			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
+
+			// UnFinished? If true, bold. If not, normal.
+			if (settings.getBoolean(CLASS_STATUS + 4, true))
+				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
+			if (settings.getBoolean(CLASS_STATUS + 3, true))
+				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
+		case 2:
+			classTitle2.setText(settings.getString(CLASS_TITLE + 2, "Null"));
+			classBody2.setText(settings.getString(CLASS_BODY + 2, "Null"));
+
+			if (settings.getBoolean(CLASS_STATUS + 2, true))
+				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
+		default:
+			classTitle1.setText(settings.getString(CLASS_TITLE + 1, "Null"));
+			classBody1.setText(settings.getString(CLASS_BODY + 1, "Null"));
+
+			if (settings.getBoolean(CLASS_STATUS + 1, true))
+				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
+			break;
+		}
+	}
+
+	// Populates preferences file to contain
+	// Class titles, bodies, and statuses for debugging.
+	private void populateDebug() {
 		for (int i = 1; i < 9; i++) {
 			editor.putString(CLASS_TITLE + i, "Class " + i);
 		}
@@ -53,74 +146,23 @@ public class MainActivity extends Activity {
 			editor.putBoolean(CLASS_STATUS + k, true);
 		}
 		editor.commit();
-		numberOfClasses = settings.getInt(NUMBER_OF_CLASSES, 1);
-
-		// Inflate the appropriate layout
-		switch (numberOfClasses) {
-		case 4:
-			layout = R.layout.main_four;
-			break;
-		case 2:
-			layout = R.layout.main_two;
-			break;
-		case 1:
-			layout = R.layout.main_one;
-			break;
-		}
-
-		setContentView(layout);
-
-		// Initialize the handlers and populate the TextViews.
-		switch (numberOfClasses) {
-		case 4:
-			// Get title handlers and set text.
-			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
-			classTitle3 = (TextView) findViewById(R.id.ClassTitle3);
-			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
-			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
-
-			// UnFinished? If true, bold. If not, normal.
-			if (settings.getBoolean(CLASS_STATUS + 4, true))
-				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
-			if (settings.getBoolean(CLASS_STATUS + 3, true))
-				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
-
-			Log.d(TAG, "" + settings.getBoolean(CLASS_STATUS + 4, false));
-
-			// Get body handlers and set text.
-			classBody4 = (TextView) findViewById(R.id.ClassBody4);
-			classBody3 = (TextView) findViewById(R.id.ClassBody3);
-			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
-			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
-		case 2:
-			classTitle2 = (TextView) findViewById(R.id.ClassTitle2);
-			classTitle2.setText(settings.getString(CLASS_TITLE + 2, "Null"));
-
-			if (settings.getBoolean(CLASS_STATUS + 2, true))
-				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
-
-			classBody2 = (TextView) findViewById(R.id.ClassBody2);
-			classBody2.setText(settings.getString(CLASS_BODY + 2, "Null"));
-		case 1:
-			classTitle1 = (TextView) findViewById(R.id.ClassTitle1);
-			classTitle1.setText(settings.getString(CLASS_TITLE + 1, "Null"));
-
-			if (settings.getBoolean(CLASS_STATUS + 1, true))
-				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
-
-			classBody1 = (TextView) findViewById(R.id.ClassBody1);
-			classBody1.setText(settings.getString(CLASS_BODY + 1, "Null"));
-			break;
-		}
-
-		parent = (ViewGroup) findViewById(R.id.TopLayout);
-
 	}
 
-	public void classTitle4Click(View v) { flip(4); }
-	public void classTitle3Click(View v) { flip(3); }
-	public void classTitle2Click(View v) { flip(2); }
-	public void classTitle1Click(View v) { flip(1); }
+	public void classTitle4Click(View v) {
+		flip(4);
+	}
+
+	public void classTitle3Click(View v) {
+		flip(3);
+	}
+
+	public void classTitle2Click(View v) {
+		flip(2);
+	}
+
+	public void classTitle1Click(View v) {
+		flip(1);
+	}
 
 	public void flip(int i) {
 		if (settings.getBoolean(CLASS_STATUS + i, true)) {
@@ -156,7 +198,7 @@ public class MainActivity extends Activity {
 				break;
 			}
 		}
-		
+
 		editor.commit();
 	}
 
@@ -171,6 +213,9 @@ public class MainActivity extends Activity {
 		switch (menuItem.getItemId()) {
 		case R.id.menu_edit:
 
+			break;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, Preferences.class));
 			break;
 		}
 		return true;
