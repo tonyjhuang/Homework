@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,15 +23,21 @@ public class EditActivity extends Activity {
 	private String title;
 	private String body;
 
-	private TextView classTitle;
+	private View classTitle;
 	private EditText classBody;
-	
+
+	private ViewGroup parent;
+	private int index;
+
 	private int id;
+	private boolean edit;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit);
 		Log.d(TAG, "EditActivity started.");
+
+		parent = (ViewGroup) findViewById(R.id.TopLayout);
 
 		// Get preferences file and set number of classes to 4 for
 		// debugging purposes.
@@ -50,8 +58,12 @@ public class EditActivity extends Activity {
 		classTitle = (TextView) findViewById(R.id.ClassTitle);
 		classBody = (EditText) findViewById(R.id.ClassBody);
 
-		classTitle.setText(title);
+		((TextView) classTitle).setText(title);
 		classBody.setText(body);
+
+		index = parent.indexOfChild(classTitle);
+
+		edit = false;
 
 		ActionBar ab = getActionBar();
 		ab.setTitle(title);
@@ -66,8 +78,35 @@ public class EditActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		switch (menuItem.getItemId()) {
+		case R.id.menu_title:
+			String title;
+			parent.removeView(classTitle);
+			if (edit) {
+				title = String.valueOf(((EditText) classTitle).getText());
+				// Replace EditText with TextView. Flip boolean.
+				classTitle = getLayoutInflater().inflate(R.layout.view_title,
+						parent, false);
+				parent.addView(classTitle, index);
+				((TextView) classTitle).setText(title);
+			} else {
+				title = String.valueOf(((TextView) classTitle).getText());
+				// Replace TextView with EditText
+				classTitle = getLayoutInflater().inflate(R.layout.edit_title,
+						parent, false);
+				parent.addView(classTitle, index);
+				((EditText) classTitle).setText(title);
+			}
+			edit = !edit;
+			break;
 		case R.id.menu_save:
-			editor.putString(MainActivity.CLASS_BODY + id, 
+			if (edit)
+				editor.putString(MainActivity.CLASS_TITLE + id,
+						String.valueOf(((EditText) classTitle).getText()));
+			else
+				editor.putString(MainActivity.CLASS_TITLE + id,
+						String.valueOf(((TextView) classTitle).getText()));
+
+			editor.putString(MainActivity.CLASS_BODY + id,
 					String.valueOf(classBody.getText()));
 			editor.commit();
 			finish();
