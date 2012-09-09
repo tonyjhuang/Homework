@@ -45,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="classBody1Click"
             android:textSize="@dimen/class_body_text_size" />
 
@@ -53,6 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="classBody2Click"
             android:textSize="@dimen/class_body_text_size" />
     </LinearLayout>

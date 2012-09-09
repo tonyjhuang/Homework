@@ -20,10 +20,10 @@ public class MainActivity extends Activity {
 	// Class Status: true = unfinished(bold), false = finished(normal)
 	private final static String CLASS_STATUS = "class_status_";
 	private final static String NUMBER_OF_CLASSES = "number_of_classes";
-	
-	private final int TITLE_UNFINISHED = Color.parseColor("#99990000");
+
+	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
 	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
-	private final int TITLE_FINISHED = Color.parseColor("#7566CC00");
+	private final int TITLE_FINISHED = Color.parseColor("#9933CC00");
 	private final int BODY_FINISHED = Color.parseColor("#7599CC00");
 
 	// As of right now, the possible ints are 1, 2, and 4.
@@ -144,15 +144,15 @@ public class MainActivity extends Activity {
 		}
 		style();
 	}
-	
+
 	// Add colors and typefaces base on class status.
 	private void style() {
-		switch(numberOfClasses) {
+		switch (numberOfClasses) {
 
 		case 4:
 			// UnFinished? If true, bold. If not, normal.
 			// Then add color!
-			if (settings.getBoolean(CLASS_STATUS + 4, true)){
+			if (settings.getBoolean(CLASS_STATUS + 4, true)) {
 				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
 				classTitle4.setBackgroundColor(TITLE_UNFINISHED);
 				classBody4.setBackgroundColor(BODY_UNFINISHED);
@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
 				classBody4.setBackgroundColor(BODY_FINISHED);
 			}
 		case 3:
-			if (settings.getBoolean(CLASS_STATUS + 3, true)){
+			if (settings.getBoolean(CLASS_STATUS + 3, true)) {
 				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
 				classTitle3.setBackgroundColor(TITLE_UNFINISHED);
 				classBody3.setBackgroundColor(BODY_UNFINISHED);
@@ -170,7 +170,7 @@ public class MainActivity extends Activity {
 				classBody3.setBackgroundColor(BODY_FINISHED);
 			}
 		case 2:
-			if (settings.getBoolean(CLASS_STATUS + 2, true)){
+			if (settings.getBoolean(CLASS_STATUS + 2, true)) {
 				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
 				classTitle2.setBackgroundColor(TITLE_UNFINISHED);
 				classBody2.setBackgroundColor(BODY_UNFINISHED);
@@ -179,7 +179,7 @@ public class MainActivity extends Activity {
 				classBody2.setBackgroundColor(BODY_FINISHED);
 			}
 		default:
-			if (settings.getBoolean(CLASS_STATUS + 1, true)){
+			if (settings.getBoolean(CLASS_STATUS + 1, true)) {
 				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
 				classTitle1.setBackgroundColor(TITLE_UNFINISHED);
 				classBody1.setBackgroundColor(BODY_UNFINISHED);
@@ -191,19 +191,21 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	// Populates preferences file to contain
-	// Class titles, bodies, and statuses for debugging.
+	// If settings is empty, populates preferences file to contain
+	// class titles, bodies, and statuses for debugging.
 	private void populateDebug() {
-		for (int i = 1; i < 9; i++) {
-			editor.putString(CLASS_TITLE + i, "Class " + i);
+		if ("empty".equals(settings.getString(CLASS_TITLE + 1, "empty"))) {
+			for (int i = 1; i < 9; i++) {
+				editor.putString(CLASS_TITLE + i, "Class " + i);
+			}
+			for (int j = 1; j < 9; j++) {
+				editor.putString(CLASS_BODY + j, "Description.");
+			}
+			for (int k = 1; k < 9; k++) {
+				editor.putBoolean(CLASS_STATUS + k, true);
+			}
+			editor.commit();
 		}
-		for (int j = 1; j < 9; j++) {
-			editor.putString(CLASS_BODY + j, "Description.");
-		}
-		for (int k = 1; k < 9; k++) {
-			editor.putBoolean(CLASS_STATUS + k, true);
-		}
-		editor.commit();
 	}
 
 	public void classTitle4Click(View v) {
@@ -270,9 +272,6 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		switch (menuItem.getItemId()) {
-		case R.id.menu_edit:
-
-			break;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, Preferences.class));
 			break;

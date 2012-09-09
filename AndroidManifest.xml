@@ -24,6 +24,10 @@
             android:name=".Preferences"
             android:label="Preferences" >
         </activity>
+        <activity
+            android:name=".EditActivity"
+            android:label="Edit" >
+        </activity>
     </application>
 
 </manifest>

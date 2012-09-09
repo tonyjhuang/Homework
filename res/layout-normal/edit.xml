@@ -8,20 +8,19 @@
     android:paddingRight="@dimen/layout_side_padding" >
 
     <TextView
-        android:id="@+id/ClassTitle1"
+        android:id="@+id/ClassTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="classTitle1Click"
         android:textSize="@dimen/class_title_text_size" />
 
-    <TextView
-        android:id="@+id/ClassBody1"
+    <EditText
+        android:id="@+id/ClassBody"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:onClick="classBody1Click"
-        android:textSize="@dimen/class_body_text_size" />
+        android:gravity="top"
+        android:singleLine="false"
+        android:textSize="@dimen/class_body_text_size"
+        android:hint="Assignments" />
 
 </LinearLayout>
