@@ -2,8 +2,6 @@ package com.tonyhuangjun.homework;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +19,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	// Preferences file accessor id's.
 	final static String CLASS_TITLE = "class_title_";
 	final static String CLASS_BODY = "class_body_";
 	// Class Status: true = unfinished(bold), false = finished(normal)
 	final static String CLASS_STATUS = "class_status_";
 	final static String NUMBER_OF_CLASSES = "number_of_classes";
+	final static String REMINDER_TIMER = "timer";
 
 	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
 	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
 				intent, 0);
 		Log.d(TAG, "Setting repeating alarm.");
 		am.setRepeating(AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis() + 1000, 5000, pendingIntent);
-
+				System.currentTimeMillis() + 1000,
+				settings.getInt(REMINDER_TIMER, 3600000), pendingIntent);
 
 		// Get preferences file and set number of classes to 4 for
 		// debugging purposes.

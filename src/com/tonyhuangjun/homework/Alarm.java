@@ -28,7 +28,7 @@ public class Alarm extends BroadcastReceiver {
 		n.flags = Notification.FLAG_AUTO_CANCEL;
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 				new Intent(context, MainActivity.class), 0);
-		n.setLatestEventInfo(context, "Iiiiiit's homework time!",
+		n.setLatestEventInfo(context, "iiiiiit's homework time!",
 				findUnfinished(), pendingIntent);
 		n.number += 1;
 		nm.notify(0, n);

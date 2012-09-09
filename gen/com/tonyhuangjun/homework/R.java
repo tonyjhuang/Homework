@@ -11,6 +11,8 @@ public final class R {
     public static final class array {
         public static final int classArray=0x7f050000;
         public static final int classValues=0x7f050001;
+        public static final int timeArray=0x7f050002;
+        public static final int timeValues=0x7f050003;
     }
     public static final class attr {
     }
