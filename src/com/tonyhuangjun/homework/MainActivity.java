@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,11 @@ public class MainActivity extends Activity {
 	// Class Status: true = unfinished(bold), false = finished(normal)
 	private final static String CLASS_STATUS = "class_status_";
 	private final static String NUMBER_OF_CLASSES = "number_of_classes";
+	
+	private final int TITLE_UNFINISHED = Color.parseColor("#99990000");
+	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
+	private final int TITLE_FINISHED = Color.parseColor("#7566CC00");
+	private final int BODY_FINISHED = Color.parseColor("#7599CC00");
 
 	// As of right now, the possible ints are 1, 2, and 4.
 	private int numberOfClasses;
@@ -42,7 +48,7 @@ public class MainActivity extends Activity {
 		// debugging purposes.
 		settings = getSharedPreferences("Default", MODE_PRIVATE);
 		editor = settings.edit();
-		
+
 		// Create dummy titles in settings.
 		populateDebug();
 
@@ -60,7 +66,7 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Refresh completed. New number of classes = "
 				+ numberOfClasses);
 		refreshLayout();
-		
+
 		getHandlers();
 		fillData();
 	}
@@ -73,7 +79,9 @@ public class MainActivity extends Activity {
 	// Applies the layout corresponding to the current number of classes.
 	private void refreshLayout() {
 		switch (numberOfClasses) {
+		// 4 and 3 classes have the same layout, but different handlers.
 		case 4:
+		case 3:
 			setContentView(R.layout.main_four);
 			break;
 		case 2:
@@ -93,11 +101,11 @@ public class MainActivity extends Activity {
 	private void getHandlers() {
 		switch (numberOfClasses) {
 		case 4:
-			// Get title handlers and set text.
+			// Get title and body handlers and set text.
 			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
-			classTitle3 = (TextView) findViewById(R.id.ClassTitle3);
-			// Get body handlers and set text.
 			classBody4 = (TextView) findViewById(R.id.ClassBody4);
+		case 3:
+			classTitle3 = (TextView) findViewById(R.id.ClassTitle3);
 			classBody3 = (TextView) findViewById(R.id.ClassBody3);
 		case 2:
 			classTitle2 = (TextView) findViewById(R.id.ClassTitle2);
@@ -113,13 +121,11 @@ public class MainActivity extends Activity {
 		switch (numberOfClasses) {
 		case 4:
 			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
-			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
 			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
+		case 3:
+			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
 			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
 
-			// UnFinished? If true, bold. If not, normal.
-			if (settings.getBoolean(CLASS_STATUS + 4, true))
-				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
 			if (settings.getBoolean(CLASS_STATUS + 3, true))
 				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
 		case 2:
@@ -134,6 +140,53 @@ public class MainActivity extends Activity {
 
 			if (settings.getBoolean(CLASS_STATUS + 1, true))
 				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
+			break;
+		}
+		style();
+	}
+	
+	// Add colors and typefaces base on class status.
+	private void style() {
+		switch(numberOfClasses) {
+
+		case 4:
+			// UnFinished? If true, bold. If not, normal.
+			// Then add color!
+			if (settings.getBoolean(CLASS_STATUS + 4, true)){
+				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle4.setBackgroundColor(TITLE_UNFINISHED);
+				classBody4.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle4.setBackgroundColor(TITLE_FINISHED);
+				classBody4.setBackgroundColor(BODY_FINISHED);
+			}
+		case 3:
+			if (settings.getBoolean(CLASS_STATUS + 3, true)){
+				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle3.setBackgroundColor(TITLE_UNFINISHED);
+				classBody3.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle3.setBackgroundColor(TITLE_FINISHED);
+				classBody3.setBackgroundColor(BODY_FINISHED);
+			}
+		case 2:
+			if (settings.getBoolean(CLASS_STATUS + 2, true)){
+				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle2.setBackgroundColor(TITLE_UNFINISHED);
+				classBody2.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle2.setBackgroundColor(TITLE_FINISHED);
+				classBody2.setBackgroundColor(BODY_FINISHED);
+			}
+		default:
+			if (settings.getBoolean(CLASS_STATUS + 1, true)){
+				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle1.setBackgroundColor(TITLE_UNFINISHED);
+				classBody1.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle1.setBackgroundColor(TITLE_FINISHED);
+				classBody1.setBackgroundColor(BODY_FINISHED);
+			}
 			break;
 		}
 	}
@@ -205,6 +258,7 @@ public class MainActivity extends Activity {
 		}
 
 		editor.commit();
+		style();
 	}
 
 	@Override
