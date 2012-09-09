@@ -4,11 +4,11 @@
         android:id="@+id/menu_title"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Title" android:icon="R.drawable.ic_action_edit"/>
+        android:title="Title" android:icon="ic_action_edit"/>
     <item
         android:id="@+id/menu_save"
         android:orderInCategory="200"
         android:showAsAction="ifRoom"
-        android:title="Save" android:icon="R.drawable.ic_action_done"/>
+        android:title="Save" android:icon="ic_action_done"/>
 
 </menu>
