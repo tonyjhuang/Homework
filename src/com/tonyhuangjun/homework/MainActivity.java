@@ -1,5 +1,7 @@
 package com.tonyhuangjun.homework;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -52,7 +54,13 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		// Set up calendar instance to reference 12pm.
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 12);
+		calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+		
 		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		// Sets repeating alarm.
 		Intent intent = new Intent(this, Alarm.class);
@@ -60,8 +68,8 @@ public class MainActivity extends Activity {
 				intent, 0);
 		Log.d(TAG, "Setting repeating alarm.");
 		am.setRepeating(AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis() + 1000,
-				settings.getInt(REMINDER_TIMER, 3600000), pendingIntent);
+				calendar.getTimeInMillis(),
+				settings.getInt(REMINDER_TIMER, 1800000), pendingIntent);
 
 		// Get preferences file and set number of classes to 4 for
 		// debugging purposes.
@@ -88,6 +96,8 @@ public class MainActivity extends Activity {
 
 		getHandlers();
 		fillData();
+		
+		Log.d(TAG, "Reminder interval = " + settings.getInt(REMINDER_TIMER, 1800000));
 	}
 
 	private void refreshNumberOfClasses() {
