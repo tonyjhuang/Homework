@@ -39,7 +39,8 @@ public final class R {
         public static final int ClassTitle4=0x7f0a0009;
         public static final int TopLayout=0x7f0a0000;
         public static final int list_item=0x7f0a0003;
-        public static final int menu_settings=0x7f0a000c;
+        public static final int menu_save=0x7f0a000c;
+        public static final int menu_settings=0x7f0a000d;
     }
     public static final class layout {
         public static final int edit=0x7f030000;
@@ -50,7 +51,8 @@ public final class R {
         public static final int main_two=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int edit=0x7f090000;
+        public static final int main=0x7f090001;
     }
     public static final class string {
         public static final int app_name=0x7f070000;

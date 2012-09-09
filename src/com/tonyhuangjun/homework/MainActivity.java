@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private final static String CLASS_TITLE = "class_title_";
-	private final static String CLASS_BODY = "class_body_";
+	final static String CLASS_TITLE = "class_title_";
+	final static String CLASS_BODY = "class_body_";
 	// Class Status: true = unfinished(bold), false = finished(normal)
-	private final static String CLASS_STATUS = "class_status_";
+	final static String CLASS_STATUS = "class_status_";
 	private final static String NUMBER_OF_CLASSES = "number_of_classes";
 
 	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
@@ -224,6 +224,24 @@ public class MainActivity extends Activity {
 		flip(1);
 	}
 
+	public void classBody4Click(View v) {
+		view(4);
+	}
+
+	public void classBody3Click(View v) {
+		view(3);
+	}
+
+	public void classBody2Click(View v) {
+		view(2);
+	}
+
+	public void classBody1Click(View v) {
+		Log.d(TAG, "Class body 1 clicked.");
+		view(1);
+	}
+
+	// Flips class status and applies new typeface and color.
 	public void flip(int i) {
 		if (settings.getBoolean(CLASS_STATUS + i, true)) {
 			editor.putBoolean(CLASS_STATUS + i, false);
@@ -261,6 +279,13 @@ public class MainActivity extends Activity {
 
 		editor.commit();
 		style();
+	}
+
+	public void view(int i) {
+		Intent intent = new Intent(this, EditActivity.class);
+		intent.putExtra("ID", i);
+		Log.d(TAG, "Starting EditActivity...");
+		startActivity(intent);
 	}
 
 	@Override
