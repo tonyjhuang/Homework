@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,26 +121,21 @@ public class MainActivity extends Activity {
 		// Initialize the handlers and populate the TextViews.
 		switch (numberOfClasses) {
 		case 4:
+			classBody4.setMovementMethod(new ScrollingMovementMethod());
 			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
 			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
 		case 3:
+			classBody3.setMovementMethod(new ScrollingMovementMethod());
 			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
 			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
-
-			if (settings.getBoolean(CLASS_STATUS + 3, true))
-				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
 		case 2:
+			classBody2.setMovementMethod(new ScrollingMovementMethod());
 			classTitle2.setText(settings.getString(CLASS_TITLE + 2, "Null"));
 			classBody2.setText(settings.getString(CLASS_BODY + 2, "Null"));
-
-			if (settings.getBoolean(CLASS_STATUS + 2, true))
-				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
 		default:
+			classBody1.setMovementMethod(new ScrollingMovementMethod());
 			classTitle1.setText(settings.getString(CLASS_TITLE + 1, "Null"));
 			classBody1.setText(settings.getString(CLASS_BODY + 1, "Null"));
-
-			if (settings.getBoolean(CLASS_STATUS + 1, true))
-				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
 			break;
 		}
 		style();
