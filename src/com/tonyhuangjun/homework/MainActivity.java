@@ -110,11 +110,15 @@ public class MainActivity extends Activity {
 	// Applies the layout corresponding to the current number of classes.
 	private void refreshLayout() {
 		switch (numberOfClasses) {
+		// 8 and 7 classes have the same layout, but different handlers.
+		case 8:
+		case 7:
+			setContentView(R.layout.main_eight);
+			break;
 		case 6:
 		case 5:
 			setContentView(R.layout.main_six);
 			break;
-		// 4 and 3 classes have the same layout, but different handlers.
 		case 4:
 		case 3:
 			setContentView(R.layout.main_four);
@@ -136,20 +140,19 @@ public class MainActivity extends Activity {
 	private void getHandlers() {
 		switch (numberOfClasses) {
 		case 8:
-			//classTitle8 = (TextView) findViewById(R.id.ClassTitle8);
-			//classBody8 = (TextView) findViewById(R.id.ClassBody8);
-		case 7:
-			//classTitle7 = (TextView) findViewById(R.id.ClassTitle7);
-			//classBody7 = (TextView) findViewById(R.id.ClassBody7);
-		case 6:
 			// Get title and body handlers and set text.
+			classTitle8 = (TextView) findViewById(R.id.ClassTitle8);
+			classBody8 = (TextView) findViewById(R.id.ClassBody8);
+		case 7:
+			classTitle7 = (TextView) findViewById(R.id.ClassTitle7);
+			classBody7 = (TextView) findViewById(R.id.ClassBody7);
+		case 6:
 			classTitle6 = (TextView) findViewById(R.id.ClassTitle6);
 			classBody6 = (TextView) findViewById(R.id.ClassBody6);
 		case 5:
 			classTitle5 = (TextView) findViewById(R.id.ClassTitle5);
 			classBody5 = (TextView) findViewById(R.id.ClassBody5);
 		case 4:
-			// Get title and body handlers and set text.
 			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
 			classBody4 = (TextView) findViewById(R.id.ClassBody4);
 		case 3:
@@ -161,6 +164,7 @@ public class MainActivity extends Activity {
 		default:
 			classTitle1 = (TextView) findViewById(R.id.ClassTitle1);
 			classBody1 = (TextView) findViewById(R.id.ClassBody1);
+			break;
 		}
 	}
 
