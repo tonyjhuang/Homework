@@ -1,0 +1,218 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TopLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#25000000"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/layout_side_padding"
+    android:paddingRight="@dimen/layout_side_padding"
+    android:weightSum="3" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassTitle1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle1Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassTitle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle2Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassBody1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody1Click"
+                    android:textSize="@dimen/class_body_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassBody2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody2Click"
+                    android:textSize="@dimen/class_body_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassTitle3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle3Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassTitle4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle4Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassBody3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody3Click"
+                    android:textSize="@dimen/class_body_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassBody4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody4Click"
+                    android:textSize="@dimen/class_body_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassTitle5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle5Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassTitle6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="classTitle6Click"
+                    android:paddingBottom="@dimen/class_title_vertical_padding"
+                    android:paddingTop="@dimen/class_title_vertical_padding"
+                    android:textSize="@dimen/class_title_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/ClassBody5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody5Click"
+                    android:textSize="@dimen/class_body_text_size" />
+
+                <TextView
+                    android:id="@+id/ClassBody6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="classBody6Click"
+                    android:textSize="@dimen/class_body_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
