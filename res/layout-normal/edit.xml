@@ -13,6 +13,8 @@
         android:layout_alignBottom="@+id/ClassTitle"
         android:layout_alignTop="@+id/ClassTitle"
         android:layout_centerHorizontal="true"
+        android:onClick="flipStatus"
+        android:clickable="true"
         android:layout_marginLeft="@dimen/list_side_padding"
         android:layout_marginRight="@dimen/list_side_padding" />
 
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/body_side_padding"
+        android:onClick="flipStatus"
         android:gravity="center"
         android:textSize="@dimen/class_title_text_size" />
 

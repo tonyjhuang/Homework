@@ -63,9 +63,9 @@ public class EditActivity extends SherlockActivity {
 
 		((TextView) classTitle).setText(title);
 		classBody.setText(body);
-		
+
 		// Color classStatus
-		classStatus.setBackgroundColor(MainActivity.TITLE_FINISHED);
+		refreshStatus();
 
 		index = parent.indexOfChild(classTitle);
 
@@ -75,6 +75,24 @@ public class EditActivity extends SherlockActivity {
 		ab.setTitle(title);
 	}
 
+	private void refreshStatus() {
+		if (settings.getBoolean(MainActivity.CLASS_STATUS + id, true)){
+			classStatus.setBackgroundColor(MainActivity.TITLE_UNFINISHED);
+			classBody.setBackgroundColor(MainActivity.BODY_UNFINISHED);
+		} else {
+			classStatus.setBackgroundColor(MainActivity.TITLE_FINISHED);
+			classBody.setBackgroundColor(MainActivity.BODY_FINISHED);
+		}
+	}
+
+	public void flipStatus(View v){
+		Log.d(TAG, "Status clicked.");
+		editor.putBoolean(MainActivity.CLASS_STATUS + id, 
+				!settings.getBoolean(MainActivity.CLASS_STATUS + id, true));
+		editor.commit();
+		refreshStatus();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.edit, menu);
