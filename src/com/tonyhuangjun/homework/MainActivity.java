@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
 		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		// Create dummy titles in settings.
+		if(settings.getBoolean(FIRST_RUN, true))
 		populateDebug();
 
 	}
@@ -109,6 +110,10 @@ public class MainActivity extends Activity {
 	// Applies the layout corresponding to the current number of classes.
 	private void refreshLayout() {
 		switch (numberOfClasses) {
+		case 6:
+		case 5:
+			setContentView(R.layout.main_six);
+			break;
 		// 4 and 3 classes have the same layout, but different handlers.
 		case 4:
 		case 3:
@@ -130,6 +135,19 @@ public class MainActivity extends Activity {
 
 	private void getHandlers() {
 		switch (numberOfClasses) {
+		case 8:
+			//classTitle8 = (TextView) findViewById(R.id.ClassTitle8);
+			//classBody8 = (TextView) findViewById(R.id.ClassBody8);
+		case 7:
+			//classTitle7 = (TextView) findViewById(R.id.ClassTitle7);
+			//classBody7 = (TextView) findViewById(R.id.ClassBody7);
+		case 6:
+			// Get title and body handlers and set text.
+			classTitle6 = (TextView) findViewById(R.id.ClassTitle6);
+			classBody6 = (TextView) findViewById(R.id.ClassBody6);
+		case 5:
+			classTitle5 = (TextView) findViewById(R.id.ClassTitle5);
+			classBody5 = (TextView) findViewById(R.id.ClassBody5);
 		case 4:
 			// Get title and body handlers and set text.
 			classTitle4 = (TextView) findViewById(R.id.ClassTitle4);
@@ -149,6 +167,22 @@ public class MainActivity extends Activity {
 	private void fillData() {
 		// Initialize the handlers and populate the TextViews.
 		switch (numberOfClasses) {
+		case 8:
+			classBody8.setMovementMethod(new ScrollingMovementMethod());
+			classTitle8.setText(settings.getString(CLASS_TITLE + 8, "Null"));
+			classBody8.setText(settings.getString(CLASS_BODY + 8, "Null"));
+		case 7:
+			classBody7.setMovementMethod(new ScrollingMovementMethod());
+			classTitle7.setText(settings.getString(CLASS_TITLE + 7, "Null"));
+			classBody7.setText(settings.getString(CLASS_BODY + 7, "Null"));
+		case 6:
+			classBody6.setMovementMethod(new ScrollingMovementMethod());
+			classTitle6.setText(settings.getString(CLASS_TITLE + 6, "Null"));
+			classBody6.setText(settings.getString(CLASS_BODY + 6, "Null"));
+		case 5:
+			classBody5.setMovementMethod(new ScrollingMovementMethod());
+			classTitle5.setText(settings.getString(CLASS_TITLE + 5, "Null"));
+			classBody5.setText(settings.getString(CLASS_BODY + 5, "Null"));
 		case 4:
 			classBody4.setMovementMethod(new ScrollingMovementMethod());
 			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
@@ -173,10 +207,45 @@ public class MainActivity extends Activity {
 	// Add colors and typefaces base on class status.
 	private void style() {
 		switch (numberOfClasses) {
-
-		case 4:
+		case 8:
 			// UnFinished? If true, bold. If not, normal.
 			// Then add color!
+			if (settings.getBoolean(CLASS_STATUS + 8, true)) {
+				classTitle8.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle8.setBackgroundColor(TITLE_UNFINISHED);
+				classBody8.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle8.setBackgroundColor(TITLE_FINISHED);
+				classBody8.setBackgroundColor(BODY_FINISHED);
+			}
+		case 7:
+			if (settings.getBoolean(CLASS_STATUS + 7, true)) {
+				classTitle7.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle7.setBackgroundColor(TITLE_UNFINISHED);
+				classBody7.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle7.setBackgroundColor(TITLE_FINISHED);
+				classBody7.setBackgroundColor(BODY_FINISHED);
+			}
+		case 6:
+			if (settings.getBoolean(CLASS_STATUS + 6, true)) {
+				classTitle6.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle6.setBackgroundColor(TITLE_UNFINISHED);
+				classBody6.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle6.setBackgroundColor(TITLE_FINISHED);
+				classBody6.setBackgroundColor(BODY_FINISHED);
+			}
+		case 5:
+			if (settings.getBoolean(CLASS_STATUS + 5, true)) {
+				classTitle5.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle5.setBackgroundColor(TITLE_UNFINISHED);
+				classBody5.setBackgroundColor(BODY_UNFINISHED);
+			} else {
+				classTitle5.setBackgroundColor(TITLE_FINISHED);
+				classBody5.setBackgroundColor(BODY_FINISHED);
+			}
+		case 4:
 			if (settings.getBoolean(CLASS_STATUS + 4, true)) {
 				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
 				classTitle4.setBackgroundColor(TITLE_UNFINISHED);
@@ -219,7 +288,6 @@ public class MainActivity extends Activity {
 	// If settings is empty, populates preferences file to contain
 	// class titles, bodies, and statuses for debugging.
 	private void populateDebug() {
-		if (settings.getBoolean(FIRST_RUN, true)) {
 			editor.putString(NUMBER_OF_CLASSES, "1");
 			editor.putString(REMINDER_TIMER, "1800000");
 
@@ -232,11 +300,28 @@ public class MainActivity extends Activity {
 			for (int k = 1; k < 9; k++) {
 				editor.putBoolean(CLASS_STATUS + k, false);
 			}
+			
+			editor.putBoolean(FIRST_RUN, false);
 			editor.commit();
-
-		}
 	}
 
+	//###OnClick managers for Titles and Bodies of classes###
+	public void classTitle8Click(View v) {
+		flip(8);
+	}
+	
+	public void classTitle7Click(View v) {
+		flip(7);
+	}
+	
+	public void classTitle6Click(View v) {
+		flip(6);
+	}
+	
+	public void classTitle5Click(View v) {
+		flip(5);
+	}
+	
 	public void classTitle4Click(View v) {
 		flip(4);
 	}
@@ -252,6 +337,22 @@ public class MainActivity extends Activity {
 	public void classTitle1Click(View v) {
 		flip(1);
 	}
+	
+	public void classBody8Click(View v) {
+		view(8);
+	}
+
+	public void classBody7Click(View v) {
+		view(7);
+	}
+	
+	public void classBody6Click(View v) {
+		view(6);
+	}
+
+	public void classBody5Click(View v) {
+		view(5);
+	}
 
 	public void classBody4Click(View v) {
 		view(4);
@@ -266,7 +367,6 @@ public class MainActivity extends Activity {
 	}
 
 	public void classBody1Click(View v) {
-		Log.d(TAG, "Class body 1 clicked.");
 		view(1);
 	}
 
@@ -287,6 +387,18 @@ public class MainActivity extends Activity {
 			case 4:
 				classTitle4.setTypeface(Typeface.DEFAULT);
 				break;
+			case 5:
+				classTitle5.setTypeface(Typeface.DEFAULT);
+				break;
+			case 6:
+				classTitle6.setTypeface(Typeface.DEFAULT);
+				break;
+			case 7:
+				classTitle7.setTypeface(Typeface.DEFAULT);
+				break;
+			case 8:
+				classTitle8.setTypeface(Typeface.DEFAULT);
+				break;	
 			}
 		} else {
 			editor.putBoolean(CLASS_STATUS + i, true);
@@ -302,6 +414,18 @@ public class MainActivity extends Activity {
 				break;
 			case 4:
 				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 5:
+				classTitle5.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 6:
+				classTitle6.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 7:
+				classTitle7.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 8:
+				classTitle8.setTypeface(Typeface.DEFAULT_BOLD);
 				break;
 			}
 		}
