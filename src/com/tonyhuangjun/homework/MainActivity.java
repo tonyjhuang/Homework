@@ -30,10 +30,10 @@ public class MainActivity extends SherlockActivity {
 	final static String REMINDER_TIMER = "timer";
 	private final static String FIRST_RUN = "first_run";
 
-	private final int TITLE_UNFINISHED = Color.parseColor("#FFCC0000");
-	private final int BODY_UNFINISHED = Color.parseColor("#FFCC0000");
-	private final int TITLE_FINISHED = Color.parseColor("#FF33CC00");
-	private final int BODY_FINISHED = Color.parseColor("#FF99CC00");
+	final static int TITLE_UNFINISHED = Color.parseColor("#CC990000");
+	final static int BODY_UNFINISHED = Color.parseColor("#CCCC0000");
+	final static int TITLE_FINISHED = Color.parseColor("#CC33CC00");
+	final static int BODY_FINISHED = Color.parseColor("#CC99CC00");
 
 	// As of right now, the possible ints are 1, 2, and 4.
 	private int numberOfClasses;
@@ -63,8 +63,8 @@ public class MainActivity extends SherlockActivity {
 		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		// Create dummy titles in settings.
-		if(settings.getBoolean(FIRST_RUN, true))
-		populateDebug();
+		if (settings.getBoolean(FIRST_RUN, true))
+			populateDebug();
 
 	}
 
@@ -82,6 +82,16 @@ public class MainActivity extends SherlockActivity {
 		getHandlers();
 		fillData();
 
+		refreshTimer();
+
+	}
+
+	private void refreshNumberOfClasses() {
+		numberOfClasses = Integer.valueOf(settings.getString(NUMBER_OF_CLASSES,
+				"1"));
+	}
+
+	private void refreshTimer() {
 		Log.d(TAG,
 				"Reminder interval = "
 						+ settings.getString(REMINDER_TIMER, "Null"));
@@ -90,21 +100,15 @@ public class MainActivity extends SherlockActivity {
 		calendar.set(Calendar.HOUR_OF_DAY, 12);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-
+		Log.d(TAG, "Current time in millis = " + System.currentTimeMillis());
 		// Sets repeating alarm.
 		Intent intent = new Intent(this, Alarm.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
 		Log.d(TAG, "Setting repeating alarm.");
-		am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+		am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
 				Integer.valueOf(settings.getString(REMINDER_TIMER, "1800000")),
 				pendingIntent);
-
-	}
-
-	private void refreshNumberOfClasses() {
-		numberOfClasses = Integer.valueOf(settings.getString(NUMBER_OF_CLASSES,
-				"1"));
 	}
 
 	// Applies the layout corresponding to the current number of classes.
@@ -292,40 +296,40 @@ public class MainActivity extends SherlockActivity {
 	// If settings is empty, populates preferences file to contain
 	// class titles, bodies, and statuses for debugging.
 	private void populateDebug() {
-			editor.putString(NUMBER_OF_CLASSES, "1");
-			editor.putString(REMINDER_TIMER, "1800000");
+		editor.putString(NUMBER_OF_CLASSES, "1");
+		editor.putString(REMINDER_TIMER, "1800000");
 
-			for (int i = 1; i < 9; i++) {
-				editor.putString(CLASS_TITLE + i, "Class " + i);
-			}
-			for (int j = 1; j < 9; j++) {
-				editor.putString(CLASS_BODY + j, "Assignments.");
-			}
-			for (int k = 1; k < 9; k++) {
-				editor.putBoolean(CLASS_STATUS + k, false);
-			}
-			
-			editor.putBoolean(FIRST_RUN, false);
-			editor.commit();
+		for (int i = 1; i < 9; i++) {
+			editor.putString(CLASS_TITLE + i, "Class " + i);
+		}
+		for (int j = 1; j < 9; j++) {
+			editor.putString(CLASS_BODY + j, "Assignments.");
+		}
+		for (int k = 1; k < 9; k++) {
+			editor.putBoolean(CLASS_STATUS + k, false);
+		}
+
+		editor.putBoolean(FIRST_RUN, false);
+		editor.commit();
 	}
 
-	//###OnClick managers for Titles and Bodies of classes###
+	// ###OnClick managers for Titles and Bodies of classes###
 	public void classTitle8Click(View v) {
 		flip(8);
 	}
-	
+
 	public void classTitle7Click(View v) {
 		flip(7);
 	}
-	
+
 	public void classTitle6Click(View v) {
 		flip(6);
 	}
-	
+
 	public void classTitle5Click(View v) {
 		flip(5);
 	}
-	
+
 	public void classTitle4Click(View v) {
 		flip(4);
 	}
@@ -341,7 +345,7 @@ public class MainActivity extends SherlockActivity {
 	public void classTitle1Click(View v) {
 		flip(1);
 	}
-	
+
 	public void classBody8Click(View v) {
 		view(8);
 	}
@@ -349,7 +353,7 @@ public class MainActivity extends SherlockActivity {
 	public void classBody7Click(View v) {
 		view(7);
 	}
-	
+
 	public void classBody6Click(View v) {
 		view(6);
 	}
@@ -402,7 +406,7 @@ public class MainActivity extends SherlockActivity {
 				break;
 			case 8:
 				classTitle8.setTypeface(Typeface.DEFAULT);
-				break;	
+				break;
 			}
 		} else {
 			editor.putBoolean(CLASS_STATUS + i, true);

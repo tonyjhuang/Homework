@@ -43,12 +43,14 @@ public class Alarm extends BroadcastReceiver {
 				MainActivity.NUMBER_OF_CLASSES, "1"));
 		String result = "Unfinished: ";
 		for (int i = 0; i < numOfClasses; i++) {
+			Log.d(TAG, "Attempting i = " + (i + 1));
 			if (settings.getBoolean(MainActivity.CLASS_STATUS + (i + 1), true)) {
-				Log.d(TAG, "i = " + i);
+				Log.d(TAG, "Test successful!");
+				Log.d(TAG, "i = " + (i + 1));
 				Log.d(TAG,
 						"Current class name = "
 								+ settings.getString(MainActivity.CLASS_TITLE
-										+ i, "Null"));
+										+ (i + 1), "Null"));
 				result += (settings.getString(MainActivity.CLASS_TITLE
 						+ (i + 1), "Null") + ", ");
 			}

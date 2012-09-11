@@ -26,6 +26,7 @@ public class EditActivity extends SherlockActivity {
 
 	private View classTitle;
 	private EditText classBody;
+	private TextView classStatus;
 
 	private ViewGroup parent;
 	private int index;
@@ -58,9 +59,13 @@ public class EditActivity extends SherlockActivity {
 		// Handlers and text.
 		classTitle = (TextView) findViewById(R.id.ClassTitle);
 		classBody = (EditText) findViewById(R.id.ClassBody);
+		classStatus = (TextView) findViewById(R.id.EditTitleStatus);
 
 		((TextView) classTitle).setText(title);
 		classBody.setText(body);
+		
+		// Color classStatus
+		classStatus.setBackgroundColor(MainActivity.TITLE_FINISHED);
 
 		index = parent.indexOfChild(classTitle);
 

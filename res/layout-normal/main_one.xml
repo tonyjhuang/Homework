@@ -12,16 +12,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layout_side_padding"
         android:layout_marginRight="@dimen/layout_side_padding"
-        android:layout_marginTop="@dimen/layout_side_padding"
+        android:layout_marginTop="@dimen/body_side_padding"
         android:clickable="true"
         android:gravity="center"
         android:onClick="classTitle1Click"
+        android:paddingBottom="@dimen/class_title_vertical_padding"
+        android:paddingTop="@dimen/class_title_vertical_padding"
         android:textSize="@dimen/class_title_text_size" />
 
     <TextView
         android:id="@+id/ClassBody1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/body_side_padding"
+        android:layout_marginLeft="@dimen/body_side_padding"
+        android:layout_marginRight="@dimen/body_side_padding"
         android:clickable="true"
         android:onClick="classBody1Click"
         android:paddingBottom="@dimen/layout_side_padding"
