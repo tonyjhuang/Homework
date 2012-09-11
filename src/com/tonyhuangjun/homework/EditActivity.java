@@ -1,20 +1,21 @@
 package com.tonyhuangjun.homework;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class EditActivity extends Activity {
+public class EditActivity extends SherlockActivity {
 	private final static String TAG = "EditActivity";
 
 	private SharedPreferences settings;
@@ -65,13 +66,13 @@ public class EditActivity extends Activity {
 
 		edit = false;
 
-		ActionBar ab = getActionBar();
+		ActionBar ab = getSupportActionBar();
 		ab.setTitle(title);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.edit, menu);
+		getSupportMenuInflater().inflate(R.menu.edit, menu);
 		return true;
 	}
 

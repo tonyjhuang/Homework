@@ -2,7 +2,10 @@ package com.tonyhuangjun.homework;
 
 import java.util.Calendar;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,13 +17,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SherlockActivity {
 	// Preferences file accessor id's.
 	final static String CLASS_TITLE = "class_title_";
 	final static String CLASS_BODY = "class_body_";
@@ -447,7 +447,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		getSupportMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
