@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/body_side_padding"
-        android:onClick="flipStatus"
         android:gravity="center"
         android:textSize="@dimen/class_title_text_size" />
 
