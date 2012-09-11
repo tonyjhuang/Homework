@@ -4,5 +4,5 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:gravity="center"
-    android:hint="Class Name"
+    android:hint="@string/class_title_edit_hint"
     android:textSize="@dimen/class_title_text_size" />

@@ -23,6 +23,6 @@
         android:gravity="top"
         android:singleLine="false"
         android:textSize="@dimen/class_body_text_size"
-        android:hint="Assignments" />
+        android:hint="@string/class_body_edit_hint" />
 
 </RelativeLayout>

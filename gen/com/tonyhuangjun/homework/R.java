@@ -72,9 +72,10 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
-        public static final int hello_world=0x7f070001;
-        public static final int menu_edit=0x7f070002;
-        public static final int title_activity_main=0x7f070003;
+        public static final int class_body_edit_hint=0x7f070004;
+        public static final int class_title_edit_hint=0x7f070003;
+        public static final int menu_edit=0x7f070001;
+        public static final int title_activity_main=0x7f070002;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;

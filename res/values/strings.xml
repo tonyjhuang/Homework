@@ -1,8 +1,9 @@
 <resources>
 
     <string name="app_name">Homework</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_edit">Edit</string>
     <string name="title_activity_main">Homework</string>
+    <string name="class_title_edit_hint">Class Name</string>
+    <string name="class_body_edit_hint">Assignments</string>
 
 </resources>
