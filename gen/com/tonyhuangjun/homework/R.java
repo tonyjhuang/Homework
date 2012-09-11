@@ -801,6 +801,8 @@ containing a value of this type.
         public static final int ic_action_edit=0x7f020057;
         public static final int ic_action_search=0x7f020058;
         public static final int ic_launcher=0x7f020059;
+        public static final int wall=0x7f02005a;
+        public static final int wallblur=0x7f02005b;
     }
     public static final class id {
         public static final int ClassBody=0x7f050029;

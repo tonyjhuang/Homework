@@ -30,10 +30,10 @@ public class MainActivity extends SherlockActivity {
 	final static String REMINDER_TIMER = "timer";
 	private final static String FIRST_RUN = "first_run";
 
-	private final int TITLE_UNFINISHED = Color.parseColor("#99CC0000");
-	private final int BODY_UNFINISHED = Color.parseColor("#75CC0000");
-	private final int TITLE_FINISHED = Color.parseColor("#9933CC00");
-	private final int BODY_FINISHED = Color.parseColor("#7599CC00");
+	private final int TITLE_UNFINISHED = Color.parseColor("#FFCC0000");
+	private final int BODY_UNFINISHED = Color.parseColor("#FFCC0000");
+	private final int TITLE_FINISHED = Color.parseColor("#FF33CC00");
+	private final int BODY_FINISHED = Color.parseColor("#FF99CC00");
 
 	// As of right now, the possible ints are 1, 2, and 4.
 	private int numberOfClasses;
