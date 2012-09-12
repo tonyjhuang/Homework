@@ -107,7 +107,12 @@ public class MainActivity extends SherlockActivity {
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
 		Log.d(TAG, "Setting repeating alarm.");
-		am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+		
+		int currentTimerPreference = Integer.valueOf(
+				settings.getString(REMINDER_TIMER, "1800000"));
+		
+		am.setRepeating(AlarmManager.RTC_WAKEUP, 
+				System.currentTimeMillis() + currentTimerPreference,
 				Integer.valueOf(settings.getString(REMINDER_TIMER, "1800000")),
 				pendingIntent);
 	}
