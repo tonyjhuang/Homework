@@ -13,7 +13,16 @@
         android:entries="@array/timeArray"
         android:entryValues="@array/timeValues"
         android:key="timer"
-        android:summary="Notification interval. Sorry, you can't turn this off!"
+        android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
         android:title="Notifications" />
+
+    <RingtonePreference
+        android:defaultValue="content://settings/system/notification_sound"
+        android:key="notification"
+        android:ringtoneType="ringtone"
+        android:showDefault="true"
+        android:showSilent="false"
+        android:summary="Choose your notification sound here."
+        android:title="Notification Sound" />
 
 </PreferenceScreen>

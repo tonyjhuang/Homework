@@ -7,6 +7,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Vibrator;
 import android.util.Log;
 
 public class Alarm extends BroadcastReceiver {
@@ -28,13 +32,24 @@ public class Alarm extends BroadcastReceiver {
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			Notification n = new Notification(R.drawable.fallout,
 					"DO YOUR FUCKING HOMEWORK.", System.currentTimeMillis());
-			n.flags = Notification.FLAG_AUTO_CANCEL;
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-					new Intent(context, MainActivity.class), 0);
+
+			new Intent(context, MainActivity.class), 0);
+			n.flags = Notification.FLAG_AUTO_CANCEL
+					| Notification.FLAG_ONLY_ALERT_ONCE;
 			n.setLatestEventInfo(context, "iiiiiit's homework time!",
 					findUnfinished(), pendingIntent);
+
 			n.number += 1;
+
+			n.sound = Uri.parse(settings.getString(MainActivity.NOTIFICATION,
+					"content://settings/system/notification_sound"));
+
+			Vibrator v = (Vibrator) context
+					.getSystemService(Context.VIBRATOR_SERVICE);
+			v.vibrate(500);
 			nm.notify(0, n);
+
 		}
 	}
 

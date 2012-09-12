@@ -28,6 +28,7 @@ public class MainActivity extends SherlockActivity {
 	final static String CLASS_STATUS = "class_status_";
 	final static String NUMBER_OF_CLASSES = "number_of_classes";
 	final static String REMINDER_TIMER = "timer";
+	final static String NOTIFICATION = "notification";
 	private final static String FIRST_RUN = "first_run";
 
 	final static int TITLE_UNFINISHED = Color.parseColor("#CC990000");
