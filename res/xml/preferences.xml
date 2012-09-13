@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <ListPreference
-        android:defaultValue="Four"
-        android:entries="@array/classArray"
-        android:entryValues="@array/classValues"
-        android:key="number_of_classes"
-        android:summary="Number of classes you are taking this semester."
-        android:title="Number of Classes" />
-    <ListPreference
-        android:defaultValue="1 Hour"
-        android:entries="@array/timeArray"
-        android:entryValues="@array/timeValues"
-        android:key="timer"
-        android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
-        android:title="Notifications" />
+    <PreferenceCategory android:title="General Settings" >
+        <ListPreference
+            android:defaultValue="Four"
+            android:entries="@array/classArray"
+            android:entryValues="@array/classValues"
+            android:key="number_of_classes"
+            android:summary="Number of classes you are taking this semester."
+            android:title="Number of Classes" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notification Settings" >
+        <ListPreference
+            android:defaultValue="1 Hour"
+            android:entries="@array/timeArray"
+            android:entryValues="@array/timeValues"
+            android:key="timer"
+            android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
+            android:title="Interval" />
 
-    <RingtonePreference
-        android:defaultValue="content://settings/system/notification_sound"
-        android:key="notification"
-        android:ringtoneType="ringtone"
-        android:showDefault="true"
-        android:showSilent="false"
-        android:summary="Choose your notification sound here."
-        android:title="Notification Sound" />
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:key="notification"
+            android:ringtoneType="ringtone"
+            android:showDefault="true"
+            android:showSilent="false"
+            android:summary="Choose your notification sound here."
+            android:title="Sound" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
