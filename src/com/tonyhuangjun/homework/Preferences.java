@@ -35,7 +35,7 @@ public class Preferences extends PreferenceActivity {
 								"one"));
 		Log.d(TAG,
 				"Current ringtone = "
-						+ settings.getString(MainActivity.NOTIFICATION, "Null"));
+						+ settings.getString(MainActivity.NOTIFICATION_SOUND, "Null"));
 
 	}
 

@@ -42,7 +42,7 @@ public class Alarm extends BroadcastReceiver {
 
 			n.number += 1;
 
-			n.sound = Uri.parse(settings.getString(MainActivity.NOTIFICATION,
+			n.sound = Uri.parse(settings.getString(MainActivity.NOTIFICATION_SOUND,
 					"content://settings/system/notification_sound"));
 
 			Vibrator v = (Vibrator) context

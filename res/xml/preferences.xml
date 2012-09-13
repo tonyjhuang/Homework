@@ -15,13 +15,13 @@
             android:defaultValue="1 Hour"
             android:entries="@array/timeArray"
             android:entryValues="@array/timeValues"
-            android:key="timer"
+            android:key="notification_timer"
             android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
             android:title="Interval" />
 
         <RingtonePreference
             android:defaultValue="content://settings/system/notification_sound"
-            android:key="notification"
+            android:key="notification_sound"
             android:ringtoneType="ringtone"
             android:showDefault="true"
             android:showSilent="false"
