@@ -66,7 +66,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody1Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -81,7 +80,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody2Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -147,7 +145,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody3Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -162,7 +159,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody4Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -228,7 +224,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody5Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -243,7 +238,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody6Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -309,7 +303,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody7Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />
@@ -324,7 +317,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:onClick="classBody8Click"
-                android:paddingBottom="@dimen/layout_side_padding"
                 android:paddingLeft="@dimen/layout_side_padding"
                 android:paddingRight="@dimen/layout_side_padding"
                 android:textSize="@dimen/class_body_text_size" />

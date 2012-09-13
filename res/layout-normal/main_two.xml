@@ -59,7 +59,6 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="classBody1Click"
-            android:paddingBottom="@dimen/layout_side_padding"
             android:paddingLeft="@dimen/layout_side_padding"
             android:paddingRight="@dimen/layout_side_padding"
             android:textSize="@dimen/class_body_text_size" />
@@ -74,7 +73,6 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="classBody2Click"
-            android:paddingBottom="@dimen/layout_side_padding"
             android:paddingLeft="@dimen/layout_side_padding"
             android:paddingRight="@dimen/layout_side_padding"
             android:textSize="@dimen/class_body_text_size" />
