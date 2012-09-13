@@ -28,7 +28,7 @@ public class MainActivity extends SherlockActivity {
 	final static String CLASS_STATUS = "class_status_"; // true unfinished,
 														// false finished.
 	final static String NUMBER_OF_CLASSES = "number_of_classes";
-	final static String REMINDER_TIMER = "timer";
+	final static String NOTIFICATION_TIMER = "timer";
 	final static String NOTIFICATION = "notification";
 	private final static String FIRST_RUN = "first_run";
 
@@ -85,7 +85,7 @@ public class MainActivity extends SherlockActivity {
 		int currentNumberOfClasses = Integer.valueOf(settings.getString(
 				NUMBER_OF_CLASSES, "1"));
 		int currentNotificationTimer = Integer.valueOf(settings.getString(
-				NOTIFICATION, "1800000"));
+				NOTIFICATION_TIMER, "1800000"));
 
 		if (!(currentNumberOfClasses == numberOfClasses)) {
 			refreshNumberOfClasses();
@@ -386,7 +386,7 @@ public class MainActivity extends SherlockActivity {
 	// class titles, bodies, and statuses for debugging.
 	private void populatePreferences() {
 		editor.putString(NUMBER_OF_CLASSES, "1");
-		editor.putString(REMINDER_TIMER, "1800000");
+		editor.putString(NOTIFICATION_TIMER, "1800000");
 		numberOfClasses = 1;
 		notificationTimer = 1800000;
 
