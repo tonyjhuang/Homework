@@ -107,12 +107,12 @@ public class MainActivity extends SherlockActivity {
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
 		Log.d(TAG, "Setting repeating alarm.");
-		
-		int currentTimerPreference = Integer.valueOf(
-				settings.getString(REMINDER_TIMER, "1800000"));
-		
-		am.setRepeating(AlarmManager.RTC_WAKEUP, 
-				System.currentTimeMillis() + currentTimerPreference,
+
+		int currentTimerPreference = Integer.valueOf(settings.getString(
+				REMINDER_TIMER, "1800000"));
+
+		am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+				+ currentTimerPreference,
 				Integer.valueOf(settings.getString(REMINDER_TIMER, "1800000")),
 				pendingIntent);
 	}
@@ -190,34 +190,42 @@ public class MainActivity extends SherlockActivity {
 			classBody8.setMovementMethod(new ScrollingMovementMethod());
 			classTitle8.setText(settings.getString(CLASS_TITLE + 8, "Null"));
 			classBody8.setText(settings.getString(CLASS_BODY + 8, "Null"));
+			classTitle8.setSelected(true);
 		case 7:
 			classBody7.setMovementMethod(new ScrollingMovementMethod());
 			classTitle7.setText(settings.getString(CLASS_TITLE + 7, "Null"));
 			classBody7.setText(settings.getString(CLASS_BODY + 7, "Null"));
+			classTitle7.setSelected(true);
 		case 6:
 			classBody6.setMovementMethod(new ScrollingMovementMethod());
 			classTitle6.setText(settings.getString(CLASS_TITLE + 6, "Null"));
 			classBody6.setText(settings.getString(CLASS_BODY + 6, "Null"));
+			classTitle6.setSelected(true);
 		case 5:
 			classBody5.setMovementMethod(new ScrollingMovementMethod());
 			classTitle5.setText(settings.getString(CLASS_TITLE + 5, "Null"));
 			classBody5.setText(settings.getString(CLASS_BODY + 5, "Null"));
+			classTitle5.setSelected(true);
 		case 4:
 			classBody4.setMovementMethod(new ScrollingMovementMethod());
 			classTitle4.setText(settings.getString(CLASS_TITLE + 4, "Null"));
 			classBody4.setText(settings.getString(CLASS_BODY + 4, "Null"));
+			classTitle4.setSelected(true);
 		case 3:
 			classBody3.setMovementMethod(new ScrollingMovementMethod());
 			classTitle3.setText(settings.getString(CLASS_TITLE + 3, "Null"));
 			classBody3.setText(settings.getString(CLASS_BODY + 3, "Null"));
+			classTitle3.setSelected(true);
 		case 2:
 			classBody2.setMovementMethod(new ScrollingMovementMethod());
 			classTitle2.setText(settings.getString(CLASS_TITLE + 2, "Null"));
 			classBody2.setText(settings.getString(CLASS_BODY + 2, "Null"));
+			classTitle2.setSelected(true);
 		default:
 			classBody1.setMovementMethod(new ScrollingMovementMethod());
 			classTitle1.setText(settings.getString(CLASS_TITLE + 1, "Null"));
 			classBody1.setText(settings.getString(CLASS_BODY + 1, "Null"));
+			classTitle1.setSelected(true);
 			break;
 		}
 		style();

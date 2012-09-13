@@ -3,6 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
+    android:layout_marginLeft="@dimen/body_side_padding"
+    android:layout_marginRight="@dimen/body_side_padding"
+    android:layout_marginTop="@dimen/body_side_padding"
     android:gravity="center"
     android:hint="@string/class_title_edit_hint"
+    android:singleLine="true"
+    android:scrollHorizontally="true"
     android:textSize="@dimen/class_title_text_size" />

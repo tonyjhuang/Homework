@@ -112,6 +112,7 @@ public class EditActivity extends SherlockActivity {
 						parent, false);
 				parent.addView(classTitle, index);
 				((TextView) classTitle).setText(title);
+				((TextView) classTitle).setSelected(true);
 			} else {
 				title = String.valueOf(((TextView) classTitle).getText());
 				// Replace TextView with EditText

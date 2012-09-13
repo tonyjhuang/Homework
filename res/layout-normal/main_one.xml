@@ -14,10 +14,16 @@
         android:layout_marginRight="@dimen/body_side_padding"
         android:layout_marginTop="@dimen/body_side_padding"
         android:clickable="true"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
         android:onClick="classTitle1Click"
         android:paddingBottom="@dimen/class_title_vertical_padding"
         android:paddingTop="@dimen/class_title_vertical_padding"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textSize="@dimen/class_title_text_size" />
 
     <TextView
