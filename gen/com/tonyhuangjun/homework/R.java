@@ -897,13 +897,16 @@ containing a value of this type.
         public static final int edit=0x7f030014;
         public static final int edit_title=0x7f030015;
         public static final int main_eight=0x7f030016;
-        public static final int main_four=0x7f030017;
-        public static final int main_one=0x7f030018;
-        public static final int main_six=0x7f030019;
-        public static final int main_two=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
-        public static final int view_title=0x7f03001d;
+        public static final int main_five=0x7f030017;
+        public static final int main_four=0x7f030018;
+        public static final int main_one=0x7f030019;
+        public static final int main_seven=0x7f03001a;
+        public static final int main_six=0x7f03001b;
+        public static final int main_three=0x7f03001c;
+        public static final int main_two=0x7f03001d;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
+        public static final int sherlock_spinner_item=0x7f03001f;
+        public static final int view_title=0x7f030020;
     }
     public static final class menu {
         public static final int edit=0x7f0d0000;

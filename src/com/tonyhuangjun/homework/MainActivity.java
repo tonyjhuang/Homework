@@ -120,18 +120,23 @@ public class MainActivity extends SherlockActivity {
 	// Applies the layout corresponding to the current number of classes.
 	private void refreshLayout() {
 		switch (numberOfClasses) {
-		// 8 and 7 classes have the same layout, but different handlers.
 		case 8:
-		case 7:
 			setContentView(R.layout.main_eight);
 			break;
+		case 7:
+			setContentView(R.layout.main_seven);
+			break;
 		case 6:
-		case 5:
 			setContentView(R.layout.main_six);
 			break;
+		case 5:
+			setContentView(R.layout.main_five);
+			break;
 		case 4:
-		case 3:
 			setContentView(R.layout.main_four);
+			break;
+		case 3:
+			setContentView(R.layout.main_three);
 			break;
 		case 2:
 			setContentView(R.layout.main_two);
