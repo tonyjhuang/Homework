@@ -10,4 +10,5 @@
     android:hint="@string/class_title_edit_hint"
     android:singleLine="true"
     android:scrollHorizontally="true"
+    android:inputType="textCapWords"
     android:textSize="@dimen/class_title_text_size" />
