@@ -15,7 +15,7 @@
             android:defaultValue="1 Hour"
             android:entries="@array/timeArray"
             android:entryValues="@array/timeValues"
-            android:key="notification_timer"
+            android:key="notification_interval"
             android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
             android:title="Interval" />
 

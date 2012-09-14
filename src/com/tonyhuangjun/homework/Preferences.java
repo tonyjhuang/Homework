@@ -10,6 +10,7 @@ public class Preferences extends PreferenceActivity {
 	private static final String TAG = "Preferences";
 	String listPref;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

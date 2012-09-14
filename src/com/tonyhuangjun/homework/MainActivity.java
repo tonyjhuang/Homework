@@ -28,7 +28,7 @@ public class MainActivity extends SherlockActivity {
 	final static String CLASS_STATUS = "class_status_"; // true unfinished,
 														// false finished.
 	final static String NUMBER_OF_CLASSES = "number_of_classes";
-	final static String NOTIFICATION_INTERVAL = "notification_sound";
+	final static String NOTIFICATION_INTERVAL = "notification_interval";
 	final static String NOTIFICATION_SOUND = "notification_sound";
 	private final static String FIRST_RUN = "first_run";
 
@@ -108,6 +108,8 @@ public class MainActivity extends SherlockActivity {
 	// preference that broadcasts and Intent that will be picked up
 	// by Alarm.class.
 	private void refreshTimer() {
+		notificationTimer = Integer.valueOf(settings.getString(
+				NOTIFICATION_INTERVAL, "1800000"));
 		Intent intent = new Intent(this, Alarm.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
@@ -476,7 +478,7 @@ public class MainActivity extends SherlockActivity {
 		Log.d(TAG, "Starting EditActivity...");
 		startActivity(intent);
 	}
-	
+
 	// ###OnClick managers for Titles and Bodies of classes###
 	public void classTitle8Click(View v) {
 		flip(8);
@@ -541,7 +543,6 @@ public class MainActivity extends SherlockActivity {
 	public void classBody1Click(View v) {
 		view(1);
 	}
-
 
 	// Populates action bar with buttons from main.xml.
 	@Override

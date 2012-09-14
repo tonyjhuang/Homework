@@ -7,8 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.util.Log;
@@ -19,11 +17,12 @@ public class Alarm extends BroadcastReceiver {
 	NotificationManager nm;
 	SharedPreferences settings;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.d(TAG, "Alarm call received.");
 		settings = context
-				.getSharedPreferences("Default", context.MODE_PRIVATE);
+				.getSharedPreferences("Default", Context.MODE_PRIVATE);
 
 		String message = findUnfinished();
 		if (!message.equals("Null")) {
