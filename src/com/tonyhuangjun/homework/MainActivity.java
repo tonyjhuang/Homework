@@ -413,61 +413,87 @@ public class MainActivity extends SherlockActivity {
 			editor.putBoolean(CLASS_STATUS + i, false);
 			switch (i) {
 			case 8:
-				classTitle1.setTypeface(Typeface.DEFAULT);
+				classTitle8.setTypeface(Typeface.DEFAULT);
 				break;
 			case 7:
-				classTitle2.setTypeface(Typeface.DEFAULT);
-				break;
-			case 6:
-				classTitle3.setTypeface(Typeface.DEFAULT);
-				break;
-			case 5:
-				classTitle4.setTypeface(Typeface.DEFAULT);
-				break;
-			case 4:
-				classTitle5.setTypeface(Typeface.DEFAULT);
-				break;
-			case 3:
-				classTitle6.setTypeface(Typeface.DEFAULT);
-				break;
-			case 2:
 				classTitle7.setTypeface(Typeface.DEFAULT);
 				break;
+			case 6:
+				classTitle6.setTypeface(Typeface.DEFAULT);
+				break;
+			case 5:
+				classTitle5.setTypeface(Typeface.DEFAULT);
+				break;
+			case 4:
+				classTitle4.setTypeface(Typeface.DEFAULT);
+				break;
+			case 3:
+				classTitle3.setTypeface(Typeface.DEFAULT);
+				break;
+			case 2:
+				classTitle2.setTypeface(Typeface.DEFAULT);
+				break;
 			case 1:
-				classTitle8.setTypeface(Typeface.DEFAULT);
+				classTitle1.setTypeface(Typeface.DEFAULT);
 				break;
 			}
 		} else {
 			editor.putBoolean(CLASS_STATUS + i, true);
 			switch (i) {
 			case 8:
-				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle8.setTypeface(Typeface.DEFAULT_BOLD);
 				break;
 			case 7:
-				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
-				break;
-			case 6:
-				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
-				break;
-			case 5:
-				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
-				break;
-			case 4:
-				classTitle5.setTypeface(Typeface.DEFAULT_BOLD);
-				break;
-			case 3:
-				classTitle6.setTypeface(Typeface.DEFAULT_BOLD);
-				break;
-			case 2:
 				classTitle7.setTypeface(Typeface.DEFAULT_BOLD);
 				break;
+			case 6:
+				classTitle6.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 5:
+				classTitle5.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 4:
+				classTitle4.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 3:
+				classTitle3.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
+			case 2:
+				classTitle2.setTypeface(Typeface.DEFAULT_BOLD);
+				break;
 			case 1:
-				classTitle8.setTypeface(Typeface.DEFAULT_BOLD);
+				classTitle1.setTypeface(Typeface.DEFAULT_BOLD);
 				break;
 			}
 		}
-
 		editor.commit();
+		style();
+
+	}
+
+	private void colorTile8() {
+
+	}
+	private void colorTile7() {
+
+	}
+	private void colorTile6() {
+
+	}
+	private void colorTile5() {
+
+	}
+	private void colorTile4() {
+
+	}
+	private void colorTile3() {
+
+	}
+	private void colorTile2() {
+
+	}
+	private void colorTile1() {
+
 	}
 
 	// Starts EditActivity populated with the class information
@@ -501,6 +527,7 @@ public class MainActivity extends SherlockActivity {
 	}
 
 	public void classTitle3Click(View v) {
+		Log.d(TAG, "Class Title 3 clicked!");
 		flip(3);
 	}
 
