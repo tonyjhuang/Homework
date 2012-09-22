@@ -31,6 +31,8 @@ public class EditActivity extends SherlockActivity {
     private View classTitle;
     private EditText classBody;
     private TextView classStatus;
+    
+    private int bodyLength;
 
     private Resources r;
 
@@ -50,16 +52,18 @@ public class EditActivity extends SherlockActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
         Log.d(TAG, "EditActivity started.");
-
-        r = getResources();
-        getColorScheme();
-
-        parent = (ViewGroup) findViewById(R.id.TopLayout);
-
         // Get preferences file and set number of classes to 4 for
         // debugging purposes.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
+
+        r = getResources();
+
+        getColorScheme();
+
+        Log.d(TAG, "Color scheme set.");
+
+        parent = (ViewGroup) findViewById(R.id.TopLayout);
 
         // Get id of class from passed in Intent.
         Log.d(TAG, "Attempting retrieval of intent");
@@ -91,39 +95,46 @@ public class EditActivity extends SherlockActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle(title);
+        
+        refreshLength();
+
+        Log.d(TAG, "EditActivity finished creating.");
     }
-    
+
     // Get user preference on color scheme and apply to vars.
-    private void getColorScheme(){
-        switch(Integer.parseInt(settings.getString(MainActivity.COLOR_SCHEME, "1"))){
+
+    // Get user preference on color scheme and apply to vars.
+    private void getColorScheme() {
+        switch (Integer.parseInt(settings.getString(MainActivity.COLOR_SCHEME,
+                "1"))) {
         case 1:
             tu = r.getColor(R.color.color_a1);
             bu = r.getColor(R.color.color_a2);
             tf = r.getColor(R.color.color_a3);
             bf = r.getColor(R.color.color_a4);
             break;
-           
+
         case 2:
             tu = r.getColor(R.color.color_b1);
             bu = r.getColor(R.color.color_b2);
             tf = r.getColor(R.color.color_b3);
             bf = r.getColor(R.color.color_b4);
             break;
-            
+
         case 3:
             tu = r.getColor(R.color.color_c1);
             bu = r.getColor(R.color.color_c2);
             tf = r.getColor(R.color.color_c3);
             bf = r.getColor(R.color.color_c4);
             break;
-            
+
         case 4:
             tu = r.getColor(R.color.color_d1);
             bu = r.getColor(R.color.color_d2);
             tf = r.getColor(R.color.color_d3);
             bf = r.getColor(R.color.color_d4);
             break;
-            
+
         default:
             tu = r.getColor(R.color.color_a1);
             bu = r.getColor(R.color.color_a2);
@@ -137,21 +148,37 @@ public class EditActivity extends SherlockActivity {
     // there are no more assignments or an assignment is added.
     private void listenToBody() {
         classBody.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                { }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "Key clicked.");
-                Log.d(TAG, "Current text = " + classBody.getText());
-                Log.d(TAG, "True? " + classBody.getText().toString().equals(""));
-                if(classBody.getText().toString().equals(""))
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                    int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                    int count) {
+                Log.d(TAG, "before = " + before);
+                Log.d(TAG, "length now = " + classBody.getText().toString().length());
+                if (classBody.getText().toString().equals(""))
                     flipStatus((TextView) findViewById(R.id.EditTitleStatus));
-                else if(!settings.getBoolean(MainActivity.CLASS_STATUS + id, false))
+                else if (!settings.getBoolean(MainActivity.CLASS_STATUS + id,
+                        false) && getLength() > bodyLength)
                     flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+                
+                
+                refreshLength();
             }
         });
     }
 
+    private void refreshLength(){
+        bodyLength = getLength();
+    }
+    
+    private int getLength() {
+        return classBody.getText().toString().length();
+    }
+    
     // Style tile based on status.
     private void style() {
         if (settings.getBoolean(MainActivity.CLASS_STATUS + id, true)) {

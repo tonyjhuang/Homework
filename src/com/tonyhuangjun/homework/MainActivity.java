@@ -68,12 +68,12 @@ public class MainActivity extends SherlockActivity {
 
         // Initialize am field.
         am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        
+
         // If this run is the user's first time opening that app,
         // populate the preference file with dummy strings.
         if (settings.getBoolean(FIRST_RUN, true))
             populatePreferences();
-        
+
         r = getResources();
 
     }
@@ -87,15 +87,16 @@ public class MainActivity extends SherlockActivity {
         super.onResume();
 
         Log.d(TAG, "MainActivity resuming...");
-        
+
         Log.d(TAG, "Color scheme initializing...");
         getColorScheme();
         Log.d(TAG, "Color scheme initialized.");
 
-        int currentNumberOfClasses = Integer.parseInt(settings.getString(NUMBER_OF_CLASSES, "1"));
+        int currentNumberOfClasses = Integer.parseInt(settings.getString(
+                NUMBER_OF_CLASSES, "1"));
         int currentNotificationTimer = Integer.parseInt(settings.getString(
                 NOTIFICATION_INTERVAL, "1800000"));
-        
+
         Log.d(TAG, "Current preferences got.");
 
         if (!(currentNumberOfClasses == numberOfClasses)) {
@@ -110,36 +111,36 @@ public class MainActivity extends SherlockActivity {
     }
 
     // Get user preference on color scheme and apply to vars.
-    private void getColorScheme(){
-        switch(Integer.parseInt(settings.getString(COLOR_SCHEME, "1"))){
+    private void getColorScheme() {
+        switch (Integer.parseInt(settings.getString(COLOR_SCHEME, "1"))) {
         case 1:
             tu = r.getColor(R.color.color_a1);
             bu = r.getColor(R.color.color_a2);
             tf = r.getColor(R.color.color_a3);
             bf = r.getColor(R.color.color_a4);
             break;
-           
+
         case 2:
             tu = r.getColor(R.color.color_b1);
             bu = r.getColor(R.color.color_b2);
             tf = r.getColor(R.color.color_b3);
             bf = r.getColor(R.color.color_b4);
             break;
-            
+
         case 3:
             tu = r.getColor(R.color.color_c1);
             bu = r.getColor(R.color.color_c2);
             tf = r.getColor(R.color.color_c3);
             bf = r.getColor(R.color.color_c4);
             break;
-            
+
         case 4:
             tu = r.getColor(R.color.color_d1);
             bu = r.getColor(R.color.color_d2);
             tf = r.getColor(R.color.color_d3);
             bf = r.getColor(R.color.color_d4);
             break;
-            
+
         default:
             tu = r.getColor(R.color.color_a1);
             bu = r.getColor(R.color.color_a2);
@@ -148,10 +149,11 @@ public class MainActivity extends SherlockActivity {
             break;
         }
     }
-    
+
     // Update the variable holding the current number of classes.
     private void refreshNumberOfClasses() {
-        numberOfClasses = Integer.parseInt(settings.getString(NUMBER_OF_CLASSES, "1"));
+        numberOfClasses = Integer.parseInt(settings.getString(
+                NUMBER_OF_CLASSES, "1"));
     }
 
     // Creates a repeating alarm based on the user's notification interval
@@ -561,7 +563,6 @@ public class MainActivity extends SherlockActivity {
     }
 
     public void classTitle3Click(View v) {
-        Log.d(TAG, "Class Title 3 clicked!");
         flip(3);
     }
 
