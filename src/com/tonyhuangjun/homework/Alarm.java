@@ -27,7 +27,7 @@ public class Alarm extends BroadcastReceiver {
             NotificationManager nm = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             Notification n = new Notification(R.drawable.fallout,
-                    "DO YOUR FUCKING HOMEWORK.", System.currentTimeMillis());
+                    "DO YOUR HOMEWORK.", System.currentTimeMillis());
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 
             new Intent(context, MainActivity.class), 0);
