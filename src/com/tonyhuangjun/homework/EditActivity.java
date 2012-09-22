@@ -144,13 +144,18 @@ public class EditActivity extends SherlockActivity {
                     int after) {
             }
 
+            // If the tile is finished...
             public void onTextChanged(CharSequence s, int start, int before,
                     int count) {
-                if (classBody.getText().toString().equals(""))
-                    flipStatus((TextView) findViewById(R.id.EditTitleStatus));
-                else if (!settings.getBoolean(MainActivity.CLASS_STATUS + id,
-                        false) && getLength() > bodyLength)
-                    flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+                // finished
+                if (!settings.getBoolean(MainActivity.CLASS_STATUS + id, false)) {
+                    if (getLength() > bodyLength)
+                        flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+
+                } else { // unfinished
+                    if (getLength() == 0)
+                        flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+                }
 
                 refreshLength();
             }
