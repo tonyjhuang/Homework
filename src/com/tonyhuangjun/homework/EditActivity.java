@@ -8,7 +8,11 @@ import com.actionbarsherlock.view.MenuItem;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,127 +20,204 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class EditActivity extends SherlockActivity {
-	private final static String TAG = "EditActivity";
+    private final static String TAG = "EditActivity";
 
-	private SharedPreferences settings;
-	private Editor editor;
+    private SharedPreferences settings;
+    private Editor editor;
 
-	private String title;
-	private String body;
+    private String title;
+    private String body;
 
-	private View classTitle;
-	private EditText classBody;
-	private TextView classStatus;
+    private View classTitle;
+    private EditText classBody;
+    private TextView classStatus;
 
-	private ViewGroup parent;
-	private int index;
+    private Resources r;
 
-	private int id;
-	private boolean edit;
+    // Colors to style the homework tiles.
+    int tu;
+    int bu;
+    int tf;
+    int bf;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.edit);
-		Log.d(TAG, "EditActivity started.");
+    private ViewGroup parent;
+    private int index;
 
-		parent = (ViewGroup) findViewById(R.id.TopLayout);
+    private int id;
+    private boolean edit;
 
-		// Get preferences file and set number of classes to 4 for
-		// debugging purposes.
-		settings = getSharedPreferences("Default", MODE_PRIVATE);
-		editor = settings.edit();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.edit);
+        Log.d(TAG, "EditActivity started.");
 
-		// Get id of class from passed in Intent.
-		Log.d(TAG, "Attempting retrieval of intent");
-		Intent i = getIntent();
-		Log.d(TAG, "Intent retrieval successful.");
-		id = i.getIntExtra("ID", 1);
-		Log.d(TAG, "id = " + id);
+        r = getResources();
+        getColorScheme();
 
-		title = settings.getString(MainActivity.CLASS_TITLE + id, "Null");
-		body = settings.getString(MainActivity.CLASS_BODY + id, "Null");
+        parent = (ViewGroup) findViewById(R.id.TopLayout);
 
-		// Handlers and text.
-		classTitle = (TextView) findViewById(R.id.ClassTitle);
-		classBody = (EditText) findViewById(R.id.ClassBody);
-		classStatus = (TextView) findViewById(R.id.EditTitleStatus);
+        // Get preferences file and set number of classes to 4 for
+        // debugging purposes.
+        settings = getSharedPreferences("Default", MODE_PRIVATE);
+        editor = settings.edit();
 
-		((TextView) classTitle).setText(title);
-		classBody.setText(body);
+        // Get id of class from passed in Intent.
+        Log.d(TAG, "Attempting retrieval of intent");
+        Intent i = getIntent();
+        Log.d(TAG, "Intent retrieval successful.");
+        id = i.getIntExtra("ID", 1);
+        Log.d(TAG, "id = " + id);
 
-		// Color classStatus
-		refreshStatus();
+        title = settings.getString(MainActivity.CLASS_TITLE + id, "Null");
+        body = settings.getString(MainActivity.CLASS_BODY + id, "Null");
 
-		index = parent.indexOfChild(classTitle);
+        // Handlers and text.
+        classTitle = (TextView) findViewById(R.id.ClassTitle);
+        classBody = (EditText) findViewById(R.id.ClassBody);
+        classStatus = (TextView) findViewById(R.id.EditTitleStatus);
 
-		edit = false;
+        ((TextView) classTitle).setText(title);
+        classBody.setText(body);
 
-		ActionBar ab = getSupportActionBar();
-		ab.setTitle(title);
-	}
+        // onKeyListener.
+        listenToBody();
 
-	private void refreshStatus() {
-		if (settings.getBoolean(MainActivity.CLASS_STATUS + id, true)){
-			classStatus.setBackgroundColor(MainActivity.TITLE_UNFINISHED);
-			classBody.setBackgroundColor(MainActivity.BODY_UNFINISHED);
-		} else {
-			classStatus.setBackgroundColor(MainActivity.TITLE_FINISHED);
-			classBody.setBackgroundColor(MainActivity.BODY_FINISHED);
-		}
-	}
+        // Color classStatus
+        style();
 
-	public void flipStatus(View v){
-		Log.d(TAG, "Status clicked.");
-		editor.putBoolean(MainActivity.CLASS_STATUS + id, 
-				!settings.getBoolean(MainActivity.CLASS_STATUS + id, true));
-		editor.commit();
-		refreshStatus();
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.edit, menu);
-		return true;
-	}
+        index = parent.indexOfChild(classTitle);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem menuItem) {
-		switch (menuItem.getItemId()) {
-		case R.id.menu_title:
-			String title;
-			parent.removeView(classTitle);
-			if (edit) {
-				title = String.valueOf(((EditText) classTitle).getText());
-				// Replace EditText with TextView. Flip boolean.
-				classTitle = getLayoutInflater().inflate(R.layout.view_title,
-						parent, false);
-				parent.addView(classTitle, index);
-				((TextView) classTitle).setText(title);
-				((TextView) classTitle).setSelected(true);
-			} else {
-				title = String.valueOf(((TextView) classTitle).getText());
-				// Replace TextView with EditText
-				classTitle = getLayoutInflater().inflate(R.layout.edit_title,
-						parent, false);
-				parent.addView(classTitle, index);
-				((EditText) classTitle).setText(title);
-			}
-			edit = !edit;
-			break;
-		case R.id.menu_save:
-			if (edit)
-				editor.putString(MainActivity.CLASS_TITLE + id,
-						String.valueOf(((EditText) classTitle).getText()));
-			else
-				editor.putString(MainActivity.CLASS_TITLE + id,
-						String.valueOf(((TextView) classTitle).getText()));
+        edit = false;
 
-			editor.putString(MainActivity.CLASS_BODY + id,
-					String.valueOf(classBody.getText()));
-			editor.commit();
-			finish();
-			break;
-		}
-		return true;
-	}
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(title);
+    }
+    
+    // Get user preference on color scheme and apply to vars.
+    private void getColorScheme(){
+        switch(Integer.parseInt(settings.getString(MainActivity.COLOR_SCHEME, "1"))){
+        case 1:
+            tu = r.getColor(R.color.color_a1);
+            bu = r.getColor(R.color.color_a2);
+            tf = r.getColor(R.color.color_a3);
+            bf = r.getColor(R.color.color_a4);
+            break;
+           
+        case 2:
+            tu = r.getColor(R.color.color_b1);
+            bu = r.getColor(R.color.color_b2);
+            tf = r.getColor(R.color.color_b3);
+            bf = r.getColor(R.color.color_b4);
+            break;
+            
+        case 3:
+            tu = r.getColor(R.color.color_c1);
+            bu = r.getColor(R.color.color_c2);
+            tf = r.getColor(R.color.color_c3);
+            bf = r.getColor(R.color.color_c4);
+            break;
+            
+        case 4:
+            tu = r.getColor(R.color.color_d1);
+            bu = r.getColor(R.color.color_d2);
+            tf = r.getColor(R.color.color_d3);
+            bf = r.getColor(R.color.color_d4);
+            break;
+            
+        default:
+            tu = r.getColor(R.color.color_a1);
+            bu = r.getColor(R.color.color_a2);
+            tf = r.getColor(R.color.color_a3);
+            bf = r.getColor(R.color.color_a4);
+            break;
+        }
+    }
+
+    // Apply onKeyListener to body so tile can be styled as soon as
+    // there are no more assignments or an assignment is added.
+    private void listenToBody() {
+        classBody.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d(TAG, "Key clicked.");
+                Log.d(TAG, "Current text = " + classBody.getText());
+                Log.d(TAG, "True? " + classBody.getText().toString().equals(""));
+                if(classBody.getText().toString().equals(""))
+                    flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+                else if(!settings.getBoolean(MainActivity.CLASS_STATUS + id, false))
+                    flipStatus((TextView) findViewById(R.id.EditTitleStatus));
+            }
+        });
+    }
+
+    // Style tile based on status.
+    private void style() {
+        if (settings.getBoolean(MainActivity.CLASS_STATUS + id, true)) {
+            ((TextView) classTitle).setTypeface(Typeface.DEFAULT_BOLD);
+            classStatus.setBackgroundColor(tu);
+            classBody.setBackgroundColor(bu);
+        } else {
+            ((TextView) classTitle).setTypeface(Typeface.DEFAULT);
+            classStatus.setBackgroundColor(tf);
+            classBody.setBackgroundColor(bf);
+        }
+    }
+
+    // Flips class status (Finished <-> Unfinished).
+    public void flipStatus(View v) {
+        Log.d(TAG, "Status clicked.");
+        editor.putBoolean(MainActivity.CLASS_STATUS + id,
+                !settings.getBoolean(MainActivity.CLASS_STATUS + id, true));
+        editor.commit();
+        style();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+        case R.id.menu_title:
+            String title;
+            parent.removeView(classTitle);
+            if (edit) {
+                title = String.valueOf(((EditText) classTitle).getText());
+                // Replace EditText with TextView. Flip boolean.
+                classTitle = getLayoutInflater().inflate(R.layout.view_title,
+                        parent, false);
+                parent.addView(classTitle, index);
+                ((TextView) classTitle).setText(title);
+                ((TextView) classTitle).setSelected(true);
+            } else {
+                title = String.valueOf(((TextView) classTitle).getText());
+                // Replace TextView with EditText
+                classTitle = getLayoutInflater().inflate(R.layout.edit_title,
+                        parent, false);
+                parent.addView(classTitle, index);
+                ((EditText) classTitle).setText(title);
+            }
+            edit = !edit;
+            break;
+        case R.id.menu_save:
+            if (edit)
+                editor.putString(MainActivity.CLASS_TITLE + id,
+                        String.valueOf(((EditText) classTitle).getText()));
+            else
+                editor.putString(MainActivity.CLASS_TITLE + id,
+                        String.valueOf(((TextView) classTitle).getText()));
+
+            editor.putString(MainActivity.CLASS_BODY + id,
+                    String.valueOf(classBody.getText()));
+            editor.commit();
+            finish();
+            break;
+        }
+        return true;
+    }
 }

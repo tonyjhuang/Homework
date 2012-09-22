@@ -5,5 +5,25 @@
     <string name="title_activity_main">Homework</string>
     <string name="class_title_edit_hint">Class Name</string>
     <string name="class_body_edit_hint">Assignments</string>
+    
+    <color name="color_a1">#FFFF0000</color>
+    <color name="color_a2">#FFFF6666</color>
+    <color name="color_a3">#FF66CC00</color>
+    <color name="color_a4">#FF99FF66</color>
+    
+    <color name="color_b1">#FFFFCC00</color>
+    <color name="color_b2">#FFFFFF66</color>
+    <color name="color_b3">#FF0066CC</color>
+    <color name="color_b4">#FF00CCCC</color>
+
+    <color name="color_c1">#FF9900FF</color>
+    <color name="color_c2">#FF9966FF</color>
+    <color name="color_c3">#FF33CCFF</color>
+    <color name="color_c4">#FF99FFFF</color>
+
+    <color name="color_d1">#FFFF3333</color>
+    <color name="color_d2">#FFFF9999</color>
+    <color name="color_d3">#FF0066FF</color>
+    <color name="color_d4">#FF3399FF</color>
 
 </resources>

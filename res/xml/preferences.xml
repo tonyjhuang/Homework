@@ -28,5 +28,14 @@
             android:summary="Choose your notification sound here."
             android:title="Sound" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Appearance Settings" >
+        <ListPreference
+            android:defaultValue="One"
+            android:entries="@array/colorArray"
+            android:entryValues="@array/colorValues"
+            android:key="color_scheme"
+            android:summary="Color theme."
+            android:title="Color" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

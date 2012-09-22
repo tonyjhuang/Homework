@@ -11,6 +11,8 @@ public final class R {
     public static final class array {
         public static final int classArray=0x7f0c0000;
         public static final int classValues=0x7f0c0001;
+        public static final int colorArray=0x7f0c0004;
+        public static final int colorValues=0x7f0c0005;
         public static final int timeArray=0x7f0c0002;
         public static final int timeValues=0x7f0c0003;
     }
@@ -598,10 +600,26 @@ containing a value of this type.
         public static final int abs__bright_foreground_inverse_holo_dark=0x7f070006;
         public static final int abs__bright_foreground_inverse_holo_light=0x7f070007;
         public static final int abs__holo_blue_light=0x7f070008;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f070009;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f07000a;
-        public static final int abs__primary_text_holo_dark=0x7f07000b;
-        public static final int abs__primary_text_holo_light=0x7f07000c;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f070019;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f07001a;
+        public static final int abs__primary_text_holo_dark=0x7f07001b;
+        public static final int abs__primary_text_holo_light=0x7f07001c;
+        public static final int color_a1=0x7f070009;
+        public static final int color_a2=0x7f07000a;
+        public static final int color_a3=0x7f07000b;
+        public static final int color_a4=0x7f07000c;
+        public static final int color_b1=0x7f07000d;
+        public static final int color_b2=0x7f07000e;
+        public static final int color_b3=0x7f07000f;
+        public static final int color_b4=0x7f070010;
+        public static final int color_c1=0x7f070011;
+        public static final int color_c2=0x7f070012;
+        public static final int color_c3=0x7f070013;
+        public static final int color_c4=0x7f070014;
+        public static final int color_d1=0x7f070015;
+        public static final int color_d2=0x7f070016;
+        public static final int color_d3=0x7f070017;
+        public static final int color_d4=0x7f070018;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
