@@ -13,14 +13,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class EditActivity extends SherlockActivity {
-    private final static String TAG = "EditActivity";
 
     private SharedPreferences settings;
     private Editor editor;
@@ -31,7 +29,7 @@ public class EditActivity extends SherlockActivity {
     private View classTitle;
     private EditText classBody;
     private TextView classStatus;
-    
+
     private int bodyLength;
 
     private Resources r;
@@ -51,9 +49,7 @@ public class EditActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
-        Log.d(TAG, "EditActivity started.");
-        // Get preferences file and set number of classes to 4 for
-        // debugging purposes.
+
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
 
@@ -61,16 +57,11 @@ public class EditActivity extends SherlockActivity {
 
         getColorScheme();
 
-        Log.d(TAG, "Color scheme set.");
-
         parent = (ViewGroup) findViewById(R.id.TopLayout);
 
         // Get id of class from passed in Intent.
-        Log.d(TAG, "Attempting retrieval of intent");
         Intent i = getIntent();
-        Log.d(TAG, "Intent retrieval successful.");
         id = i.getIntExtra("ID", 1);
-        Log.d(TAG, "id = " + id);
 
         title = settings.getString(MainActivity.CLASS_TITLE + id, "Null");
         body = settings.getString(MainActivity.CLASS_BODY + id, "Null");
@@ -95,10 +86,8 @@ public class EditActivity extends SherlockActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle(title);
-        
-        refreshLength();
 
-        Log.d(TAG, "EditActivity finished creating.");
+        refreshLength();
     }
 
     // Get user preference on color scheme and apply to vars.
@@ -157,28 +146,25 @@ public class EditActivity extends SherlockActivity {
 
             public void onTextChanged(CharSequence s, int start, int before,
                     int count) {
-                Log.d(TAG, "before = " + before);
-                Log.d(TAG, "length now = " + classBody.getText().toString().length());
                 if (classBody.getText().toString().equals(""))
                     flipStatus((TextView) findViewById(R.id.EditTitleStatus));
                 else if (!settings.getBoolean(MainActivity.CLASS_STATUS + id,
                         false) && getLength() > bodyLength)
                     flipStatus((TextView) findViewById(R.id.EditTitleStatus));
-                
-                
+
                 refreshLength();
             }
         });
     }
 
-    private void refreshLength(){
+    private void refreshLength() {
         bodyLength = getLength();
     }
-    
+
     private int getLength() {
         return classBody.getText().toString().length();
     }
-    
+
     // Style tile based on status.
     private void style() {
         if (settings.getBoolean(MainActivity.CLASS_STATUS + id, true)) {
@@ -194,7 +180,6 @@ public class EditActivity extends SherlockActivity {
 
     // Flips class status (Finished <-> Unfinished).
     public void flipStatus(View v) {
-        Log.d(TAG, "Status clicked.");
         editor.putBoolean(MainActivity.CLASS_STATUS + id,
                 !settings.getBoolean(MainActivity.CLASS_STATUS + id, true));
         editor.commit();

@@ -14,13 +14,10 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends SherlockActivity {
-
-    private final static String TAG = "MainActivity";
 
     // Preferences file accessor id's.
     final static String CLASS_TITLE = "class_title_";
@@ -86,18 +83,12 @@ public class MainActivity extends SherlockActivity {
     protected void onResume() {
         super.onResume();
 
-        Log.d(TAG, "MainActivity resuming...");
-
-        Log.d(TAG, "Color scheme initializing...");
         getColorScheme();
-        Log.d(TAG, "Color scheme initialized.");
 
         int currentNumberOfClasses = Integer.parseInt(settings.getString(
                 NUMBER_OF_CLASSES, "1"));
         int currentNotificationTimer = Integer.parseInt(settings.getString(
                 NOTIFICATION_INTERVAL, "1800000"));
-
-        Log.d(TAG, "Current preferences got.");
 
         if (!(currentNumberOfClasses == numberOfClasses)) {
             refreshNumberOfClasses();
@@ -165,7 +156,6 @@ public class MainActivity extends SherlockActivity {
         Intent intent = new Intent(this, Alarm.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
                 intent, 0);
-        Log.d(TAG, "Setting repeating alarm.");
 
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + notificationTimer, notificationTimer, pendingIntent);
@@ -537,7 +527,6 @@ public class MainActivity extends SherlockActivity {
     public void view(int i) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("ID", i);
-        Log.d(TAG, "Starting EditActivity...");
         startActivity(intent);
     }
 
