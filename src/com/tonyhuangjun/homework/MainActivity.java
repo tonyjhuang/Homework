@@ -1,9 +1,5 @@
 package com.tonyhuangjun.homework;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,8 +10,13 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MainActivity extends SherlockActivity {
 
@@ -58,6 +59,7 @@ public class MainActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MAIN", "a");
 
         // Get preferences file and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
@@ -68,8 +70,11 @@ public class MainActivity extends SherlockActivity {
 
         // If this run is the user's first time opening that app,
         // populate the preference file with dummy strings.
-        if (settings.getBoolean(FIRST_RUN, true))
+        if (settings.getBoolean(FIRST_RUN, true)){
             populatePreferences();
+            refreshNumberOfClasses();
+            refreshLayout();
+        }
 
         r = getResources();
 
@@ -82,22 +87,32 @@ public class MainActivity extends SherlockActivity {
     // If so, call the appropriate methods.
     protected void onResume() {
         super.onResume();
+        
+        Log.d("MAIN", "1");
 
         getColorScheme();
+        Log.d("MAIN", "2");
 
         int currentNumberOfClasses = Integer.parseInt(settings.getString(
                 NUMBER_OF_CLASSES, "1"));
         int currentNotificationTimer = Integer.parseInt(settings.getString(
                 NOTIFICATION_INTERVAL, "1800000"));
+        Log.d("MAIN", "3");
 
+        Log.d("MAIN", "cnoc = " + currentNumberOfClasses);
+        Log.d("MAIN", "noc = " + numberOfClasses);
         if (!(currentNumberOfClasses == numberOfClasses)) {
+            Log.d("MAIN", "I'm in yo if cond!");
+            
             refreshNumberOfClasses();
             refreshLayout();
         }
         getHandlersAndPopulate();
+        Log.d("MAIN", "4");
 
         if (!(notificationTimer == currentNotificationTimer))
             refreshTimer();
+        Log.d("MAIN", "5");
 
     }
 
@@ -441,6 +456,7 @@ public class MainActivity extends SherlockActivity {
         editor.putString(NOTIFICATION_INTERVAL, "1800000");
         editor.putString(COLOR_SCHEME, "1");
         refreshNumberOfClasses();
+        numberOfClasses = 1;
         notificationTimer = 1800000;
 
         for (int i = 1; i < 9; i++) {
