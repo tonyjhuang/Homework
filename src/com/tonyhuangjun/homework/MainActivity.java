@@ -59,7 +59,6 @@ public class MainActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MAIN", "a");
 
         // Get preferences file and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
@@ -87,20 +86,12 @@ public class MainActivity extends SherlockActivity {
     // If so, call the appropriate methods.
     protected void onResume() {
         super.onResume();
-        
-        Log.d("MAIN", "1");
-
         getColorScheme();
-        Log.d("MAIN", "2");
-
+        
         int currentNumberOfClasses = Integer.parseInt(settings.getString(
                 NUMBER_OF_CLASSES, "1"));
         int currentNotificationTimer = Integer.parseInt(settings.getString(
                 NOTIFICATION_INTERVAL, "1800000"));
-        Log.d("MAIN", "3");
-
-        Log.d("MAIN", "cnoc = " + currentNumberOfClasses);
-        Log.d("MAIN", "noc = " + numberOfClasses);
         if (!(currentNumberOfClasses == numberOfClasses)) {
             Log.d("MAIN", "I'm in yo if cond!");
             
@@ -108,11 +99,9 @@ public class MainActivity extends SherlockActivity {
             refreshLayout();
         }
         getHandlersAndPopulate();
-        Log.d("MAIN", "4");
 
         if (!(notificationTimer == currentNotificationTimer))
             refreshTimer();
-        Log.d("MAIN", "5");
 
     }
 
