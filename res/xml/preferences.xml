@@ -38,6 +38,17 @@
             android:title="Color" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Development" >
+        <Preference
+            android:summary="@string/email_description"
+            android:title="Email me!" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:tony.huang.jun@gmail.com" >
+                <extra
+                    android:name="android.intent.extra.SUBJECT"
+                    android:value="Homework Tracker!" />
+            </intent>
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

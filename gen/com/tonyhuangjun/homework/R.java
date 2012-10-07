@@ -963,6 +963,7 @@ containing a value of this type.
         public static final int app_name=0x7f0a000a;
         public static final int class_body_edit_hint=0x7f0a000e;
         public static final int class_title_edit_hint=0x7f0a000d;
+        public static final int email_description=0x7f0a000f;
         public static final int menu_edit=0x7f0a000b;
         public static final int title_activity_main=0x7f0a000c;
     }
