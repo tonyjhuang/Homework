@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="General Settings" >
+    <PreferenceCategory android:title="General" >
         <ListPreference
             android:defaultValue="Four"
             android:entries="@array/classArray"
@@ -10,7 +10,7 @@
             android:summary="Number of classes you are taking this semester."
             android:title="Number of Classes" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Notification Settings" >
+    <PreferenceCategory android:title="Notifications" >
         <ListPreference
             android:defaultValue="1 Hour"
             android:entries="@array/timeArray"
@@ -28,7 +28,7 @@
             android:summary="Choose your notification sound here."
             android:title="Sound" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Appearance Settings" >
+    <PreferenceCategory android:title="Appearance" >
         <ListPreference
             android:defaultValue="One"
             android:entries="@array/colorArray"
@@ -36,6 +36,8 @@
             android:key="color_scheme"
             android:summary="Color theme."
             android:title="Color" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Development" >
     </PreferenceCategory>
 
 </PreferenceScreen>
