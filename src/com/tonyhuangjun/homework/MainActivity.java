@@ -29,7 +29,7 @@ public class MainActivity extends SherlockActivity {
     final static String NUMBER_OF_CLASSES = "number_of_classes";
     final static String NOTIFICATION_INTERVAL = "notification_interval";
     final static String NOTIFICATION_SOUND = "notification_sound";
-    private final static String FIRST_RUN = "first_run";
+    final static String FIRST_RUN = "first_run";
 
     private Resources r;
 
@@ -134,13 +134,6 @@ public class MainActivity extends SherlockActivity {
             bu = r.getColor(R.color.color_d2);
             tf = r.getColor(R.color.color_d3);
             bf = r.getColor(R.color.color_d4);
-            break;
-
-        default:
-            tu = r.getColor(R.color.color_a1);
-            bu = r.getColor(R.color.color_a2);
-            tf = r.getColor(R.color.color_a3);
-            bf = r.getColor(R.color.color_a4);
             break;
         }
     }
