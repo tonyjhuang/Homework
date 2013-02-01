@@ -1,5 +1,6 @@
 package com.tonyhuangjun.homework;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.AlarmManager;
@@ -11,13 +12,13 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
-import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class MainActivityII extends SherlockListActivity {
+public class MainActivityII extends SherlockActivity {
 
     // Preferences file accessor id's.
     final static String CLASS_TITLE = "class_title_";
@@ -30,35 +31,43 @@ public class MainActivityII extends SherlockListActivity {
     final static String NOTIFICATION_SOUND = "notification_sound";
     final static String FIRST_RUN = "first_run";
 
+    // System resources accessor.
     private Resources r;
 
     // Controls user preferences.
     private SharedPreferences settings;
     private Editor editor;
 
-    private int numberOfClasses;
+    // To keep track of change in settings.
     private int notificationTimer;
 
     HashMap<String, Integer> colorScheme = new HashMap<String, Integer>();
 
     AlarmManager am;
 
+    LinearLayout layout;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Load in system resources handler.
+        r = getResources();
+
         // Get preferences file and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
-        
-        if(settings.getBoolean(FIRST_RUN, true))
+
+        // First run check.
+        if (settings.getBoolean(FIRST_RUN, true))
             populatePreferences();
 
-        // Initialize am field.
+        // Initialize AlarmManager.
         am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        // Set view.
         setContentView(R.layout.main);
-        ListView mListView = getListView();
+        layout = (LinearLayout) findViewById(R.id.Layout);
     }
 
     // Called on application start and after EditActivity
@@ -68,49 +77,25 @@ public class MainActivityII extends SherlockListActivity {
     // If so, call the appropriate methods.
     protected void onResume() {
         super.onResume();
-        getColorScheme();
+        refreshSettings();
+        
+        layout.addView(new Tile(this, "Class 1", "yo|sup|hah|").getView());
+        
+    }
 
-        int currentNumberOfClasses = Integer.parseInt(settings
-                        .getString(NUMBER_OF_CLASSES, "1"));
+    private void refreshSettings() {
+        getColorScheme();
         int currentNotificationTimer = Integer.parseInt(settings
                         .getString(NOTIFICATION_INTERVAL, "1800000"));
-        if (!(currentNumberOfClasses == numberOfClasses)) {
-            Log.d("MAIN", "I'm in yo if cond!");
-
-            refreshNumberOfClasses();
-        }
-
         if (!(notificationTimer == currentNotificationTimer))
             refreshTimer();
-
     }
 
     // Get user preference on color scheme and apply to vars.
     private void getColorScheme() {
-        switch (Integer.parseInt(settings
-                        .getString(COLOR_SCHEME, "1"))) {
-        case 1:
-            Colors.colorScheme1(r);
-            break;
+        colorScheme = Colors.colorScheme(r, Integer.parseInt(settings
+                        .getString(COLOR_SCHEME, "1")));
 
-        case 2:
-            Colors.colorScheme2(r);
-            break;
-
-        case 3:
-            Colors.colorScheme3(r);
-            break;
-
-        case 4:
-            Colors.colorScheme4(r);
-            break;
-        }
-    }
-
-    // Update the variable holding the current number of classes.
-    private void refreshNumberOfClasses() {
-        numberOfClasses = Integer.parseInt(settings.getString(
-                        NUMBER_OF_CLASSES, "1"));
     }
 
     // Creates a repeating alarm based on the user's notification interval
@@ -129,31 +114,25 @@ public class MainActivityII extends SherlockListActivity {
                         notificationTimer, pendingIntent);
     }
 
- // If settings is empty, populates preferences file to contain
+    // If settings is empty, populates preferences file to contain
     // class titles, bodies, and statuses for debugging.
     private void populatePreferences() {
         editor.putString(NUMBER_OF_CLASSES, "4");
         editor.putString(NOTIFICATION_INTERVAL, "1800000");
         editor.putString(COLOR_SCHEME, "3");
-        refreshNumberOfClasses();
-        numberOfClasses = 4;
-        notificationTimer = 1800000;
+        getColorScheme();
 
         for (int i = 1; i < 9; i++) {
             editor.putString(CLASS_TITLE + i, "Class " + i);
-        }
-        for (int j = 1; j < 9; j++) {
-            editor.putString(CLASS_BODY + j, "");
-        }
-        for (int k = 1; k < 9; k++) {
-            editor.putBoolean(CLASS_STATUS + k, false);
+            editor.putString(CLASS_BODY + i, "");
+            editor.putBoolean(CLASS_STATUS + i, false);
         }
 
         editor.putBoolean(FIRST_RUN, false);
         editor.commit();
     }
-    
- // Populates action bar with buttons from main.xml.
+
+    // Populates action bar with buttons from main.xml.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.main, menu);
@@ -170,5 +149,5 @@ public class MainActivityII extends SherlockListActivity {
         }
         return true;
     }
-    
+
 }
