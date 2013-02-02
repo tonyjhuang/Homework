@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,15 +73,7 @@ public class Tile extends LinearLayout implements
         titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
         bodyView = (ListView) view.findViewById(R.id.Body);
 
-        // Update fields.
-        titleView.setText(title);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                        getContext(),
-                        android.R.layout.simple_list_item_1, body);
-        bodyView.setAdapter(arrayAdapter);
-
-        // COLORS!!!
-        style();
+        updateView();
 
         // Listen to titleView and bodyView for clicks.
         titleView.setOnClickListener(this);
@@ -102,8 +95,9 @@ public class Tile extends LinearLayout implements
 
     // Can be called to save title and body directly to settings!
     public void save() {
+        editor = settings.edit();
         editor.putString(MainActivityII.CLASS_TITLE + index,
-                        getTitle());
+                        titleEdit.getText().toString());
         editor.putString(MainActivityII.CLASS_BODY + index, getBody());
         editor.putBoolean(MainActivityII.CLASS_UNFINISHED + index,
                         unfinished);
@@ -113,6 +107,14 @@ public class Tile extends LinearLayout implements
     // Replace textview with edittext or vice-versa
     public void editTitle() {
         switcher.showNext();
+        // If user changed name of class, store old title (in case it gets canceled)
+        // and update new title.
+        if(titleEdit.getText().toString() != title){
+            oldTitle = title;
+            title = titleEdit.getText().toString();
+            titleView.setText(title);
+            titleEdit.setText(title);
+        }
         style();
     }
 
@@ -143,7 +145,20 @@ public class Tile extends LinearLayout implements
     }
 
     public View getView() {
+        updateView();
         return view;
+    }
+    
+    private void updateView() {
+        titleView.setText(title);
+        titleEdit.setText(title);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                        getContext(),
+                        android.R.layout.simple_list_item_1, body);
+        bodyView.setAdapter(arrayAdapter);
+
+        // COLORS!!!
+        style();
     }
 
     // This Tile is equal to another if its title and body are identical.

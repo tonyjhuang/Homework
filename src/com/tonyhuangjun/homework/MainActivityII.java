@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class MainActivityII extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MAIN", "onCreate called.");
 
         // Load in system resources handler.
         r = getResources();
@@ -83,6 +85,7 @@ public class MainActivityII extends SherlockActivity {
     // number of classes, or the interval of the notifications.
     // If so, call the appropriate methods.
     protected void onResume() {
+        Log.d("MAIN", "onResume called.");
         super.onResume();
         refreshSettings();
         drawTiles();
@@ -244,6 +247,15 @@ public class MainActivityII extends SherlockActivity {
         editor.putBoolean(FIRST_RUN, false);
         editor.commit();
         Log.d("MAIN", settings.getBoolean(FIRST_RUN, false) + "");
+    }
+    
+    // Handle screen rotation.
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d("MAIN", "onConfigurationChanged called");
+        super.onConfigurationChanged(newConfig);
+        Log.d("MAIN", "super called, calling onResume now");
+        onResume();
     }
 
     // Populates action bar with buttons from main.xml.
