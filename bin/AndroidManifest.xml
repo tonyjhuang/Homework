@@ -39,6 +39,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".EditActivityII"
+            android:label="Edit" >
+        </activity>
+        <activity
             android:name=".EditActivity"
             android:label="Edit"
             android:configChanges="orientation|keyboardHidden"

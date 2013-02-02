@@ -1,6 +1,5 @@
 package com.tonyhuangjun.homework;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -8,10 +7,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class EditActivityII extends SherlockActivity {
 
@@ -22,49 +27,57 @@ public class EditActivityII extends SherlockActivity {
     private Editor editor;
     private Resources r;
 
-    public String title;
-    public ArrayList<String> body;
-
-    // Colors to style the homework tiles.
-    HashMap<String, Integer> colorScheme;
+    // Information to be displayed.
+    private String title;
+    private String body;
+    private Tile tile;
+    private View viewTile;
+    private LinearLayout layout;
 
     // Index of Tile being edited.
     private int index;
-    // Is the title of the tile being editted?
-    private boolean edit;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // initialize settings and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
 
         r = getResources();
-        // Get id of class from passed in Intent.
-        Intent i = getIntent();
-        index = i.getIntExtra(EditActivityII.ID, 1);
-    }
+        
+        // Get index of class from passed in Intent.
+        index = getIntent().getIntExtra(EditActivityII.ID, 1);
 
-    protected void onResume() {
-        super.onResume();
-        getColorScheme();
+        // Grab title information from settings.
         title = settings.getString(MainActivity.CLASS_TITLE + index,
                         "Null");
-        body = Interpreter.stringToArrayList(settings.getString(
-                        MainActivity.CLASS_BODY + index, "Null|"));
-
+        body = settings.getString(MainActivity.CLASS_BODY + index,
+                        "Null|");
+        
+        // Get handler for top layout.
+        layout = (LinearLayout) findViewById(R.id.Layout);
+        
+        // Instantiate a new tile with title and body information.
+        tile = new Tile(getBaseContext(), title, body, index,
+                        MainActivityII.EDIT_ID, settings);
+        // Store view from tile.
+        viewTile = tile.getView();
+        // Apply layoutparams to viewTile.
+        viewTile.setLayoutParams(new LinearLayout.LayoutParams(
+                        LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT, 1f));
     }
 
-    // Get user preference on color scheme and apply to vars.
-    private void getColorScheme() {
-        colorScheme = Colors.colorScheme(r, Integer.parseInt(settings
-                        .getString(MainActivityII.COLOR_SCHEME, "1")));
-
-    }
-
-    public void listViewClick(int index) {
-
+    // Called after onResume, orientation change.
+    // Will also call after data changes (deletions and insertions) to refresh view.
+    protected void onResume() {
+        super.onResume();
+        // Clear top layout.
+        layout.removeAllViews();
+        viewTile = tile.getView();
+        layout.addView(viewTile);
     }
 
     @Override
@@ -73,26 +86,16 @@ public class EditActivityII extends SherlockActivity {
         return true;
     }
 
-    /*
-     * @Override public boolean onOptionsItemSelected(MenuItem menuItem) {
-     * switch (menuItem.getItemId()) { case R.id.menu_title: String title;
-     * parent.removeView(classTitle); if (edit) { title =
-     * String.valueOf(((EditText) classTitle) .getText()); // Replace EditText
-     * with TextView. Flip boolean. classTitle = getLayoutInflater().inflate(
-     * R.layout.view_title, parent, false); parent.addView(classTitle, index);
-     * ((TextView) classTitle).setText(title); ((TextView)
-     * classTitle).setSelected(true); } else { title =
-     * String.valueOf(((TextView) classTitle) .getText()); // Replace TextView
-     * with EditText classTitle = getLayoutInflater().inflate(
-     * R.layout.edit_title, parent, false); parent.addView(classTitle, index);
-     * ((EditText) classTitle).setText(title); } edit = !edit; break; case
-     * R.id.menu_save: if (edit) editor.putString( MainActivity.CLASS_TITLE +
-     * id, String.valueOf(((EditText) classTitle) .getText())); else
-     * editor.putString( MainActivity.CLASS_TITLE + id,
-     * String.valueOf(((TextView) classTitle) .getText()));
-     * 
-     * editor.putString(MainActivity.CLASS_BODY + id,
-     * String.valueOf(classBody.getText())); editor.commit(); finish(); break; }
-     * return true; }
-     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+        case R.id.menu_title:
+            break;
+        case R.id.menu_save:
+            tile.save();
+            finish();
+            break;
+        }
+        return true;
+    }
 }

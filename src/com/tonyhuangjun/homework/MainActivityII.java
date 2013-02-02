@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.ViewGroup.LayoutParams;
@@ -26,14 +27,14 @@ public class MainActivityII extends SherlockActivity {
     // Preferences file accessor id's.
     final static String CLASS_TITLE = "class_title_";
     final static String CLASS_BODY = "class_body_";
-    final static String CLASS_STATUS = "class_status_"; // true unfinished,
-                                                        // false finished.
+    final static String CLASS_UNFINISHED = "class_status_"; // true unfinished,
+    // false finished.
     final static String COLOR_SCHEME = "color_scheme";
     final static String NUMBER_OF_CLASSES = "number_of_classes";
     final static String NOTIFICATION_INTERVAL = "notification_interval";
     final static String NOTIFICATION_SOUND = "notification_sound";
     final static String FIRST_RUN = "first_run";
-    
+
     final static int MAIN_ID = 0;
     final static int EDIT_ID = 1;
 
@@ -63,7 +64,7 @@ public class MainActivityII extends SherlockActivity {
         // Get preferences file and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
-
+        
         // First run check.
         if (settings.getBoolean(FIRST_RUN, true))
             populatePreferences();
@@ -107,17 +108,15 @@ public class MainActivityII extends SherlockActivity {
         for (int i = 1; i - 1 < rowcolumnSize; i++) {
             leftOrTop.add(new Tile(this, settings.getString(
                             CLASS_TITLE + i, "Null"), settings
-                            .getString(CLASS_BODY + i, "Null"),
-                            colorScheme, settings.getBoolean(
-                                            CLASS_STATUS, false), i, MAIN_ID));
+                            .getString(CLASS_BODY + i, "Null"), i,
+                            MAIN_ID, settings));
         }
         // Rest of the tiles.
         for (int j = rowcolumnSize + 1; j - 1 < numOfClass; j++) {
             rightOrBottom.add(new Tile(this, settings.getString(
                             CLASS_TITLE + j, "Null"), settings
-                            .getString(CLASS_BODY + j, "Null"),
-                            colorScheme, settings.getBoolean(
-                                            CLASS_STATUS, false), j, MAIN_ID));
+                            .getString(CLASS_BODY + j, "Null"), j,
+                            MAIN_ID, settings));
         }
 
         // Clear layout to redraw.
@@ -144,6 +143,7 @@ public class MainActivityII extends SherlockActivity {
             child1 = refreshLayoutOrientation(display,
                             new LinearLayout(this), true);
             child1.setWeightSum(1f);
+            // Make layout fill up whole parent.
             child1.setLayoutParams(new LinearLayout.LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.MATCH_PARENT, 1f));
@@ -238,18 +238,12 @@ public class MainActivityII extends SherlockActivity {
         for (int i = 1; i < 9; i++) {
             editor.putString(CLASS_TITLE + i, "Class " + i);
             editor.putString(CLASS_BODY + i, "enter|your|work|here!|");
-            editor.putBoolean(CLASS_STATUS + i, false);
+            editor.putBoolean(CLASS_UNFINISHED + i, false);
         }
 
         editor.putBoolean(FIRST_RUN, false);
         editor.commit();
-    }
-    
-    // ListView click handler for Tiles.
-    public void listViewClick(int index){
-        Intent intent = new Intent();
-        intent.putExtra(EditActivityII.ID, index);
-        startActivity(intent);
+        Log.d("MAIN", settings.getBoolean(FIRST_RUN, false) + "");
     }
 
     // Populates action bar with buttons from main.xml.

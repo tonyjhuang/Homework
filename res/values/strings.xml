@@ -5,7 +5,7 @@
     <string name="title_activity_main">Homework</string>
     <string name="class_title_edit_hint">Class Name</string>
     <string name="class_body_edit_hint">Assignments</string>
-    <string name="email_description">Feel free to use this app to contact me about any improvements you would like to see in future versions of Homework Tracker!</string>
+    <string name="email_description">Contact me about any improvements you would like to see in future versions of Homework Tracker! I LOVE feedback!</string>
 
     <color name="bg">#FFCCCCCC</color>
     <color name="color_a1">#FFFF0000</color>

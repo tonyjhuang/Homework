@@ -5,10 +5,10 @@
         android:icon="@drawable/ic_action_edit"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
-        android:title="Title"/>
+        android:title="Change Title"/>
     <item
         android:id="@+id/menu_save"
-        android:icon="@drawable/ic_action_done"
+        android:icon="@drawable/navigation_accept"
         android:orderInCategory="200"
         android:showAsAction="ifRoom|withText"
         android:title="Save"/>

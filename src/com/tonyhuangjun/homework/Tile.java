@@ -3,8 +3,11 @@ package com.tonyhuangjun.homework;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,17 +31,25 @@ public class Tile extends LinearLayout implements
     private Context context;
     private int index, parentID;
 
+    // Settings & Editor & System resources.
+    private SharedPreferences settings;
+    private Editor editor;
+
     public Tile(Context _context, String _title, String _body,
-                    HashMap<String, Integer> _colorScheme,
-                    boolean _unfinished, int _index, int _parentID) {
+                    int _index, int _parentID, SharedPreferences _settings) {
         super(_context);
 
+        settings = _settings;
         // Store constructor variables
         context = _context;
-        unfinished = _unfinished;
+        unfinished = settings.getBoolean(
+                        MainActivityII.CLASS_UNFINISHED + _index, false);
         title = _title;
         body = Interpreter.stringToArrayList(_body);
-        colorScheme = _colorScheme;
+        colorScheme = Colors.colorScheme(context.getResources(),
+                        Integer.parseInt(settings.getString(
+                                        MainActivityII.COLOR_SCHEME,
+                                        "1")));
         index = _index;
         parentID = _parentID;
 
@@ -63,28 +74,31 @@ public class Tile extends LinearLayout implements
 
         // Listen to titleView and bodyView for clicks.
         titleView.setOnClickListener(this);
-        bodyView.setOnItemClickListener(new OnItemClickListener(){
+        bodyView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id) {
-                if(parentID == MainActivityII.MAIN_ID){
-                    Intent intent = new Intent(context, EditActivityII.class);
+                if (parentID == MainActivityII.MAIN_ID) {
+                    Intent intent = new Intent(context,
+                                    EditActivityII.class);
                     intent.putExtra(EditActivityII.ID, index);
                     context.startActivity(intent);
-                }
-                else{
-                    
+                } else {
+
                 }
             }
         });
     }
 
-    public void flip() {
-        unfinished = !unfinished;
-        style();
+    // Can be called to save title and body directly to settings!
+    public void save(){
+        editor.putString(MainActivityII.CLASS_TITLE + index, getTitle());
+        editor.putString(MainActivityII.CLASS_BODY + index, getBody());
+        editor.putBoolean(MainActivityII.CLASS_UNFINISHED + index, unfinished);
+        editor.commit();
     }
-
-    public void style() {
+    
+    private void style() {
         if (unfinished) {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_UNFINISHED));
@@ -120,7 +134,12 @@ public class Tile extends LinearLayout implements
 
     // To implement onClick
     @Override
-    public void onClick(View v) {
-        flip();
+    public void onClick(View view) {
+        editor = settings.edit();
+        editor.putBoolean(MainActivityII.CLASS_UNFINISHED + index,
+                        !unfinished);
+        editor.commit();
+        unfinished = !unfinished;
+        style();
     }
 }
