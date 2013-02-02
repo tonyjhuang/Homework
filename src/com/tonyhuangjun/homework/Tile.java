@@ -3,27 +3,33 @@ package com.tonyhuangjun.homework;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 public class Tile extends LinearLayout implements
                 View.OnClickListener {
-    private String title;
-    private ArrayList<String> body;
+    // Fields for displaying title and body. oldTitle and oldBody are
+    // fields to keep track of unsaved changes. Might not need these...
+    // TODO: Possibly get rid of oldTitle and oldBody.
+    private String title, oldTitle;
+    private ArrayList<String> body, oldBody;
+
+    private ViewSwitcher switcher;
     private TextView titleView;
+    private EditText titleEdit;
     private ListView bodyView;
     private View view;
     HashMap<String, Integer> colorScheme;
@@ -36,14 +42,16 @@ public class Tile extends LinearLayout implements
     private Editor editor;
 
     public Tile(Context _context, String _title, String _body,
-                    int _index, int _parentID, SharedPreferences _settings) {
+                    int _index, int _parentID,
+                    SharedPreferences _settings) {
         super(_context);
 
         settings = _settings;
         // Store constructor variables
         context = _context;
         unfinished = settings.getBoolean(
-                        MainActivityII.CLASS_UNFINISHED + _index, false);
+                        MainActivityII.CLASS_UNFINISHED + _index,
+                        false);
         title = _title;
         body = Interpreter.stringToArrayList(_body);
         colorScheme = Colors.colorScheme(context.getResources(),
@@ -56,10 +64,12 @@ public class Tile extends LinearLayout implements
         // Inflate xml.
         view = ((LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                        .inflate(R.layout.tile, null);
+                        .inflate(R.layout.alt_tile, null);
 
         // Grab handlers to xml.
-        titleView = (TextView) view.findViewById(R.id.Title);
+        switcher = (ViewSwitcher) view.findViewById(R.id.ViewSwitcher);
+        titleView = (TextView) switcher.findViewById(R.id.Title);
+        titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
         bodyView = (ListView) view.findViewById(R.id.Body);
 
         // Update fields.
@@ -91,29 +101,39 @@ public class Tile extends LinearLayout implements
     }
 
     // Can be called to save title and body directly to settings!
-    public void save(){
-        editor.putString(MainActivityII.CLASS_TITLE + index, getTitle());
+    public void save() {
+        editor.putString(MainActivityII.CLASS_TITLE + index,
+                        getTitle());
         editor.putString(MainActivityII.CLASS_BODY + index, getBody());
-        editor.putBoolean(MainActivityII.CLASS_UNFINISHED + index, unfinished);
+        editor.putBoolean(MainActivityII.CLASS_UNFINISHED + index,
+                        unfinished);
         editor.commit();
     }
-    
+
+    // Replace textview with edittext or vice-versa
+    public void editTitle() {
+        switcher.showNext();
+        style();
+    }
+
+    // Apply fonts and colors to Tile.
     private void style() {
         if (unfinished) {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_UNFINISHED));
-            titleView.setTypeface(Typeface.DEFAULT_BOLD);
+            ((TextView) titleView).setTypeface(Typeface.DEFAULT_BOLD);
             bodyView.setBackgroundColor(colorScheme
                             .get(Colors.BODY_UNFINISHED));
         } else {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_FINISHED));
-            titleView.setTypeface(Typeface.DEFAULT);
+            ((TextView) titleView).setTypeface(Typeface.DEFAULT);
             bodyView.setBackgroundColor(colorScheme
                             .get(Colors.BODY_FINISHED));
         }
     }
 
+    // Basic getters and setters.
     public String getTitle() {
         return title;
     }
@@ -126,6 +146,9 @@ public class Tile extends LinearLayout implements
         return view;
     }
 
+    // This Tile is equal to another if its title and body are identical.
+    // Doesn't account for identical class names with identical assignments but
+    // who does that? .... right?
     public boolean equals(Tile t) {
         return title.equals(t.getTitle())
                         && Interpreter.arrayListToString(body)

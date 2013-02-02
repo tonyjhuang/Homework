@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
@@ -90,6 +91,8 @@ public class EditActivityII extends SherlockActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
         case R.id.menu_title:
+            Log.d("EDIT", (tile == null) + "");
+            tile.editTitle();
             break;
         case R.id.menu_save:
             tile.save();

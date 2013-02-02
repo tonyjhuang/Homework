@@ -1,38 +1,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/TopLayout"
+    android:id="@+id/Tile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
+    
+<ViewSwitcher
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ViewSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/ClassTitle"
+        <TextView
+        android:id="@+id/Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/body_side_padding"
         android:layout_marginRight="@dimen/body_side_padding"
         android:layout_marginTop="@dimen/body_side_padding"
-        android:clickable="true"
         android:ellipsize="marquee"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
-        android:onClick="classTitleClick"
         android:paddingBottom="@dimen/class_title_vertical_padding"
         android:paddingTop="@dimen/class_title_vertical_padding"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textSize="@dimen/class_title_text_size" />
 
+        <EditText
+        android:id="@+id/TitleEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/body_side_padding"
+        android:layout_marginRight="@dimen/body_side_padding"
+        android:layout_marginTop="@dimen/body_side_padding"
+        android:gravity="center"
+        android:paddingBottom="@dimen/class_title_vertical_padding"
+        android:paddingTop="@dimen/class_title_vertical_padding"
+        android:singleLine="true"
+        android:textSize="@dimen/class_title_text_size" />
+    </ViewSwitcher>
+    
+
     <ListView
-        android:id="@+id/ClassBody"
+        android:id="@+id/Body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/body_side_padding"
         android:layout_marginLeft="@dimen/body_side_padding"
         android:layout_marginRight="@dimen/body_side_padding"
-        android:clickable="true"
-        android:onClick="classBodyClick"
         android:paddingLeft="@dimen/layout_side_padding"
         android:paddingRight="@dimen/layout_side_padding"
         android:textSize="@dimen/class_body_text_size" />
