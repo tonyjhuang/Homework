@@ -75,7 +75,10 @@ public class EditActivityII extends SherlockActivity {
     // delete unsaved changes.
     @Override
     public void onBackPressed() {
-        if (!tile.hasChanged()) {
+        if (tile.editting){
+            tile.editTitle();
+        }
+        else if(!tile.hasChanged()) {
             super.onBackPressed();
 
         } else
@@ -114,10 +117,6 @@ public class EditActivityII extends SherlockActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
         case R.id.menu_add:
-            break;
-        case R.id.menu_title:
-            Log.d("EDIT", (tile == null) + "");
-            tile.editTitle();
             break;
         case R.id.menu_save:
             tile.save();

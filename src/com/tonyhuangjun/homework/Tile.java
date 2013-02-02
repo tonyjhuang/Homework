@@ -21,10 +21,9 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 public class Tile extends LinearLayout implements
-                View.OnClickListener {
+                View.OnClickListener, View.OnLongClickListener {
     // Fields for displaying title and body. oldTitle and oldBody are
-    // fields to keep track of unsaved changes. Might not need these...
-    // TODO: Possibly get rid of oldTitle and oldBody.
+    // fields to keep track of unsaved changes.
     private String title, oldTitle;
     private ArrayList<String> body, oldBody;
 
@@ -37,6 +36,8 @@ public class Tile extends LinearLayout implements
     private boolean unfinished;
     private Context context;
     private int index, parentID;
+    // is the title a textview or editview? 
+    public boolean editting;
 
     // Settings & Editor & System resources.
     private SharedPreferences settings;
@@ -61,6 +62,7 @@ public class Tile extends LinearLayout implements
                                         "1")));
         index = _index;
         parentID = _parentID;
+        editting = false;
 
         // Inflate xml.
         view = ((LayoutInflater) context
@@ -78,6 +80,7 @@ public class Tile extends LinearLayout implements
 
         // Listen to titleView and bodyView for clicks.
         titleView.setOnClickListener(this);
+        titleView.setOnLongClickListener(this);
         bodyView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -106,11 +109,13 @@ public class Tile extends LinearLayout implements
     }
 
     public boolean hasChanged() {
-        return ((oldBody != null && oldBody != body) || (oldTitle != null && oldTitle != title));
+        Log.d("TILE", "oldTitle: " + oldTitle + ", title: " + title);
+        return ((oldBody != null && !oldBody.equals(body)) || (oldTitle != null && !oldTitle.equals(title)));
     }
 
     // Replace textview with edittext or vice-versa
     public void editTitle() {
+        editting = !editting;
         switcher.showNext();
         // If user changed name of class, store old title (in case it gets
         // canceled)
@@ -121,7 +126,6 @@ public class Tile extends LinearLayout implements
             titleView.setText(title);
             titleEdit.setText(title);
         }
-        style();
     }
 
     // Apply fonts and colors to Tile.
@@ -185,5 +189,11 @@ public class Tile extends LinearLayout implements
         editor.commit();
         unfinished = !unfinished;
         style();
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        editTitle();
+        return true;
     }
 }
