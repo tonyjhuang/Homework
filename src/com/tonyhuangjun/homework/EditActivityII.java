@@ -75,7 +75,10 @@ public class EditActivityII extends SherlockActivity {
     // delete unsaved changes.
     @Override
     public void onBackPressed() {
-        if (tile.hasChanged())
+        if (!tile.hasChanged()) {
+            super.onBackPressed();
+
+        } else
             new AlertDialog.Builder(this)
                             .setTitle("Really Exit?")
                             .setMessage("Delete unsaved changes?")
@@ -86,10 +89,12 @@ public class EditActivityII extends SherlockActivity {
                                                 public void onClick(
                                                                 DialogInterface arg0,
                                                                 int arg1) {
+
+                                                    EditActivityII.super
+                                                                    .onBackPressed();
                                                 }
                                             }).create().show();
 
-        EditActivityII.super.onBackPressed();
     }
 
     // Handle screen rotation.
@@ -108,6 +113,8 @@ public class EditActivityII extends SherlockActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+        case R.id.menu_add:
+            break;
         case R.id.menu_title:
             Log.d("EDIT", (tile == null) + "");
             tile.editTitle();

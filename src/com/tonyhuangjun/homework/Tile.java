@@ -106,7 +106,7 @@ public class Tile extends LinearLayout implements
     }
 
     public boolean hasChanged() {
-        return ((oldBody != null && oldBody != body) || (oldTitle != title && oldTitle != title));
+        return ((oldBody != null && oldBody != body) || (oldTitle != null && oldTitle != title));
     }
 
     // Replace textview with edittext or vice-versa

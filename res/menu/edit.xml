@@ -1,15 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_add"
+        android:icon="@drawable/content_new"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="Add Assignment"/>
+    <item
         android:id="@+id/menu_title"
         android:icon="@drawable/ic_action_edit"
-        android:orderInCategory="100"
+        android:orderInCategory="1000"
         android:showAsAction="ifRoom|withText"
         android:title="Change Title"/>
     <item
         android:id="@+id/menu_save"
         android:icon="@drawable/navigation_accept"
-        android:orderInCategory="200"
+        android:orderInCategory="2000"
         android:showAsAction="ifRoom|withText"
         android:title="Save"/>
 
