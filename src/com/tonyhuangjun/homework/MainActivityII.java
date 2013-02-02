@@ -14,7 +14,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.Surface;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -66,7 +65,7 @@ public class MainActivityII extends SherlockActivity {
         // Get preferences file and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
         editor = settings.edit();
-        
+
         // First run check.
         if (settings.getBoolean(FIRST_RUN, true))
             populatePreferences();
@@ -92,7 +91,8 @@ public class MainActivityII extends SherlockActivity {
     }
 
     private void drawTiles() {
-        Display display = getWindowManager().getDefaultDisplay();
+        int rotation = getWindowManager().getDefaultDisplay()
+                        .getRotation();
 
         // Determine number of Tiles to put in a row or a column.
         // INVARIANT: If device is rotated, there is at most 2 rows.
@@ -103,24 +103,10 @@ public class MainActivityII extends SherlockActivity {
                         NUMBER_OF_CLASSES, "4"));
         int rowcolumnSize = (int) Math.ceil(numOfClass / 2);
         // TODO: Come up with some better names. This is so shitty.
-        ArrayList<Tile> leftOrTop = new ArrayList<Tile>();
-        ArrayList<Tile> rightOrBottom = new ArrayList<Tile>();
-
-        // Populate ArrayLists that will supply the Tiles to be drawn later.
-        // Full column/row.
-        for (int i = 1; i - 1 < rowcolumnSize; i++) {
-            leftOrTop.add(new Tile(this, settings.getString(
-                            CLASS_TITLE + i, "Null"), settings
-                            .getString(CLASS_BODY + i, "Null"), i,
-                            MAIN_ID, settings));
-        }
-        // Rest of the tiles.
-        for (int j = rowcolumnSize + 1; j - 1 < numOfClass; j++) {
-            rightOrBottom.add(new Tile(this, settings.getString(
-                            CLASS_TITLE + j, "Null"), settings
-                            .getString(CLASS_BODY + j, "Null"), j,
-                            MAIN_ID, settings));
-        }
+        ArrayList<Tile> leftOrTop = groupTiles(rotation, numOfClass,
+                        rowcolumnSize, "left");
+        ArrayList<Tile> rightOrBottom = groupTiles(rotation,
+                        numOfClass, rowcolumnSize, "right");
 
         // Clear layout to redraw.
         layout.removeAllViews();
@@ -137,13 +123,13 @@ public class MainActivityII extends SherlockActivity {
         // Create ONE LinearLayout if number of classes is EXACTLY 2.
         // Create THREE LinearLayouts if number of classes is greater than 2.
         // Push Tile to screen if there is EXACTLY 1.
-        layout = refreshLayoutOrientation(display, layout, false);
+        layout = refreshLayoutOrientation(rotation, layout, false);
         LinearLayout child2a = null, child2b = null, child1 = null;
 
         if (numOfClass == 1) {
             layout.addView(leftOrTop.get(0).getView());
         } else {
-            child1 = refreshLayoutOrientation(display,
+            child1 = refreshLayoutOrientation(rotation,
                             new LinearLayout(this), true);
             child1.setWeightSum(1f);
             // Make layout fill up whole parent.
@@ -156,9 +142,9 @@ public class MainActivityII extends SherlockActivity {
                                                 halfweight),
                                 rightOrBottom, halfweight);
             } else if (numOfClass > 2) {
-                child2a = refreshLayoutOrientation(display,
+                child2a = refreshLayoutOrientation(rotation,
                                 new LinearLayout(this), false);
-                child2b = refreshLayoutOrientation(display,
+                child2b = refreshLayoutOrientation(rotation,
                                 new LinearLayout(this), false);
                 child2a = addTiles(child2a, leftOrTop, balancedweight);
                 child2b = addTiles(child2b, rightOrBottom,
@@ -168,6 +154,48 @@ public class MainActivityII extends SherlockActivity {
             }
             layout.addView(child1);
         }
+    }
+
+    // Return arraylist with appropriate tiles based on rotation,
+    private ArrayList<Tile> groupTiles(int rotation, int numOfClass,
+                    int rowcolumnSize, String leftOrRight) {
+        ArrayList<Tile> result = new ArrayList<Tile>();
+        // If screen is rotated:
+        if (rotation == Surface.ROTATION_90
+                        || rotation == Surface.ROTATION_270) {
+            // For the top row: first half of Tiles.
+            if (leftOrRight.equals("left")) {
+                // First half of tiles
+                for (int i = 1; i - 1 < rowcolumnSize; i++) {
+                    result.add(getTile(i));
+                }
+            } else {
+                // For the bottom row: second half of Tiles.
+                for (int j = rowcolumnSize + 1; j - 1 < numOfClass; j++) {
+                    result.add(getTile(j));
+                }
+            }
+            // If screen is portrait:
+        } else {
+            if (leftOrRight.equals("left")) {
+                // Odd numbered tiles:
+                for (int i = 1; i <= numOfClass; i += 2) {
+                    result.add(getTile(i));
+                }
+            } else {
+                // Even numbered tiles:
+                for (int j = 2; j <= numOfClass; j += 2) {
+                    result.add(getTile(j));
+                }
+            }
+        }
+        return result;
+    }
+
+    private Tile getTile(int i) {
+        return new Tile(this, settings.getString(CLASS_TITLE + i,
+                        "Null"), settings.getString(CLASS_BODY + i,
+                        "Null"), i, MAIN_ID, settings);
     }
 
     // Add Tiles in the ArrayList to a given layout.
@@ -182,10 +210,10 @@ public class MainActivityII extends SherlockActivity {
 
     // Updates orientation of layout based on rotation of the screen.
     // Also takes a boolean. If its true, reverse the orientation of the layout.
-    private LinearLayout refreshLayoutOrientation(Display display,
+    private LinearLayout refreshLayoutOrientation(int rotation,
                     LinearLayout layout, boolean opposite) {
-        if (display.getRotation() == Surface.ROTATION_90
-                        || display.getRotation() == Surface.ROTATION_270) {
+        if (rotation == Surface.ROTATION_90
+                        || rotation == Surface.ROTATION_270) {
             if (opposite)
                 layout.setOrientation(LinearLayout.VERTICAL);
             else
@@ -248,13 +276,11 @@ public class MainActivityII extends SherlockActivity {
         editor.commit();
         Log.d("MAIN", settings.getBoolean(FIRST_RUN, false) + "");
     }
-    
+
     // Handle screen rotation.
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d("MAIN", "onConfigurationChanged called");
         super.onConfigurationChanged(newConfig);
-        Log.d("MAIN", "super called, calling onResume now");
         onResume();
     }
 

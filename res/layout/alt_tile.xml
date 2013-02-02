@@ -32,6 +32,7 @@
         android:id="@+id/TitleEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Class Name"
         android:layout_marginLeft="@dimen/body_side_padding"
         android:layout_marginRight="@dimen/body_side_padding"
         android:layout_marginTop="@dimen/body_side_padding"

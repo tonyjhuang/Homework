@@ -68,7 +68,8 @@ public class Tile extends LinearLayout implements
                         .inflate(R.layout.alt_tile, null);
 
         // Grab handlers to xml.
-        switcher = (ViewSwitcher) view.findViewById(R.id.ViewSwitcher);
+        switcher = (ViewSwitcher) view
+                        .findViewById(R.id.ViewSwitcher);
         titleView = (TextView) switcher.findViewById(R.id.Title);
         titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
         bodyView = (ListView) view.findViewById(R.id.Body);
@@ -104,12 +105,17 @@ public class Tile extends LinearLayout implements
         editor.commit();
     }
 
+    public boolean hasChanged() {
+        return ((oldBody != null && oldBody != body) || (oldTitle != title && oldTitle != title));
+    }
+
     // Replace textview with edittext or vice-versa
     public void editTitle() {
         switcher.showNext();
-        // If user changed name of class, store old title (in case it gets canceled)
+        // If user changed name of class, store old title (in case it gets
+        // canceled)
         // and update new title.
-        if(titleEdit.getText().toString() != title){
+        if (titleEdit.getText().toString() != title) {
             oldTitle = title;
             title = titleEdit.getText().toString();
             titleView.setText(title);
@@ -148,7 +154,7 @@ public class Tile extends LinearLayout implements
         updateView();
         return view;
     }
-    
+
     private void updateView() {
         titleView.setText(title);
         titleEdit.setText(title);

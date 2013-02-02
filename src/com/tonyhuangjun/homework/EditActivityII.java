@@ -1,7 +1,9 @@
 package com.tonyhuangjun.homework;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,6 @@ public class EditActivityII extends SherlockActivity {
 
     // Settings & Editor & System resources.
     private SharedPreferences settings;
-    private Editor editor;
 
     // Information to be displayed.
     private String title;
@@ -37,7 +38,6 @@ public class EditActivityII extends SherlockActivity {
 
         // initialize settings and editor.
         settings = getSharedPreferences("Default", MODE_PRIVATE);
-        editor = settings.edit();
 
         // Get index of class from passed in Intent.
         index = getIntent().getIntExtra(EditActivityII.ID, 1);
@@ -73,6 +73,24 @@ public class EditActivityII extends SherlockActivity {
 
     // Intercept back button call with dialog. Ask user if he wants to
     // delete unsaved changes.
+    @Override
+    public void onBackPressed() {
+        if (tile.hasChanged())
+            new AlertDialog.Builder(this)
+                            .setTitle("Really Exit?")
+                            .setMessage("Delete unsaved changes?")
+                            .setNegativeButton(android.R.string.no,
+                                            null)
+                            .setPositiveButton(android.R.string.yes,
+                                            new OnClickListener() {
+                                                public void onClick(
+                                                                DialogInterface arg0,
+                                                                int arg1) {
+                                                }
+                                            }).create().show();
+
+        EditActivityII.super.onBackPressed();
+    }
 
     // Handle screen rotation.
     @Override
