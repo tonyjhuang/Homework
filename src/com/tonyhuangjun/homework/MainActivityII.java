@@ -11,9 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.ViewGroup.LayoutParams;
@@ -35,6 +33,9 @@ public class MainActivityII extends SherlockActivity {
     final static String NOTIFICATION_INTERVAL = "notification_interval";
     final static String NOTIFICATION_SOUND = "notification_sound";
     final static String FIRST_RUN = "first_run";
+    
+    final static int MAIN_ID = 0;
+    final static int EDIT_ID = 1;
 
     // System resources accessor.
     private Resources r;
@@ -88,8 +89,6 @@ public class MainActivityII extends SherlockActivity {
 
     private void drawTiles() {
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
 
         // Determine number of Tiles to put in a row or a column.
         // INVARIANT: If device is rotated, there is at most 2 rows.
@@ -108,13 +107,17 @@ public class MainActivityII extends SherlockActivity {
         for (int i = 1; i - 1 < rowcolumnSize; i++) {
             leftOrTop.add(new Tile(this, settings.getString(
                             CLASS_TITLE + i, "Null"), settings
-                            .getString(CLASS_BODY + i, "Null")));
+                            .getString(CLASS_BODY + i, "Null"),
+                            colorScheme, settings.getBoolean(
+                                            CLASS_STATUS, false), i, MAIN_ID));
         }
         // Rest of the tiles.
         for (int j = rowcolumnSize + 1; j - 1 < numOfClass; j++) {
             rightOrBottom.add(new Tile(this, settings.getString(
                             CLASS_TITLE + j, "Null"), settings
-                            .getString(CLASS_BODY + j, "Null")));
+                            .getString(CLASS_BODY + j, "Null"),
+                            colorScheme, settings.getBoolean(
+                                            CLASS_STATUS, false), j, MAIN_ID));
         }
 
         // Clear layout to redraw.
@@ -128,7 +131,6 @@ public class MainActivityII extends SherlockActivity {
                         LayoutParams.MATCH_PARENT,
                         LayoutParams.MATCH_PARENT, (float) 1
                                         / rowcolumnSize);
-
 
         // Create ONE LinearLayout if number of classes is EXACTLY 2.
         // Create THREE LinearLayouts if number of classes is greater than 2.
@@ -165,6 +167,7 @@ public class MainActivityII extends SherlockActivity {
         }
     }
 
+    // Add Tiles in the ArrayList to a given layout.
     private LinearLayout addTiles(LinearLayout layout,
                     ArrayList<Tile> tiles, LinearLayout.LayoutParams p) {
         Iterator<Tile> i = tiles.iterator();
@@ -240,6 +243,13 @@ public class MainActivityII extends SherlockActivity {
 
         editor.putBoolean(FIRST_RUN, false);
         editor.commit();
+    }
+    
+    // ListView click handler for Tiles.
+    public void listViewClick(int index){
+        Intent intent = new Intent();
+        intent.putExtra(EditActivityII.ID, index);
+        startActivity(intent);
     }
 
     // Populates action bar with buttons from main.xml.

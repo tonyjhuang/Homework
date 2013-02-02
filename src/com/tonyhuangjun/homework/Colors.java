@@ -5,6 +5,13 @@ import java.util.HashMap;
 import android.content.res.Resources;
 
 public class Colors {
+    public static final String TITLE_UNFINISHED = "tu";
+    public static final String TITLE_FINISHED = "tf";
+    public static final String BODY_UNFINISHED = "bu";
+    public static final String BODY_FINISHED = "bf";
+    
+    
+    
     public static HashMap<String, Integer> colorScheme(Resources r,
                     int c) {
         HashMap<String, Integer> h = new HashMap<String, Integer>();
