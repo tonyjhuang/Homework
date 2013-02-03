@@ -6,8 +6,8 @@ import java.util.Iterator;
 import android.util.Log;
 
 public class Interpreter {
-    public static final String endOfAssignment = "|"; // alt+1555
-    public static final String startOfDate = "%"; // alt+1556
+    public static final String endOfAssignment = "|";
+    public static final String startOfDate = "%";
     public static final String NULL = "Assignment" + endOfAssignment;
 
     public static Assignment stringToAssignment(String s) {
