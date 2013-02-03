@@ -819,11 +819,8 @@ containing a value of this type.
         public static final int action_settings=0x7f020055;
         public static final int content_new=0x7f020056;
         public static final int fallout=0x7f020057;
-        public static final int ic_action_done=0x7f020058;
-        public static final int ic_action_edit=0x7f020059;
-        public static final int ic_action_settings=0x7f02005a;
-        public static final int icon=0x7f02005b;
-        public static final int navigation_accept=0x7f02005c;
+        public static final int icon=0x7f020058;
+        public static final int navigation_accept=0x7f020059;
     }
     public static final class id {
         public static final int AddDate=0x7f05002a;
