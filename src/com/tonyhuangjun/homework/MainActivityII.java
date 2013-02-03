@@ -35,15 +35,15 @@ import com.actionbarsherlock.view.MenuItem;
 public class MainActivityII extends SherlockActivity {
 
     // Preferences file accessor id's.
-    final static String CLASS_TITLE = "class_title_";
-    final static String CLASS_BODY = "class_body_";
-    final static String CLASS_UNFINISHED = "class_status_"; // true unfinished,
+    final static String CLASS_TITLE = "class_title__";
+    final static String CLASS_BODY = "class_body__";
+    final static String CLASS_UNFINISHED = "class_status__"; // true unfinished,
     // false finished.
-    final static String COLOR_SCHEME = "color_scheme";
-    final static String NUMBER_OF_CLASSES = "number_of_classes";
-    final static String NOTIFICATION_INTERVAL = "notification_interval";
-    final static String NOTIFICATION_SOUND = "notification_sound";
-    final static String FIRST_RUN = "first_run";
+    final static String COLOR_SCHEME = "color_scheme__";
+    final static String NUMBER_OF_CLASSES = "number_of_classes__";
+    final static String NOTIFICATION_INTERVAL = "notification_interval__";
+    final static String NOTIFICATION_SOUND = "notification_sound__";
+    final static String FIRST_RUN = "first_run__";
 
     final static int MAIN_ID = 0;
     final static int EDIT_ID = 1;
@@ -383,7 +383,7 @@ public class MainActivityII extends SherlockActivity {
         case R.id.Delete:
             new Tile(this, settings.getString(CLASS_TITLE + index,
                             "Null"), settings.getString(CLASS_BODY
-                            + index, "Null"), index, MAIN_ID,
+                            + index, Interpreter.NULL), index, MAIN_ID,
                             settings).delete(info.position);
             onResume();
             return true;
