@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="General" >
+        <ListPreference
+            android:defaultValue="Four"
+            android:entries="@array/classArray"
+            android:entryValues="@array/classValues"
+            android:key="number_of_classes__"
+            android:summary="Number of classes you are taking this semester."
+            android:title="Number of Classes" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notifications" >
+        <ListPreference
+            android:defaultValue="1 Hour"
+            android:entries="@array/timeArray"
+            android:entryValues="@array/timeValues"
+            android:key="notification_interval__"
+            android:summary="Notification interval. Sorry, you can&apos;t turn this off!"
+            android:title="Interval" />
+
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:key="notification_sound__"
+            android:ringtoneType="ringtone"
+            android:showDefault="true"
+            android:showSilent="false"
+            android:summary="Choose your notification sound here."
+            android:title="Sound" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Appearance" >
+        <ListPreference
+            android:defaultValue="One"
+            android:entries="@array/colorArray"
+            android:entryValues="@array/colorValues"
+            android:key="color_scheme__"
+            android:summary="Color theme."
+            android:title="Color" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Development" >
+        <Preference
+            android:summary="@string/email_description"
+            android:title="Email me!" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:tony.huang.jun@gmail.com" >
+                <extra
+                    android:name="android.intent.extra.SUBJECT"
+                    android:value="Homework Tracker!" />
+            </intent>
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
