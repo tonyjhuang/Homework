@@ -343,7 +343,7 @@ public class MainActivityII extends SherlockActivity {
                                                 newDate.getText()
                                                                 .toString()),
                                                 index, position,
-                                                settings);
+                                                settings, MAIN_ID);
                                 onResume();
 
                             }

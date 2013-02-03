@@ -122,9 +122,9 @@ public class Tile extends LinearLayout implements
         editor.commit();
     }
 
+    // Have any changes been committed to this Tile?
     public boolean hasChanged() {
-        return ((oldBody != null && !oldBody.equals(body)) || (oldTitle != null && !oldTitle
-                        .equals(title)));
+        return oldBody != null || oldTitle != null;
     }
 
     // Replace textview with edittext or vice-versa
@@ -196,10 +196,12 @@ public class Tile extends LinearLayout implements
     }
 
     public static void edit(Assignment assignment, int index,
-                    int position, SharedPreferences settings) {
+                    int position, SharedPreferences settings,
+                    int parentID) {
         String body = settings.getString(MainActivityII.CLASS_BODY
                         + index, Interpreter.NULL);
-        ArrayList<Assignment> list = Interpreter.stringToArrayList2(body);
+        ArrayList<Assignment> list = Interpreter
+                        .stringToArrayList2(body);
         list.set(position, assignment);
         body = Interpreter.arrayListToString2(list);
         Editor editor = settings.edit();
@@ -207,14 +209,23 @@ public class Tile extends LinearLayout implements
         editor.commit();
     }
 
+    public void edit(Assignment assignment, int position) {
+        oldBody = body;
+        body.set(position, assignment);
+    }
+
     public void delete(int position) {
+        // If called from Main, update settings immediately.
+        // Otherwise, store changes in oldBody.
         if (parentID == MainActivityII.MAIN_ID) {
             body.remove(position);
             editor = settings.edit();
             editor.putString(MainActivityII.CLASS_BODY + index,
                             Interpreter.arrayListToString2(body));
             editor.commit();
-        }
+        } else
+            oldBody = body;
+        body.remove(position);
     }
 
     // This Tile is equal to another if its title and body are identical.

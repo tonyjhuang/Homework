@@ -7,11 +7,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -56,6 +59,8 @@ public class EditActivityII extends SherlockActivity {
         // Instantiate a new tile with title and body information.
         tile = new Tile(getBaseContext(), title, body, index,
                         MainActivityII.EDIT_ID, settings);
+
+        registerForContextMenu(tile.getListView());
     }
 
     // Called after onResume, orientation change.
@@ -145,6 +150,7 @@ public class EditActivityII extends SherlockActivity {
         if (tile.editting) {
             tile.editTitle();
         } else if (!tile.hasChanged()) {
+            Log.d("EDIT", "no changes?");
             super.onBackPressed();
 
         } else
@@ -171,6 +177,78 @@ public class EditActivityII extends SherlockActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         onResume();
+    }
+
+    private void showEditDialog(final int position) {
+        Assignment assignment = Interpreter.stringToArrayList2(
+                        tile.getBody()).get(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.add_dialog,
+                        null);
+        final EditText newTitle = (EditText) dialogView
+                        .findViewById(R.id.AddTitle);
+        final EditText newDate = (EditText) dialogView
+                        .findViewById(R.id.AddDate);
+        newTitle.setText(assignment.getName());
+        newDate.setText(assignment.getDate());
+        builder.setView(dialogView);
+        builder.setTitle("Edit Assignment");
+        builder.setPositiveButton("Save",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                tile.edit(new Assignment(
+                                                newTitle.getText()
+                                                                .toString(),
+                                                newDate.getText()
+                                                                .toString()),
+                                                position);
+                                onResume();
+
+                            }
+                        });
+        builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+
+                            }
+                        });
+        builder.create().show();
+
+    }
+
+    // ContextMenu for ListViews in Tiles.
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.tilecontext, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                        .getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.Edit:
+            showEditDialog(info.position);
+            onResume();
+            return true;
+        case R.id.Delete:
+            tile.delete(info.position);
+            onResume();
+            return true;
+        default:
+            return super.onContextItemSelected((android.view.MenuItem) item);
+        }
     }
 
     @Override
