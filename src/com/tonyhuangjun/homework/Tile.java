@@ -26,7 +26,8 @@ public class Tile extends LinearLayout implements
     // fields to keep track of unsaved changes.
     private String title, oldTitle;
     private ArrayList<String> body, oldBody;
-
+    // xml elements.
+    LinearLayout background;
     private ViewSwitcher switcher;
     private TextView titleView;
     private EditText titleEdit;
@@ -71,18 +72,27 @@ public class Tile extends LinearLayout implements
                         .inflate(R.layout.alt_tile, null);
 
         // Grab handlers to xml.
-
+        background = (LinearLayout) view.findViewById(R.id.Tile);
         switcher = (ViewSwitcher) view
                         .findViewById(R.id.ViewSwitcher);
-
         titleView = (TextView) switcher.findViewById(R.id.Title);
-
         titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
-
         bodyView = (ListView) view.findViewById(R.id.Body);
         updateView();
 
-        // Listen to titleView and bodyView for clicks.
+        // Listen to titleView, bodyView, and background (Tile) for clicks.
+        background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (parentID == MainActivityII.MAIN_ID) {
+                    Intent intent = new Intent(context,
+                                    EditActivityII.class);
+                    intent.putExtra(EditActivityII.ID, index);
+                    context.startActivity(intent);
+                }
+            }
+
+        });
         titleView.setOnClickListener(this);
         titleView.setOnLongClickListener(this);
         bodyView.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -95,8 +105,6 @@ public class Tile extends LinearLayout implements
                                     EditActivityII.class);
                     intent.putExtra(EditActivityII.ID, index);
                     context.startActivity(intent);
-                } else {
-
                 }
             }
         });
@@ -144,11 +152,16 @@ public class Tile extends LinearLayout implements
             ((TextView) titleView).setTypeface(Typeface.DEFAULT_BOLD);
             bodyView.setBackgroundColor(colorScheme
                             .get(Colors.BODY_UNFINISHED));
+            background.setBackgroundColor(colorScheme
+                            .get(Colors.BODY_UNFINISHED));
+
         } else {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_FINISHED));
             ((TextView) titleView).setTypeface(Typeface.DEFAULT);
             bodyView.setBackgroundColor(colorScheme
+                            .get(Colors.BODY_FINISHED));
+            background.setBackgroundColor(colorScheme
                             .get(Colors.BODY_FINISHED));
         }
 
@@ -185,17 +198,16 @@ public class Tile extends LinearLayout implements
     private void updateView() {
         titleView.setText(title);
         titleEdit.setText(title);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                        getContext(),
-                        android.R.layout.simple_list_item_1, body);
-        bodyView.setAdapter(arrayAdapter);
+        updateBody();
         // COLORS!!!
         style();
     }
 
-    private void updateBody() {/*
-        
-        */
+    private void updateBody() {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                        getContext(),
+                        android.R.layout.simple_list_item_1, body);
+        bodyView.setAdapter(arrayAdapter);
     }
 
     // This Tile is equal to another if its title and body are identical.
