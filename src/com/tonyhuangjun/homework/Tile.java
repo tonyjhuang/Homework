@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -25,7 +26,7 @@ public class Tile extends LinearLayout implements
     // Fields for displaying title and body. oldTitle and oldBody are
     // fields to keep track of unsaved changes.
     private String title, oldTitle;
-    private ArrayList<String> body, oldBody;
+    private ArrayList<Assignment> body, oldBody;
     // xml elements.
     LinearLayout background;
     private ViewSwitcher switcher;
@@ -57,7 +58,7 @@ public class Tile extends LinearLayout implements
                         MainActivityII.CLASS_UNFINISHED + _index,
                         false);
         title = _title;
-        body = Interpreter.stringToArrayList(_body);
+        body = Interpreter.stringToArrayList2(_body);
         colorScheme = Colors.colorScheme(context.getResources(),
                         Integer.parseInt(settings.getString(
                                         MainActivityII.COLOR_SCHEME,
@@ -170,14 +171,14 @@ public class Tile extends LinearLayout implements
     // Adds string to front of body arraylist.
     public void addToTop(String s) {
         oldBody = body;
-        body.add(0, s);
+        body.add(0, Interpreter.stringToAssignment(s));
         updateBody();
     }
 
     // Adds string to back of body arraylist.
     public void addToBottom(String s) {
         oldBody = body;
-        body.add(s);
+        body.add(Interpreter.stringToAssignment(s));
         updateBody();
     }
 
@@ -187,7 +188,7 @@ public class Tile extends LinearLayout implements
     }
 
     public String getBody() {
-        return Interpreter.arrayListToString(body);
+        return Interpreter.arrayListToString2(body);
     }
 
     public View getView() {
@@ -204,10 +205,9 @@ public class Tile extends LinearLayout implements
     }
 
     private void updateBody() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                        getContext(),
-                        android.R.layout.simple_list_item_1, body);
-        bodyView.setAdapter(arrayAdapter);
+        Log.d("TILE", "helloworld!");
+        TileAdapter ta = new TileAdapter(context, body);
+        bodyView.setAdapter(ta);
     }
 
     // This Tile is equal to another if its title and body are identical.
@@ -215,7 +215,7 @@ public class Tile extends LinearLayout implements
     // who does that? .... right?
     public boolean equals(Tile t) {
         return title.equals(t.getTitle())
-                        && Interpreter.arrayListToString(body)
+                        && Interpreter.arrayListToString2(body)
                                         .equals(t.getBody());
     }
 
@@ -235,4 +235,42 @@ public class Tile extends LinearLayout implements
         editTitle();
         return true;
     }
+
+    private class TileAdapter extends ArrayAdapter<Assignment> {
+        private ArrayList<Assignment> assignments;
+        private Context context;
+        private LayoutInflater inflater;
+
+        public TileAdapter(Context _context,
+                        ArrayList<Assignment> _assignments) {
+            super(_context, R.id.Assignment);
+            context = _context;
+            assignments = _assignments;
+            inflater = (LayoutInflater) context
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            Log.d("TA:constructor", "helloworld!");
+        }
+
+        public View getView(int position, View convertView,
+                        ViewGroup parent) {
+            Log.d("TA:getView", "helloworld!");
+            View view = convertView;
+            if (view == null) {
+                view = inflater.inflate(R.layout.assignment, null);
+            }
+
+            Assignment a = assignments.get(position);
+            TextView name = (TextView) view.findViewById(R.id.Name);
+            name.setText(a.getName());
+            if (a.hasDate()) {
+                TextView date = (TextView) view
+                                .findViewById(R.id.Date);
+                date.setText(a.getDate());
+            }
+
+            return view;
+        }
+
+    }
+
 }

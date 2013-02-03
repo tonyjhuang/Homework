@@ -1,6 +1,8 @@
 package com.tonyhuangjun.homework;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -267,10 +269,17 @@ public class MainActivityII extends SherlockActivity {
         editor.putString(NOTIFICATION_INTERVAL, "1800000");
         editor.putString(COLOR_SCHEME, "3");
         getColorScheme();
-
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd");
+        Date now = new Date();
         for (int i = 1; i < 9; i++) {
             editor.putString(CLASS_TITLE + i, "Class " + i);
-            editor.putString(CLASS_BODY + i, "enter|your|work|here!|");
+            ArrayList<Assignment> a = new ArrayList<Assignment>();
+            a.add(new Assignment("enter", formatter.format(now)));
+            a.add(new Assignment("your", formatter.format(now)));
+            a.add(new Assignment("work", formatter.format(now)));
+            a.add(new Assignment("here!", formatter.format(now)));
+            editor.putString(CLASS_BODY + i, 
+                            Interpreter.arrayListToString2(a));
             editor.putBoolean(CLASS_UNFINISHED + i, false);
         }
 

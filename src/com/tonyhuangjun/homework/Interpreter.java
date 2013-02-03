@@ -3,9 +3,22 @@ package com.tonyhuangjun.homework;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import android.util.Log;
+
 public class Interpreter {
     public static final String endOfAssignment = "‼";
     public static final String startOfDate = "¶";
+
+    public static Assignment stringToAssignment(String s) {
+        int index = s.indexOf(endOfAssignment);
+        int index2 = s.indexOf(startOfDate);
+        if (index2 != -1) 
+            return new Assignment(s.substring(0, index2),
+                            s.substring(index2 + 1, index));
+        else
+            return new Assignment(s.substring(0, index));
+        
+    }
 
     public static ArrayList<Assignment> stringToArrayList2(String s) {
         ArrayList<Assignment> result = new ArrayList<Assignment>();
@@ -31,7 +44,8 @@ public class Interpreter {
         return result;
     }
 
-    public static String arrayListToString2(ArrayList<Assignment> a){
+    public static String arrayListToString2(ArrayList<Assignment> a) {
+        Log.d("INT:aLTS2", "helloworld!");
         String result = "";
         Iterator<Assignment> i = a.iterator();
 
@@ -40,7 +54,7 @@ public class Interpreter {
         }
         return result;
     }
-    
+
     public static ArrayList<String> stringToArrayList(String s) {
         ArrayList<String> result = new ArrayList<String>();
 
