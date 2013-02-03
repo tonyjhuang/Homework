@@ -284,7 +284,7 @@ public class MainActivityII extends SherlockActivity {
     // If settings is empty, populates preferences file to contain
     // class titles, bodies, and statuses for debugging.
     private void populatePreferences() {
-        editor.putString(NUMBER_OF_CLASSES, "4");
+        editor.putString(NUMBER_OF_CLASSES, "30");
         editor.putString(NOTIFICATION_INTERVAL, "1800000");
         editor.putString(COLOR_SCHEME, "3");
         getColorScheme();

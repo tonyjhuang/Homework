@@ -90,6 +90,8 @@ public class Tile extends LinearLayout implements
                                     EditActivityII.class);
                     intent.putExtra(EditActivityII.ID, index);
                     context.startActivity(intent);
+                } else {
+
                 }
             }
 
@@ -271,6 +273,12 @@ public class Tile extends LinearLayout implements
     public boolean onLongClick(View v) {
         if (parentID != MainActivityII.MAIN_ID)
             editTitle();
+        else {
+            Intent intent = new Intent(context, EditActivityII.class);
+            intent.putExtra(EditActivityII.ID, index);
+            Log.d("TILE", "index passed through: " + index);
+            context.startActivity(intent);
+        }
         return true;
     }
 

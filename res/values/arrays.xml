@@ -9,6 +9,10 @@
         <item>Six</item>
         <item>Seven</item>
         <item>Eight</item>
+        <item>Nine</item>
+        <item>Ten</item>
+        <item>Eleven</item>
+        <item>Twelve</item>
     </string-array>
     <string-array name="classValues">
         <item>1</item>
@@ -19,6 +23,10 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
     </string-array>
     <string-array name="timeArray">
         <item>5 minutes</item>
