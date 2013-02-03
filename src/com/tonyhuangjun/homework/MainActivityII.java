@@ -57,7 +57,6 @@ public class MainActivityII extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MAIN", "onCreate called.");
 
         // Load in system resources handler.
         r = getResources();
@@ -84,7 +83,6 @@ public class MainActivityII extends SherlockActivity {
     // number of classes, or the interval of the notifications.
     // If so, call the appropriate methods.
     protected void onResume() {
-        Log.d("MAIN", "onResume called.");
         super.onResume();
         refreshSettings();
         drawTiles();
@@ -107,7 +105,7 @@ public class MainActivityII extends SherlockActivity {
                         rowcolumnSize, "left");
         ArrayList<Tile> rightOrBottom = groupTiles(rotation,
                         numOfClass, rowcolumnSize, "right");
-
+        
         // Clear layout to redraw.
         layout.removeAllViews();
 
@@ -125,7 +123,7 @@ public class MainActivityII extends SherlockActivity {
         // Push Tile to screen if there is EXACTLY 1.
         layout = refreshLayoutOrientation(rotation, layout, false);
         LinearLayout child2a = null, child2b = null, child1 = null;
-
+        
         if (numOfClass == 1) {
             layout.addView(leftOrTop.get(0).getView());
         } else {
@@ -274,7 +272,6 @@ public class MainActivityII extends SherlockActivity {
 
         editor.putBoolean(FIRST_RUN, false);
         editor.commit();
-        Log.d("MAIN", settings.getBoolean(FIRST_RUN, false) + "");
     }
 
     // Handle screen rotation.

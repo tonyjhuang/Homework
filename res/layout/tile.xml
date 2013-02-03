@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
-    
 
     <TextView
         android:id="@+id/Title"
@@ -30,8 +29,12 @@
         android:layout_marginBottom="@dimen/body_side_padding"
         android:layout_marginLeft="@dimen/body_side_padding"
         android:layout_marginRight="@dimen/body_side_padding"
+        android:overScrollMode="never"
+        android:textSize="@dimen/class_body_text_size" />
+    <!--
         android:paddingLeft="@dimen/layout_side_padding"
         android:paddingRight="@dimen/layout_side_padding"
-        android:textSize="@dimen/class_body_text_size" />
+
+    -->
 
 </LinearLayout>

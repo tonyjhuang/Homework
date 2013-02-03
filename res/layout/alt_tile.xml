@@ -27,7 +27,7 @@
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textSize="@dimen/class_title_text_size" />
-
+ 
         <EditText
         android:id="@+id/TitleEdit"
         android:layout_width="match_parent"
@@ -41,6 +41,7 @@
         android:paddingTop="@dimen/class_title_vertical_padding"
         android:singleLine="true"
         android:textSize="@dimen/class_title_text_size" />
+         
     </ViewSwitcher>
     
 

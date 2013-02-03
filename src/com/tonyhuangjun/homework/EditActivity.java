@@ -199,7 +199,7 @@ public class EditActivity extends SherlockActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {/*
         case R.id.menu_title:
             String title;
             parent.removeView(classTitle);
@@ -221,6 +221,7 @@ public class EditActivity extends SherlockActivity {
             }
             edit = !edit;
             break;
+            */
         case R.id.menu_save:
             if (edit)
                 editor.putString(MainActivity.CLASS_TITLE + id,

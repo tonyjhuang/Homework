@@ -6,9 +6,10 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -71,14 +72,64 @@ public class EditActivityII extends SherlockActivity {
         layout.addView(viewTile);
     }
 
+    private void showAddDialog() {
+        /*
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.add_dialog, null))
+                        .setTitle("Add Assignment")
+                        .setPositiveButton(
+                                        "Add To Top",
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(
+                                                            DialogInterface dialog,
+                                                            int which) {
+                                                tile.addToTop(((EditText) findViewById(R.id.AddTitle))
+                                                                .getText()
+                                                                .toString());
+
+                                            }
+                                        })
+                        .setNeutralButton(
+                                        "Add To Bottom",
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(
+                                                            DialogInterface dialog,
+                                                            int which) {
+                                                tile.addToBottom(((EditText) findViewById(R.id.AddTitle))
+                                                                .getText()
+                                                                .toString());
+
+                                            }
+                                        })
+                        .setNegativeButton(
+                                        "Cancel",
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(
+                                                            DialogInterface dialog,
+                                                            int which) {
+
+                                            }
+                                        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        */
+    }
+
     // Intercept back button call with dialog. Ask user if he wants to
     // delete unsaved changes.
     @Override
     public void onBackPressed() {
-        if (tile.editting){
+        if (tile.editting) {
             tile.editTitle();
-        }
-        else if(!tile.hasChanged()) {
+        } else if (!tile.hasChanged()) {
             super.onBackPressed();
 
         } else
@@ -117,6 +168,7 @@ public class EditActivityII extends SherlockActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
         case R.id.menu_add:
+            showAddDialog();
             break;
         case R.id.menu_save:
             tile.save();

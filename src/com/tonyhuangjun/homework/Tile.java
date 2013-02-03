@@ -31,12 +31,13 @@ public class Tile extends LinearLayout implements
     private TextView titleView;
     private EditText titleEdit;
     private ListView bodyView;
+    // View of Tile, passed to Activities that wish to display Tiles.
     private View view;
     HashMap<String, Integer> colorScheme;
     private boolean unfinished;
     private Context context;
     private int index, parentID;
-    // is the title a textview or editview? 
+    // is the title a textview or editview?
     public boolean editting;
 
     // Settings & Editor & System resources.
@@ -68,19 +69,24 @@ public class Tile extends LinearLayout implements
         view = ((LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                         .inflate(R.layout.alt_tile, null);
+        Log.d("TILE", "??");
 
         // Grab handlers to xml.
+
         switcher = (ViewSwitcher) view
                         .findViewById(R.id.ViewSwitcher);
-        titleView = (TextView) switcher.findViewById(R.id.Title);
-        titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
-        bodyView = (ListView) view.findViewById(R.id.Body);
 
+        titleView = (TextView) switcher.findViewById(R.id.Title);
+
+        titleEdit = (EditText) switcher.findViewById(R.id.TitleEdit);
+
+        bodyView = (ListView) view.findViewById(R.id.Body);
         updateView();
 
         // Listen to titleView and bodyView for clicks.
         titleView.setOnClickListener(this);
         titleView.setOnLongClickListener(this);
+        bodyView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         bodyView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -110,11 +116,13 @@ public class Tile extends LinearLayout implements
 
     public boolean hasChanged() {
         Log.d("TILE", "oldTitle: " + oldTitle + ", title: " + title);
-        return ((oldBody != null && !oldBody.equals(body)) || (oldTitle != null && !oldTitle.equals(title)));
+        return ((oldBody != null && !oldBody.equals(body)) || (oldTitle != null && !oldTitle
+                        .equals(title)));
     }
 
     // Replace textview with edittext or vice-versa
     public void editTitle() {
+        
         editting = !editting;
         switcher.showNext();
         // If user changed name of class, store old title (in case it gets
@@ -126,10 +134,12 @@ public class Tile extends LinearLayout implements
             titleView.setText(title);
             titleEdit.setText(title);
         }
+        
     }
 
     // Apply fonts and colors to Tile.
     private void style() {
+        
         if (unfinished) {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_UNFINISHED));
@@ -143,7 +153,16 @@ public class Tile extends LinearLayout implements
             bodyView.setBackgroundColor(colorScheme
                             .get(Colors.BODY_FINISHED));
         }
+        
     }
+
+    
+       //Adds string to front of body arraylist. 
+    public void addToTop(String s){ oldBody = body; body.add(0, s); updateBody(); }
+      
+       //Adds string to back of body arraylist. 
+    public void addToBottom(String s){ oldBody = body; body.add(s); updateBody(); }
+     
 
     // Basic getters and setters.
     public String getTitle() {
@@ -166,9 +185,13 @@ public class Tile extends LinearLayout implements
                         getContext(),
                         android.R.layout.simple_list_item_1, body);
         bodyView.setAdapter(arrayAdapter);
-
         // COLORS!!!
         style();
+    }
+
+    private void updateBody() {/*
+        
+        */
     }
 
     // This Tile is equal to another if its title and body are identical.
