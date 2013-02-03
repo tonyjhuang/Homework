@@ -4,27 +4,64 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Interpreter {
-    public static ArrayList<String> stringToArrayList(String s)
-    {
+    public static final String endOfAssignment = "‼";
+    public static final String startOfDate = "¶";
+
+    public static ArrayList<Assignment> stringToArrayList2(String s) {
+        ArrayList<Assignment> result = new ArrayList<Assignment>();
+        int index = s.indexOf(endOfAssignment);
+        int index2 = s.indexOf(startOfDate);
+        while (index != 0) {
+            if (index2 != -1 && index2 > index) {
+                // There is a date present in this Assignment.
+                result.add(new Assignment(s.substring(0, index2), s
+                                .substring(index2 + 1, index)));
+            } else if (index + 1 == s.length()) {
+                // There are no more Assignments.
+                break;
+            } else {
+                // There is only a name present in this Assignment.
+                result.add(new Assignment(s.substring(0, index)));
+            }
+            s = s.substring(index + 1, s.length());
+            index = s.indexOf(endOfAssignment);
+            index2 = s.indexOf(startOfDate);
+
+        }
+        return result;
+    }
+
+    public static String arrayListToString2(ArrayList<Assignment> a){
+        String result = "";
+        Iterator<Assignment> i = a.iterator();
+
+        while (i.hasNext()) {
+            result += i.next().toString();
+        }
+        return result;
+    }
+    
+    public static ArrayList<String> stringToArrayList(String s) {
         ArrayList<String> result = new ArrayList<String>();
-        
+
         int index = s.indexOf("|");
-        while(index != 0){
+        while (index != 0) {
             result.add(s.substring(0, index));
-            if(index + 1 == s.length())
+            if (index + 1 == s.length())
                 break;
             s = s.substring(index + 1, s.length());
             index = s.indexOf("|");
         }
         return result;
     }
-    public static String arrayListToString(ArrayList<String> a){
+
+    public static String arrayListToString(ArrayList<String> a) {
         String result = "";
         Iterator<String> i = a.iterator();
-        
-        while(i.hasNext()){
+
+        while (i.hasNext()) {
             result += i.next() + "|";
-        } 
+        }
         return result;
     }
 }
