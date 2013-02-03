@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,10 +20,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -206,7 +210,8 @@ public class MainActivityII extends SherlockActivity {
     private Tile getTile(int i) {
         Tile tile = new Tile(this, settings.getString(
                         CLASS_TITLE + i, "Null"), settings.getString(
-                        CLASS_BODY + i, "Null"), i, MAIN_ID, settings);
+                        CLASS_BODY + i, Interpreter.NULL), i,
+                        MAIN_ID, settings);
         registerForContextMenu(tile.getListView());
         return tile;
     }
@@ -308,6 +313,55 @@ public class MainActivityII extends SherlockActivity {
         onResume();
     }
 
+    private void showEditDialog(final int index, final int position) {
+        Assignment assignment = Interpreter.stringToArrayList2(
+                        settings.getString(CLASS_BODY + index,
+                                        Interpreter.NULL)).get(
+                        position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.add_dialog,
+                        null);
+        final EditText newTitle = (EditText) dialogView
+                        .findViewById(R.id.AddTitle);
+        final EditText newDate = (EditText) dialogView
+                        .findViewById(R.id.AddDate);
+        newTitle.setText(assignment.getName());
+        newDate.setText(assignment.getDate());
+        builder.setView(dialogView);
+        builder.setTitle("Edit Assignment");
+        builder.setPositiveButton("Save",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                Tile.edit(new Assignment(
+                                                newTitle.getText()
+                                                                .toString(),
+                                                newDate.getText()
+                                                                .toString()),
+                                                index, position,
+                                                settings);
+                                onResume();
+
+                            }
+                        });
+        builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+
+                            }
+                        });
+        builder.create().show();
+
+    }
+
     // ContextMenu for ListViews in Tiles.
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -323,10 +377,10 @@ public class MainActivityII extends SherlockActivity {
         int index = (Integer) info.targetView.getTag();
         switch (item.getItemId()) {
         case R.id.Edit:
+            showEditDialog(index, info.position);
+            onResume();
             return true;
         case R.id.Delete:
-            Log.d("in Delete...", "position = " + info.position
-                            + ", index = " + index);
             new Tile(this, settings.getString(CLASS_TITLE + index,
                             "Null"), settings.getString(CLASS_BODY
                             + index, "Null"), index, MAIN_ID,

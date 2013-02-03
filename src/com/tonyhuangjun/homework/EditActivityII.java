@@ -80,64 +80,58 @@ public class EditActivityII extends SherlockActivity {
         final View dialogView = inflater.inflate(R.layout.add_dialog,
                         null);
         builder.setView(dialogView);
-        builder.setTitle("Add Assignment")
-                        .setPositiveButton(
-                                        "Add To Top",
-                                        new DialogInterface.OnClickListener() {
+        builder.setTitle("Add Assignment");
+        builder.setPositiveButton("Add To Top",
+                        new DialogInterface.OnClickListener() {
 
-                                            @Override
-                                            public void onClick(
-                                                            DialogInterface dialog,
-                                                            int which) {
-                                                EditText newTitle = (EditText) dialogView
-                                                                .findViewById(R.id.AddTitle);
-                                                EditText newDate = (EditText) dialogView
-                                                                .findViewById(R.id.AddDate);
-                                                String name = newTitle
-                                                                .getText()
-                                                                .toString();
-                                                if (!name.equals(""))
-                                                    tile.addToTop(new Assignment(
-                                                                    name,
-                                                                    newDate.getText()
-                                                                                    .toString()));
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                EditText newTitle = (EditText) dialogView
+                                                .findViewById(R.id.AddTitle);
+                                EditText newDate = (EditText) dialogView
+                                                .findViewById(R.id.AddDate);
+                                String name = newTitle.getText()
+                                                .toString();
+                                if (!name.equals(""))
+                                    tile.addToTop(new Assignment(
+                                                    name,
+                                                    newDate.getText()
+                                                                    .toString()));
 
-                                            }
-                                        })
-                        .setNeutralButton(
-                                        "Add To Bottom",
-                                        new DialogInterface.OnClickListener() {
+                            }
+                        });
+        builder.setNeutralButton("Add To Bottom",
+                        new DialogInterface.OnClickListener() {
 
-                                            @Override
-                                            public void onClick(
-                                                            DialogInterface dialog,
-                                                            int which) {
-                                                EditText newTitle = (EditText) dialogView
-                                                                .findViewById(R.id.AddTitle);
-                                                EditText newDate = (EditText) dialogView
-                                                                .findViewById(R.id.AddDate);
-                                                String name = newTitle
-                                                                .getText()
-                                                                .toString();
-                                                if (!name.equals(""))
-                                                    tile.addToBottom(new Assignment(
-                                                                    name,
-                                                                    newDate.getText()
-                                                                                    .toString()));
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                EditText newTitle = (EditText) dialogView
+                                                .findViewById(R.id.AddTitle);
+                                EditText newDate = (EditText) dialogView
+                                                .findViewById(R.id.AddDate);
+                                String name = newTitle.getText()
+                                                .toString();
+                                if (!name.equals(""))
+                                    tile.addToBottom(new Assignment(
+                                                    name,
+                                                    newDate.getText()
+                                                                    .toString()));
 
-                                            }
-                                        })
-                        .setNegativeButton(
-                                        "Cancel",
-                                        new DialogInterface.OnClickListener() {
+                            }
+                        }).setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
 
-                                            @Override
-                                            public void onClick(
-                                                            DialogInterface dialog,
-                                                            int which) {
+                            @Override
+                            public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
 
-                                            }
-                                        });
+                            }
+                        });
 
         AlertDialog dialog = builder.create();
         dialog.show();

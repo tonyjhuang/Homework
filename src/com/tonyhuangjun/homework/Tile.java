@@ -195,8 +195,16 @@ public class Tile extends LinearLayout implements
         bodyView.setAdapter(atttt);
     }
 
-    public void edit(int position) {
-
+    public static void edit(Assignment assignment, int index,
+                    int position, SharedPreferences settings) {
+        String body = settings.getString(MainActivityII.CLASS_BODY
+                        + index, Interpreter.NULL);
+        ArrayList<Assignment> list = Interpreter.stringToArrayList2(body);
+        list.set(position, assignment);
+        body = Interpreter.arrayListToString2(list);
+        Editor editor = settings.edit();
+        editor.putString(MainActivityII.CLASS_BODY + index, body);
+        editor.commit();
     }
 
     public void delete(int position) {
