@@ -181,7 +181,7 @@ public class Tile extends LinearLayout implements
         updateBody();
     }
 
-    // Basic getters and setters.
+    // Basic getters.
     public String getTitle() {
         return title;
     }

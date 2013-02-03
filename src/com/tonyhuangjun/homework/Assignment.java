@@ -25,5 +25,14 @@ public class Assignment {
     public boolean hasDate(){
         return date != null;
     }
+    
+    // Getters.
+    public String getName(){
+        return name;
+    }
+    
+    public String getDate(){
+        return date;
+    }
 
 }
