@@ -169,20 +169,19 @@ public class Tile extends LinearLayout implements
     }
 
     // Adds string to front of body arraylist.
-    public void addToTop(String s) {
+    public void addToTop(Assignment a) {
         oldBody = body;
-        body.add(0, Interpreter.stringToAssignment(s));
+        body.add(0, a);
         updateBody();
     }
 
     // Adds string to back of body arraylist.
-    public void addToBottom(String s) {
+    public void addToBottom(Assignment a) {
         oldBody = body;
-        body.add(Interpreter.stringToAssignment(s));
+        body.add(a);
         updateBody();
     }
 
-   
     private void updateView() {
         titleView.setText(title);
         titleEdit.setText(title);
@@ -192,13 +191,22 @@ public class Tile extends LinearLayout implements
     }
 
     private void updateBody() {
-        ArrayList<String> a = new ArrayList<String>();
-        a.add("hello");
-        a.add("world!");
-        Log.d("TILE", body.toString());
-        Adapttter attt = new Adapttter(getContext(), android.R.layout.simple_list_item_1, a);
-        Adapttter2 atttt = new Adapttter2(getContext(), android.R.layout.simple_list_item_1, body);
+        Adapttter2 atttt = new Adapttter2(getContext(), body);
         bodyView.setAdapter(atttt);
+    }
+
+    public void edit(int position) {
+
+    }
+
+    public void delete(int position) {
+        if (parentID == MainActivityII.MAIN_ID) {
+            body.remove(position);
+            editor = settings.edit();
+            editor.putString(MainActivityII.CLASS_BODY + index,
+                            Interpreter.arrayListToString2(body));
+            editor.commit();
+        }
     }
 
     // This Tile is equal to another if its title and body are identical.
@@ -219,12 +227,15 @@ public class Tile extends LinearLayout implements
         return Interpreter.arrayListToString2(body);
     }
 
+    public ListView getListView() {
+        return bodyView;
+    }
+
     public View getView() {
         updateView();
         return view;
     }
 
-    
     // To implement onClick
     @Override
     public void onClick(View view) {
@@ -242,67 +253,41 @@ public class Tile extends LinearLayout implements
         return true;
     }
 
-    private class Adapttter extends ArrayAdapter<String> {
-        Context c;
-        ArrayList<String> list;
-        public Adapttter (Context c, int layout, ArrayList<String> list){
-            super(c, layout, list);
-            this.c = c;
-            this.list = list;
-        }
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.assignment, null);
-            }
-
-            String item = list.get(position);
-            if (item!= null) {
-                // My layout has only one TextView
-                TextView itemView = (TextView) view.findViewById(R.id.Name);
-                TextView dateView = (TextView) view.findViewById(R.id.Date);
-                if (itemView != null) {
-                    // do whatever you want with your string and long
-                    itemView.setText("DICKS");
-                    dateView.setText("2/2");
-                }
-             }
-
-            return view;
-        }
-    }
-    
     private class Adapttter2 extends ArrayAdapter<Assignment> {
         Context c;
         ArrayList<Assignment> list;
-        public Adapttter2 (Context c, int layout, ArrayList<Assignment> list){
-            super(c, layout, list);
+
+        public Adapttter2(Context c, ArrayList<Assignment> list) {
+            super(c, android.R.layout.simple_list_item_1, list);
             this.c = c;
             this.list = list;
         }
-        public View getView(int position, View convertView, ViewGroup parent) {
+
+        public View getView(int position, View convertView,
+                        ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) c
+                                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.assignment, null);
             }
 
             Assignment item = list.get(position);
-            if (item!= null) {
+            if (item != null) {
                 // My layout has only one TextView
-                TextView itemView = (TextView) view.findViewById(R.id.Name);
-                TextView dateView = (TextView) view.findViewById(R.id.Date);
+                TextView itemView = (TextView) view
+                                .findViewById(R.id.Name);
+                TextView dateView = (TextView) view
+                                .findViewById(R.id.Date);
                 if (itemView != null) {
                     // do whatever you want with your string and long
                     itemView.setText(list.get(position).getName());
                     dateView.setText(list.get(position).getDate());
                 }
-             }
-
+            }
+            view.setTag(index);
             return view;
         }
     }
-    
 
 }

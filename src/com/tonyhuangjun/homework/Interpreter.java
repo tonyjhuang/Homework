@@ -45,13 +45,11 @@ public class Interpreter {
     }
 
     public static String arrayListToString2(ArrayList<Assignment> a) {
-        Log.d("INT", "a: " + a.toString() + "length: " + a.size());
         String result = "";
         Iterator<Assignment> i = a.iterator();
 
         while (i.hasNext()) {
             Assignment a2 = i.next();
-            Log.d("INT", a2.toString());
             result += a2.toString();
         }
         return result;

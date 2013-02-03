@@ -79,8 +79,8 @@ public class EditActivityII extends SherlockActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.add_dialog,
                         null);
-        builder.setView(dialogView)
-                        .setTitle("Add Assignment")
+        builder.setView(dialogView);
+        builder.setTitle("Add Assignment")
                         .setPositiveButton(
                                         "Add To Top",
                                         new DialogInterface.OnClickListener() {
@@ -91,11 +91,16 @@ public class EditActivityII extends SherlockActivity {
                                                             int which) {
                                                 EditText newTitle = (EditText) dialogView
                                                                 .findViewById(R.id.AddTitle);
-                                                String entry = newTitle
+                                                EditText newDate = (EditText) dialogView
+                                                                .findViewById(R.id.AddDate);
+                                                String name = newTitle
                                                                 .getText()
                                                                 .toString();
-                                                if (!entry.equals(""))
-                                                    tile.addToTop(entry);
+                                                if (!name.equals(""))
+                                                    tile.addToTop(new Assignment(
+                                                                    name,
+                                                                    newDate.getText()
+                                                                                    .toString()));
 
                                             }
                                         })
@@ -109,11 +114,16 @@ public class EditActivityII extends SherlockActivity {
                                                             int which) {
                                                 EditText newTitle = (EditText) dialogView
                                                                 .findViewById(R.id.AddTitle);
-                                                String entry = newTitle
+                                                EditText newDate = (EditText) dialogView
+                                                                .findViewById(R.id.AddDate);
+                                                String name = newTitle
                                                                 .getText()
                                                                 .toString();
-                                                if (!entry.equals(""))
-                                                    tile.addToBottom(entry);
+                                                if (!name.equals(""))
+                                                    tile.addToBottom(new Assignment(
+                                                                    name,
+                                                                    newDate.getText()
+                                                                                    .toString()));
 
                                             }
                                         })

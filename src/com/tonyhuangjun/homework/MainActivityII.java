@@ -16,9 +16,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -55,7 +58,19 @@ public class MainActivityII extends SherlockActivity {
 
     AlarmManager am;
 
+    // Keeps track of layout and Tiles to be drawn.
     LinearLayout layout;
+    ArrayList<Tile> leftOrTop, rightOrBottom;
+    // Determine number of Tiles to put in a row or a column.
+    // INVARIANT: If device is rotated, there is at most 2 rows.
+    // INVARIANT: Otherwise, there is at most 2 columns.
+    // rowcolumnSize determines how many rows or columns there should be
+    // with respect to orientation, respecting the invariants listed above.
+    int rowcolumnSize;
+    int numOfClass;
+
+    // Screen rotation.
+    int rotation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,22 +107,12 @@ public class MainActivityII extends SherlockActivity {
     }
 
     private void drawTiles() {
-        int rotation = getWindowManager().getDefaultDisplay()
-                        .getRotation();
 
-        // Determine number of Tiles to put in a row or a column.
-        // INVARIANT: If device is rotated, there is at most 2 rows.
-        // INVARIANT: Otherwise, there is at most 2 columns.
-        // rowcolumnSize determines how many rows or columns there should be
-        // with respect to orientation, respecting the invariants listed above.
-        int numOfClass = Integer.valueOf(settings.getString(
-                        NUMBER_OF_CLASSES, "4"));
-        int rowcolumnSize = (int) Math.ceil(numOfClass / 2);
-        // TODO: Come up with some better names. This is so shitty.
-        ArrayList<Tile> leftOrTop = groupTiles(rotation, numOfClass,
-                        rowcolumnSize, "left");
-        ArrayList<Tile> rightOrBottom = groupTiles(rotation,
-                        numOfClass, rowcolumnSize, "right");
+        // Refresh Tiles to be drawn
+        leftOrTop = groupTiles(rotation, numOfClass, rowcolumnSize,
+                        "left");
+        rightOrBottom = groupTiles(rotation, numOfClass,
+                        rowcolumnSize, "right");
 
         // Clear layout to redraw.
         layout.removeAllViews();
@@ -124,7 +129,7 @@ public class MainActivityII extends SherlockActivity {
         // Create ONE LinearLayout if number of classes is EXACTLY 2.
         // Create THREE LinearLayouts if number of classes is greater than 2.
         // Push Tile to screen if there is EXACTLY 1.
-        layout = refreshLayoutOrientation(rotation, layout, false);
+        layout = refreshLayoutOrientation(layout, false);
         LinearLayout child2a = null, child2b = null, child1 = null;
 
         if (numOfClass == 1) {
@@ -134,8 +139,8 @@ public class MainActivityII extends SherlockActivity {
                             LayoutParams.MATCH_PARENT, 1f));
             layout.addView(viewTile);
         } else {
-            child1 = refreshLayoutOrientation(rotation,
-                            new LinearLayout(this), true);
+            child1 = refreshLayoutOrientation(new LinearLayout(this),
+                            true);
             child1.setWeightSum(1f);
             // Make layout fill up whole parent.
             child1.setLayoutParams(new LinearLayout.LayoutParams(
@@ -147,10 +152,10 @@ public class MainActivityII extends SherlockActivity {
                                                 halfweight),
                                 rightOrBottom, halfweight);
             } else if (numOfClass > 2) {
-                child2a = refreshLayoutOrientation(rotation,
-                                new LinearLayout(this), false);
-                child2b = refreshLayoutOrientation(rotation,
-                                new LinearLayout(this), false);
+                child2a = refreshLayoutOrientation(new LinearLayout(
+                                this), false);
+                child2b = refreshLayoutOrientation(new LinearLayout(
+                                this), false);
                 child2a = addTiles(child2a, leftOrTop, balancedweight);
                 child2b = addTiles(child2b, rightOrBottom,
                                 balancedweight);
@@ -197,10 +202,13 @@ public class MainActivityII extends SherlockActivity {
         return result;
     }
 
+    // Make Tile with info from preferences. Register for context menu.
     private Tile getTile(int i) {
-        return new Tile(this, settings.getString(CLASS_TITLE + i,
-                        "Null"), settings.getString(CLASS_BODY + i,
-                        "Null"), i, MAIN_ID, settings);
+        Tile tile = new Tile(this, settings.getString(
+                        CLASS_TITLE + i, "Null"), settings.getString(
+                        CLASS_BODY + i, "Null"), i, MAIN_ID, settings);
+        registerForContextMenu(tile.getListView());
+        return tile;
     }
 
     // Add Tiles in the ArrayList to a given layout.
@@ -215,7 +223,7 @@ public class MainActivityII extends SherlockActivity {
 
     // Updates orientation of layout based on rotation of the screen.
     // Also takes a boolean. If its true, reverse the orientation of the layout.
-    private LinearLayout refreshLayoutOrientation(int rotation,
+    private LinearLayout refreshLayoutOrientation(
                     LinearLayout layout, boolean opposite) {
         if (rotation == Surface.ROTATION_90
                         || rotation == Surface.ROTATION_270) {
@@ -238,6 +246,11 @@ public class MainActivityII extends SherlockActivity {
                         .getString(NOTIFICATION_INTERVAL, "1800000"));
         if (!(notificationTimer == currentNotificationTimer))
             refreshTimer();
+        rotation = getWindowManager().getDefaultDisplay()
+                        .getRotation();
+        numOfClass = Integer.valueOf(settings.getString(
+                        NUMBER_OF_CLASSES, "4"));
+        rowcolumnSize = (int) Math.ceil(numOfClass / 2);
     }
 
     // Get user preference on color scheme and apply to vars.
@@ -279,7 +292,7 @@ public class MainActivityII extends SherlockActivity {
             a.add(new Assignment("your", formatter.format(now)));
             a.add(new Assignment("work", formatter.format(now)));
             a.add(new Assignment("here!", formatter.format(now)));
-            editor.putString(CLASS_BODY + i, 
+            editor.putString(CLASS_BODY + i,
                             Interpreter.arrayListToString2(a));
             editor.putBoolean(CLASS_UNFINISHED + i, false);
         }
@@ -293,6 +306,36 @@ public class MainActivityII extends SherlockActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         onResume();
+    }
+
+    // ContextMenu for ListViews in Tiles.
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.tilecontext, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                        .getMenuInfo();
+        int index = (Integer) info.targetView.getTag();
+        switch (item.getItemId()) {
+        case R.id.Edit:
+            return true;
+        case R.id.Delete:
+            Log.d("in Delete...", "position = " + info.position
+                            + ", index = " + index);
+            new Tile(this, settings.getString(CLASS_TITLE + index,
+                            "Null"), settings.getString(CLASS_BODY
+                            + index, "Null"), index, MAIN_ID,
+                            settings).delete(info.position);
+            onResume();
+            return true;
+        default:
+            return super.onContextItemSelected((android.view.MenuItem) item);
+        }
     }
 
     // Populates action bar with buttons from main.xml.

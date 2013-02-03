@@ -4,39 +4,38 @@
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp" >
-    
+
     <TextView
         android:id="@+id/NamePlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Assignment:"
-        android:layout_alignBaseline="@+id/AddTitle" />
+        android:layout_alignBaseline="@+id/AddTitle"
+        android:text="Assignment:" />
+
     <EditText
         android:id="@id/AddTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Assignment Name" 
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/NamePlace"
+        android:hint="Assignment Name"
         android:singleLine="true" />
-    
-</RelativeLayout>
 
-
-    <!-- 
     <TextView
         android:id="@+id/NamePlace2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date:"
-        android:layout_below="@id/AddTitle" />
+        android:layout_below="@id/AddTitle"
+        android:text="Date:" />
+
     <EditText
         android:id="@+id/AddDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Date" 
         android:layout_alignLeft="@id/AddTitle"
         android:layout_below="@id/AddTitle"
         android:layout_toRightOf="@id/NamePlace2"
+        android:hint="Date"
         android:singleLine="true" />
-         -->
+
+</RelativeLayout>

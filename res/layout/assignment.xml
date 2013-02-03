@@ -9,18 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/line" />
-
-    <View
-        android:id="@id/line"
-        android:layout_width="1px"
-        android:background="#DADADA"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/Date"
-        android:layout_alignTop="@+id/Date"
-        android:layout_toLeftOf="@+id/Date"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp" />
+        android:textSize="20sp"
+        android:layout_toLeftOf="@+id/Date" />
 
     <TextView
         android:id="@id/Date"
