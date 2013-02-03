@@ -6,6 +6,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -73,10 +74,12 @@ public class EditActivityII extends SherlockActivity {
     }
 
     private void showAddDialog() {
-        /*
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.add_dialog, null))
+        final View dialogView = inflater.inflate(R.layout.add_dialog,
+                        null);
+        builder.setView(dialogView)
                         .setTitle("Add Assignment")
                         .setPositiveButton(
                                         "Add To Top",
@@ -86,9 +89,13 @@ public class EditActivityII extends SherlockActivity {
                                             public void onClick(
                                                             DialogInterface dialog,
                                                             int which) {
-                                                tile.addToTop(((EditText) findViewById(R.id.AddTitle))
+                                                EditText newTitle = (EditText) dialogView
+                                                                .findViewById(R.id.AddTitle);
+                                                String entry = newTitle
                                                                 .getText()
-                                                                .toString());
+                                                                .toString();
+                                                if (!entry.equals(""))
+                                                    tile.addToTop(entry);
 
                                             }
                                         })
@@ -100,9 +107,13 @@ public class EditActivityII extends SherlockActivity {
                                             public void onClick(
                                                             DialogInterface dialog,
                                                             int which) {
-                                                tile.addToBottom(((EditText) findViewById(R.id.AddTitle))
+                                                EditText newTitle = (EditText) dialogView
+                                                                .findViewById(R.id.AddTitle);
+                                                String entry = newTitle
                                                                 .getText()
-                                                                .toString());
+                                                                .toString();
+                                                if (!entry.equals(""))
+                                                    tile.addToBottom(entry);
 
                                             }
                                         })
@@ -120,7 +131,7 @@ public class EditActivityII extends SherlockActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-        */
+
     }
 
     // Intercept back button call with dialog. Ask user if he wants to

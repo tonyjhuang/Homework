@@ -69,7 +69,6 @@ public class Tile extends LinearLayout implements
         view = ((LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                         .inflate(R.layout.alt_tile, null);
-        Log.d("TILE", "??");
 
         // Grab handlers to xml.
 
@@ -115,14 +114,13 @@ public class Tile extends LinearLayout implements
     }
 
     public boolean hasChanged() {
-        Log.d("TILE", "oldTitle: " + oldTitle + ", title: " + title);
         return ((oldBody != null && !oldBody.equals(body)) || (oldTitle != null && !oldTitle
                         .equals(title)));
     }
 
     // Replace textview with edittext or vice-versa
     public void editTitle() {
-        
+
         editting = !editting;
         switcher.showNext();
         // If user changed name of class, store old title (in case it gets
@@ -134,12 +132,12 @@ public class Tile extends LinearLayout implements
             titleView.setText(title);
             titleEdit.setText(title);
         }
-        
+
     }
 
     // Apply fonts and colors to Tile.
     private void style() {
-        
+
         if (unfinished) {
             titleView.setBackgroundColor(colorScheme
                             .get(Colors.TITLE_UNFINISHED));
@@ -153,16 +151,22 @@ public class Tile extends LinearLayout implements
             bodyView.setBackgroundColor(colorScheme
                             .get(Colors.BODY_FINISHED));
         }
-        
+
     }
 
-    
-       //Adds string to front of body arraylist. 
-    public void addToTop(String s){ oldBody = body; body.add(0, s); updateBody(); }
-      
-       //Adds string to back of body arraylist. 
-    public void addToBottom(String s){ oldBody = body; body.add(s); updateBody(); }
-     
+    // Adds string to front of body arraylist.
+    public void addToTop(String s) {
+        oldBody = body;
+        body.add(0, s);
+        updateBody();
+    }
+
+    // Adds string to back of body arraylist.
+    public void addToBottom(String s) {
+        oldBody = body;
+        body.add(s);
+        updateBody();
+    }
 
     // Basic getters and setters.
     public String getTitle() {
