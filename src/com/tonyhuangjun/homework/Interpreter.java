@@ -3,8 +3,6 @@ package com.tonyhuangjun.homework;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import android.util.Log;
-
 public class Interpreter {
     public static final String endOfAssignment = "|";
     public static final String startOfDate = "%";

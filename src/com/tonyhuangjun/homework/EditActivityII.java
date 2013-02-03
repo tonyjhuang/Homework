@@ -6,7 +6,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,8 +45,6 @@ public class EditActivityII extends SherlockActivity {
 
         // Get index of class from passed in Intent.
         index = getIntent().getIntExtra(ID, 1);
-
-        Log.d("EDIT", "index passed through: " + index);
 
         // Grab title information from settings.
         title = settings.getString(MainActivityII.CLASS_TITLE + index,
@@ -152,7 +149,6 @@ public class EditActivityII extends SherlockActivity {
         if (tile.editting) {
             tile.editTitle();
         } else if (!tile.hasChanged()) {
-            Log.d("EDIT", "no changes?");
             super.onBackPressed();
 
         } else
