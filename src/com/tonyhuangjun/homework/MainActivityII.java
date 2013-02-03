@@ -209,7 +209,7 @@ public class MainActivityII extends SherlockActivity {
     // Make Tile with info from preferences. Register for context menu.
     private Tile getTile(int i) {
         Tile tile = new Tile(this, settings.getString(
-                        CLASS_TITLE + i, "Null"), settings.getString(
+                        CLASS_TITLE + i, "Class Name"), settings.getString(
                         CLASS_BODY + i, Interpreter.NULL), i,
                         MAIN_ID, settings);
         registerForContextMenu(tile.getListView());
@@ -298,7 +298,7 @@ public class MainActivityII extends SherlockActivity {
             a.add(new Assignment("work", formatter.format(now)));
             a.add(new Assignment("here!", formatter.format(now)));
             editor.putString(CLASS_BODY + i,
-                            Interpreter.arrayListToString2(a));
+                            "");
             editor.putBoolean(CLASS_UNFINISHED + i, false);
         }
 
@@ -382,7 +382,7 @@ public class MainActivityII extends SherlockActivity {
             return true;
         case R.id.Delete:
             new Tile(this, settings.getString(CLASS_TITLE + index,
-                            "Null"), settings.getString(CLASS_BODY
+                            "Class Name"), settings.getString(CLASS_BODY
                             + index, Interpreter.NULL), index, MAIN_ID,
                             settings).delete(info.position);
             onResume();

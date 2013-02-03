@@ -8,7 +8,7 @@ import android.util.Log;
 public class Interpreter {
     public static final String endOfAssignment = "‼"; // alt+1555
     public static final String startOfDate = "¶"; // alt+1556
-    public static final String NULL = "Null" + endOfAssignment;
+    public static final String NULL = "Assignment" + endOfAssignment;
 
     public static Assignment stringToAssignment(String s) {
         int index = s.indexOf(endOfAssignment);

@@ -45,13 +45,15 @@ public class EditActivityII extends SherlockActivity {
         settings = getSharedPreferences("Default", MODE_PRIVATE);
 
         // Get index of class from passed in Intent.
-        index = getIntent().getIntExtra(EditActivityII.ID, 1);
+        index = getIntent().getIntExtra(ID, 1);
+
+        Log.d("EDIT", "index passed through: " + index);
 
         // Grab title information from settings.
-        title = settings.getString(MainActivity.CLASS_TITLE + index,
-                        "Null");
-        body = settings.getString(MainActivity.CLASS_BODY + index,
-                        "Null|");
+        title = settings.getString(MainActivityII.CLASS_TITLE + index,
+                        "Class Name");
+        body = settings.getString(MainActivityII.CLASS_BODY + index,
+                        "");
 
         // Get handler for top layout.
         layout = (LinearLayout) findViewById(R.id.Layout);
