@@ -97,6 +97,7 @@ public class MainActivityII extends SherlockActivity {
         // Set view.
         setContentView(R.layout.main);
         layout = (LinearLayout) findViewById(R.id.Layout);
+        Log.d("MAIN", "test");
     }
 
     // Called on application start and after EditActivity
@@ -107,20 +108,26 @@ public class MainActivityII extends SherlockActivity {
     protected void onResume() {
         super.onResume();
         refreshSettings();
+        Log.d("MAIN", "test");
         drawTiles();
+        Log.d("MAIN", "test");
     }
 
     private void drawTiles() {
 
+        Log.d("MAIN", "test");
         // Refresh Tiles to be drawn
         leftOrTop = groupTiles(rotation, numOfClass, rowcolumnSize,
                         "left");
         rightOrBottom = groupTiles(rotation, numOfClass,
                         rowcolumnSize, "right");
 
+
+        Log.d("MAIN", "test");
         // Clear layout to redraw.
         layout.removeAllViews();
 
+        Log.d("MAIN", "test");
         // Prepare layout params. balancedweight is for child2a, child2b
         LinearLayout.LayoutParams halfweight = new LinearLayout.LayoutParams(
                         LayoutParams.MATCH_PARENT,
@@ -130,12 +137,14 @@ public class MainActivityII extends SherlockActivity {
                         LayoutParams.MATCH_PARENT, (float) 1
                                         / rowcolumnSize);
 
+        Log.d("MAIN", "test");
         // Create ONE LinearLayout if number of classes is EXACTLY 2.
         // Create THREE LinearLayouts if number of classes is greater than 2.
         // Push Tile to screen if there is EXACTLY 1.
         layout = refreshLayoutOrientation(layout, false);
         LinearLayout child2a = null, child2b = null, child1 = null;
 
+        Log.d("MAIN", "test");
         if (numOfClass == 1) {
             View viewTile = leftOrTop.get(0).getView();
             viewTile.setLayoutParams(new LinearLayout.LayoutParams(
@@ -167,6 +176,7 @@ public class MainActivityII extends SherlockActivity {
                 child1.addView(child2b, halfweight);
             }
             layout.addView(child1);
+            Log.d("MAIN", "test");
         }
     }
 
@@ -174,6 +184,8 @@ public class MainActivityII extends SherlockActivity {
     private ArrayList<Tile> groupTiles(int rotation, int numOfClass,
                     int rowcolumnSize, String leftOrRight) {
         ArrayList<Tile> result = new ArrayList<Tile>();
+
+        Log.d("MAIN", "test2");
         // If screen is rotated:
         if (rotation == Surface.ROTATION_90
                         || rotation == Surface.ROTATION_270) {
@@ -191,11 +203,13 @@ public class MainActivityII extends SherlockActivity {
             }
             // If screen is portrait:
         } else {
+            Log.d("MAIN", "test2");
             if (leftOrRight.equals("left")) {
                 // Odd numbered tiles:
                 for (int i = 1; i <= numOfClass; i += 2) {
                     result.add(getTile(i));
                 }
+                Log.d("MAIN", "test2");
             } else {
                 // Even numbered tiles:
                 for (int j = 2; j <= numOfClass; j += 2) {
@@ -208,11 +222,14 @@ public class MainActivityII extends SherlockActivity {
 
     // Make Tile with info from preferences. Register for context menu.
     private Tile getTile(int i) {
+        Log.d("MAIN", "test3");
         Tile tile = new Tile(this, settings.getString(
                         CLASS_TITLE + i, "Class Name"), settings.getString(
                         CLASS_BODY + i, Interpreter.NULL), i,
                         MAIN_ID, settings);
+        Log.d("MAIN", "test3");
         registerForContextMenu(tile.getListView());
+        Log.d("MAIN", "test3");
         return tile;
     }
 
@@ -284,7 +301,7 @@ public class MainActivityII extends SherlockActivity {
     // If settings is empty, populates preferences file to contain
     // class titles, bodies, and statuses for debugging.
     private void populatePreferences() {
-        editor.putString(NUMBER_OF_CLASSES, "30");
+        editor.putString(NUMBER_OF_CLASSES, "4");
         editor.putString(NOTIFICATION_INTERVAL, "1800000");
         editor.putString(COLOR_SCHEME, "3");
         getColorScheme();
