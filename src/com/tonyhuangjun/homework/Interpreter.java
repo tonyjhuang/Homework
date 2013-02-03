@@ -6,18 +6,18 @@ import java.util.Iterator;
 import android.util.Log;
 
 public class Interpreter {
-    public static final String endOfAssignment = "‼";
-    public static final String startOfDate = "¶";
+    public static final String endOfAssignment = "‼"; // alt+1555
+    public static final String startOfDate = "¶"; // alt+1556
 
     public static Assignment stringToAssignment(String s) {
         int index = s.indexOf(endOfAssignment);
         int index2 = s.indexOf(startOfDate);
-        if (index2 != -1) 
+        if (index2 != -1)
             return new Assignment(s.substring(0, index2),
                             s.substring(index2 + 1, index));
         else
             return new Assignment(s.substring(0, index));
-        
+
     }
 
     public static ArrayList<Assignment> stringToArrayList2(String s) {
@@ -25,7 +25,7 @@ public class Interpreter {
         int index = s.indexOf(endOfAssignment);
         int index2 = s.indexOf(startOfDate);
         while (index != 0) {
-            if (index2 != -1 && index2 > index) {
+            if (index2 != -1 && index2 < index) {
                 // There is a date present in this Assignment.
                 result.add(new Assignment(s.substring(0, index2), s
                                 .substring(index2 + 1, index)));
@@ -45,12 +45,14 @@ public class Interpreter {
     }
 
     public static String arrayListToString2(ArrayList<Assignment> a) {
-        Log.d("INT:aLTS2", "helloworld!");
+        Log.d("INT", "a: " + a.toString() + "length: " + a.size());
         String result = "";
         Iterator<Assignment> i = a.iterator();
 
         while (i.hasNext()) {
-            result += i.next().toString();
+            Assignment a2 = i.next();
+            Log.d("INT", a2.toString());
+            result += a2.toString();
         }
         return result;
     }

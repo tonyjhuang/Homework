@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Assignment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/Assignment" >
-<TextView android:id="@+id/Name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_toLeftOf="@+id/line" />
-<TextView
-    android:id="@id/line"
-    style="?android:attr/listSeparatorTextViewStyle"
-    android:gravity="center_horizontal"
-    android:layout_toLeftOf="@+id/Date"
-    android:layout_width="1dp"
-    android:layout_height="match_parent"
-    android:layout_alignTop="@+id/Date"
-    android:layout_alignBottom="@+id/Date" />
+    android:layout_height="wrap_content" >
 
-<TextView android:id="@id/Date"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true" />
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/line" />
+
+    <View
+        android:id="@id/line"
+        android:layout_width="1px"
+        android:background="#DADADA"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/Date"
+        android:layout_alignTop="@+id/Date"
+        android:layout_toLeftOf="@+id/Date"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp" />
+
+    <TextView
+        android:id="@id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+
 </RelativeLayout>

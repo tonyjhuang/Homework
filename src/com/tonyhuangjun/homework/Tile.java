@@ -182,6 +182,34 @@ public class Tile extends LinearLayout implements
         updateBody();
     }
 
+   
+    private void updateView() {
+        titleView.setText(title);
+        titleEdit.setText(title);
+        updateBody();
+        // COLORS!!!
+        style();
+    }
+
+    private void updateBody() {
+        ArrayList<String> a = new ArrayList<String>();
+        a.add("hello");
+        a.add("world!");
+        Log.d("TILE", body.toString());
+        Adapttter attt = new Adapttter(getContext(), android.R.layout.simple_list_item_1, a);
+        Adapttter2 atttt = new Adapttter2(getContext(), android.R.layout.simple_list_item_1, body);
+        bodyView.setAdapter(atttt);
+    }
+
+    // This Tile is equal to another if its title and body are identical.
+    // Doesn't account for identical class names with identical assignments but
+    // who does that? .... right?
+    public boolean equals(Tile t) {
+        return title.equals(t.getTitle())
+                        && Interpreter.arrayListToString2(body)
+                                        .equals(t.getBody());
+    }
+
     // Basic getters.
     public String getTitle() {
         return title;
@@ -196,29 +224,7 @@ public class Tile extends LinearLayout implements
         return view;
     }
 
-    private void updateView() {
-        titleView.setText(title);
-        titleEdit.setText(title);
-        updateBody();
-        // COLORS!!!
-        style();
-    }
-
-    private void updateBody() {
-        Log.d("TILE", "helloworld!");
-        TileAdapter ta = new TileAdapter(context, body);
-        bodyView.setAdapter(ta);
-    }
-
-    // This Tile is equal to another if its title and body are identical.
-    // Doesn't account for identical class names with identical assignments but
-    // who does that? .... right?
-    public boolean equals(Tile t) {
-        return title.equals(t.getTitle())
-                        && Interpreter.arrayListToString2(body)
-                                        .equals(t.getBody());
-    }
-
+    
     // To implement onClick
     @Override
     public void onClick(View view) {
@@ -236,41 +242,67 @@ public class Tile extends LinearLayout implements
         return true;
     }
 
-    private class TileAdapter extends ArrayAdapter<Assignment> {
-        private ArrayList<Assignment> assignments;
-        private Context context;
-        private LayoutInflater inflater;
-
-        public TileAdapter(Context _context,
-                        ArrayList<Assignment> _assignments) {
-            super(_context, R.id.Assignment);
-            context = _context;
-            assignments = _assignments;
-            inflater = (LayoutInflater) context
-                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            Log.d("TA:constructor", "helloworld!");
+    private class Adapttter extends ArrayAdapter<String> {
+        Context c;
+        ArrayList<String> list;
+        public Adapttter (Context c, int layout, ArrayList<String> list){
+            super(c, layout, list);
+            this.c = c;
+            this.list = list;
         }
-
-        public View getView(int position, View convertView,
-                        ViewGroup parent) {
-            Log.d("TA:getView", "helloworld!");
+        public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.assignment, null);
             }
 
-            Assignment a = assignments.get(position);
-            TextView name = (TextView) view.findViewById(R.id.Name);
-            name.setText(a.getName());
-            if (a.hasDate()) {
-                TextView date = (TextView) view
-                                .findViewById(R.id.Date);
-                date.setText(a.getDate());
-            }
+            String item = list.get(position);
+            if (item!= null) {
+                // My layout has only one TextView
+                TextView itemView = (TextView) view.findViewById(R.id.Name);
+                TextView dateView = (TextView) view.findViewById(R.id.Date);
+                if (itemView != null) {
+                    // do whatever you want with your string and long
+                    itemView.setText("DICKS");
+                    dateView.setText("2/2");
+                }
+             }
 
             return view;
         }
-
     }
+    
+    private class Adapttter2 extends ArrayAdapter<Assignment> {
+        Context c;
+        ArrayList<Assignment> list;
+        public Adapttter2 (Context c, int layout, ArrayList<Assignment> list){
+            super(c, layout, list);
+            this.c = c;
+            this.list = list;
+        }
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.assignment, null);
+            }
+
+            Assignment item = list.get(position);
+            if (item!= null) {
+                // My layout has only one TextView
+                TextView itemView = (TextView) view.findViewById(R.id.Name);
+                TextView dateView = (TextView) view.findViewById(R.id.Date);
+                if (itemView != null) {
+                    // do whatever you want with your string and long
+                    itemView.setText(list.get(position).getName());
+                    dateView.setText(list.get(position).getDate());
+                }
+             }
+
+            return view;
+        }
+    }
+    
 
 }
