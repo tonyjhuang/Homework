@@ -30,7 +30,7 @@ public class Alarm extends BroadcastReceiver {
                     "DO YOUR HOMEWORK.", System.currentTimeMillis());
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 
-            new Intent(context, MainActivity.class), 0);
+            new Intent(context, MainActivityII.class), 0);
             n.flags = Notification.FLAG_AUTO_CANCEL
                     | Notification.FLAG_ONLY_ALERT_ONCE;
             n.setLatestEventInfo(context, "iiiiiit's homework time!",
@@ -39,7 +39,7 @@ public class Alarm extends BroadcastReceiver {
             n.number += 1;
 
             n.sound = Uri.parse(settings.getString(
-                    MainActivity.NOTIFICATION_SOUND,
+                    MainActivityII.NOTIFICATION_SOUND,
                     "content://settings/system/notification_sound"));
 
             Vibrator v = (Vibrator) context
@@ -52,11 +52,11 @@ public class Alarm extends BroadcastReceiver {
 
     private String findUnfinished() {
         int numOfClasses = Integer.valueOf(settings.getString(
-                MainActivity.NUMBER_OF_CLASSES, "1"));
+                MainActivityII.NUMBER_OF_CLASSES, "1"));
         String result = "Unfinished: ";
         for (int i = 0; i < numOfClasses; i++) {
-            if (settings.getBoolean(MainActivity.CLASS_STATUS + (i + 1), true)) {
-                result += (settings.getString(MainActivity.CLASS_TITLE
+            if (settings.getBoolean(MainActivityII.CLASS_UNFINISHED + (i + 1), true)) {
+                result += (settings.getString(MainActivityII.CLASS_TITLE
                         + (i + 1), "Null") + ", ");
             }
         }
