@@ -43,6 +43,7 @@
             android:hint="Class Name"
             android:paddingBottom="@dimen/class_title_vertical_padding"
             android:paddingTop="@dimen/class_title_vertical_padding"
+            android:inputType="textCapWords"
             android:singleLine="true"
             android:textSize="@dimen/class_title_text_size" />
     </ViewSwitcher>

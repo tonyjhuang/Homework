@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:inputType="textCapSentences"
         android:layout_toRightOf="@id/NamePlace"
         android:hint="Assignment Name"
         android:singleLine="true" />
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/AddTitle"
+        android:inputType="textCapSentences"
         android:layout_below="@id/AddTitle"
         android:layout_toRightOf="@id/NamePlace2"
         android:hint="Date"
