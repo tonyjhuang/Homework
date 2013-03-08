@@ -226,9 +226,10 @@ public class Tile extends LinearLayout implements
             editor.putString(MainActivityII.CLASS_BODY + index,
                             Interpreter.arrayListToString2(body));
             editor.commit();
-        } else
+        } else{
             oldBody = body;
-        body.remove(position);
+            body.remove(position);
+        }
     }
 
     // This Tile is equal to another if its title and body are identical.
